@@ -13,8 +13,19 @@ class CategoryItemController extends GetxController {
         value: 100,
         portion: 9,
         maxPortion: 10,
-        dueDate: DateTime.now().add(const Duration(days: 20),),
+        dueDate: 19,
         status: BillStatus.pendent.index,
+        categoryId: 5
+      ),
+      Bill(
+        id: '2',
+        title: 'Carteira de motorista',
+        value: 500,
+        portion: 4,
+        maxPortion: 5,
+        dueDate: 5,
+        status: BillStatus.paid.index,
+        categoryId: 5
       ),
     ]);
   }

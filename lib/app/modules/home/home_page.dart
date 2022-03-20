@@ -14,9 +14,13 @@ class HomePage extends GetView<HomeController> {
     return GetBuilder<HomeController>(
       builder: (_) => Scaffold(
         appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            AppHelpers.monthResolver(DateTime.now().month),
+          title: InkWell(
+            onTap: () {
+              controller.swapDate(context);
+            },
+            child: Text(
+                AppHelpers.monthResolver(controller.selectedDate.month) +
+                    ' - ${controller.selectedDate.year}'),
           ),
         ),
         body: SafeArea(
@@ -67,7 +71,7 @@ class HomePage extends GetView<HomeController> {
                         height: 15,
                       ),
                       ...controller.categories
-                          .map((e) => CategoryItem(category: e))
+                          .map((e) => CategoryItem(category: e, addBill: controller.addBill,))
                           .toList(),
                     ],
                   ),

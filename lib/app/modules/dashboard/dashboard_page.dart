@@ -19,8 +19,6 @@ class DashboardPage extends GetView<DashboardController> {
                 icon: Icon(Icons.home, size: 28,), label: '', tooltip: 'Home'),
             BottomNavigationBarItem(
                 icon: Icon(Icons.trending_up, size: 28,), label: '', tooltip: 'Statistics'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.card_giftcard, size: 28,), label: '', tooltip: 'Avatars'),
           ],
         ),
       ),

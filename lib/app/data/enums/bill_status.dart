@@ -1,5 +1,5 @@
 enum BillStatus {
+  overdue,
   pendent,
   paid,
-  overdue,
 }

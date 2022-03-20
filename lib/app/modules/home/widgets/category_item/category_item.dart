@@ -9,7 +9,8 @@ import 'package:get/get.dart';
 
 class CategoryItem extends StatelessWidget {
   final Category category;
-  const CategoryItem({Key? key, required this.category}) : super(key: key);
+  final Function(int categoryId) addBill;
+  const CategoryItem({Key? key, required this.category, required this.addBill}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +105,9 @@ class CategoryItem extends StatelessWidget {
                 ),
                 ElevatedButton(
                   child: const Text('Add a bill'),
-                  onPressed: () {},
+                  onPressed: () {
+                    addBill(category.id);
+                  },
                 ),
               ],
             ),
@@ -115,43 +118,48 @@ class CategoryItem extends StatelessWidget {
   }
 
   Widget _buildBill(Bill bill) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                height: 40,
-                width: 5,
-                color: Colors.green,
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
+              Row(
                 children: [
-                  Text(
-                    bill.title,
-                    style: TextStyle(color: Get.theme.colorScheme.primary),
+                  Container(
+                    height: 40,
+                    width: 5,
+                    color: AppHelpers.billStatusResolver(bill.status),
                   ),
-                  bill.maxPortion != null
-                      ? Text(
-                          '${bill.portion}/${bill.maxPortion}',
-                        )
-                      : Container(),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        bill.title,
+                        style: TextStyle(color: Get.theme.colorScheme.primary),
+                      ),
+                      bill.maxPortion != null
+                          ? Text(
+                              '${bill.portion}/${bill.maxPortion}',
+                            )
+                          : Container(),
+                    ],
+                  ),
                 ],
+              ),
+              Text(
+                AppHelpers.formatCurrency(bill.value),
               ),
             ],
           ),
-          Text(
-            AppHelpers.formatCurrency(bill.value),
-          ),
-        ],
-      ),
+        ),
+        Divider(color: Get.theme.colorScheme.onBackground,),
+      ],
     );
   }
 }

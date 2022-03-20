@@ -6,7 +6,6 @@ class DashboardController extends GetxController {
   final pages = [
     const HomePage(),
     const HomePage(),
-    const HomePage(),
   ];
 
   changePage(int i) {
