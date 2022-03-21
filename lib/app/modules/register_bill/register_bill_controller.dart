@@ -1,3 +1,4 @@
+import 'package:financial_control_app/app/core/utils/helpers.dart';
 import 'package:financial_control_app/app/data/enums/bill_status.dart';
 import 'package:financial_control_app/app/data/models/bill.dart';
 import 'package:flutter/material.dart';
@@ -43,19 +44,18 @@ class RegisterBillController extends GetxController {
 
   addBill() {
     if (formKey.currentState!.validate()) {
-      final doubleRegex = RegExp(r'\s+(\d+\.\d+)\s+', multiLine: true);
-      var n = doubleRegex.allMatches(totalValueController.text).map((m) => m.group(0));
-      print(n);
       Bill bill = Bill(
         id: uuid.v4(),
         categoryId: categoryId,
         title: titleController.text,
-        value: 0,
+        value: AppHelpers.revertCurrencyFormat(totalValueController.text),
         dueDate: int.parse(dueDateController.text),
+        portion: int.tryParse(portionController.text),
+        maxPortion: int.tryParse(maxPortionController.text),
         status: status,
       );
 
-      // bills.add(bill);
+      bills.add(bill);
     }
   }
 

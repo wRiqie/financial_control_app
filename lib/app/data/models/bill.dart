@@ -2,7 +2,7 @@ class Bill {
   late String id;
   late int categoryId;
   late String title;
-  late double value;
+  late num value;
   int? portion;
   int? maxPortion;
   late int dueDate;

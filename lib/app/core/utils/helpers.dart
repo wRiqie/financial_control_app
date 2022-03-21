@@ -23,7 +23,7 @@ class AppHelpers {
     return months[month - 1];
   }
 
-  static String formatCurrency(double value) {
+  static String formatCurrency(num value) {
     var formatted =
         NumberFormat.simpleCurrency(locale: const Locale('pt', 'BR').toString())
             .format(value)
@@ -63,6 +63,11 @@ class AppHelpers {
 
   static String formatDateBR(DateTime date) {
     return DateFormat('dd/MM/yyyy').format(date);
+  }
+
+  static num revertCurrencyFormat(String currency) {
+    final formatter = NumberFormat.simpleCurrency(locale: "pt_Br");
+    return formatter.parse(currency);
   }
 }
 
