@@ -24,9 +24,11 @@ class DatabaseProvider {
       path,
       version: 1,
       onOpen: (db) async {
+        await db.execute(_createTableMonth);
         await db.execute(_createTableBill);
       },
       onCreate: (Database db, int version) async {
+        await db.execute(_createTableMonth);
         await db.execute(_createTableBill);
       },
     );

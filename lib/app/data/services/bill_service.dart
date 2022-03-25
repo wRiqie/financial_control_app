@@ -16,6 +16,7 @@ class BillService extends GetxService {
     var month = await monthRepository.getMonthByDate(AppHelpers.formatDateToSave(selectedDate));
     if(month != null){
       selectedMonth = month;
+      return month;
     }
     var monthToAdd = Month(date: AppHelpers.formatDateToSave(selectedDate),);
     selectedMonth = monthToAdd;
