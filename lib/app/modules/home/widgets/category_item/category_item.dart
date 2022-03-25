@@ -9,14 +9,15 @@ import 'package:get/get.dart';
 
 class CategoryItem extends StatelessWidget {
   final Category category;
-  final Function(int categoryId) addBill;
-  const CategoryItem({Key? key, required this.category, required this.addBill}) : super(key: key);
+  final Function(int categoryId, CategoryItemController controller) addBillToCategory;
+  const CategoryItem({Key? key, required this.category, required this.addBillToCategory}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CategoryItemController>(
-      init: CategoryItemController(),
+      init: CategoryItemController(category),
       global: false,
+      tag: category.id.toString(),
       builder: (_) => ExpandablePanel(
         theme: const ExpandableThemeData(
           hasIcon: false,
@@ -53,9 +54,9 @@ class CategoryItem extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    const LinearProgressIndicator(
+                    LinearProgressIndicator(
                       minHeight: 5,
-                      value: 0.3,
+                      value: _.percentage,
                     ),
                   ],
                 ),
@@ -65,14 +66,14 @@ class CategoryItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      AppHelpers.formatCurrency(200.32),
+                      AppHelpers.formatCurrency(_.totalPrice),
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
                     Text(
-                      'Left ' + AppHelpers.formatCurrency(54.67),
+                      'Left ' + AppHelpers.formatCurrency(_.leftPrice),
                       style: const TextStyle(color: DarkColors.grey),
                     ),
                   ],
@@ -106,7 +107,7 @@ class CategoryItem extends StatelessWidget {
                 ElevatedButton(
                   child: const Text('Add a bill'),
                   onPressed: () {
-                    addBill(category.id);
+                    addBillToCategory(category.id, _);
                   },
                 ),
               ],
@@ -141,7 +142,6 @@ class CategoryItem extends StatelessWidget {
                     children: [
                       Text(
                         bill.title,
-                        style: TextStyle(color: Get.theme.colorScheme.primary),
                       ),
                       bill.maxPortion != null
                           ? Text(

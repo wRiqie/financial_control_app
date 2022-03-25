@@ -1,38 +1,55 @@
 import 'package:financial_control_app/app/data/enums/bill_status.dart';
 import 'package:financial_control_app/app/data/models/bill.dart';
+import 'package:financial_control_app/app/data/models/category.dart';
+import 'package:financial_control_app/app/data/services/bill_service.dart';
 import 'package:get/get.dart';
 
 class CategoryItemController extends GetxController {
   List<Bill> bills = [];
+  final Category category;
+  final billService = Get.find<BillService>();
+  final args = Get.arguments;
 
-  void getBills() {
-    bills.addAll([
-      Bill(
-        id: '1',
-        title: 'Notebook',
-        value: 100,
-        portion: 9,
-        maxPortion: 10,
-        dueDate: 19,
-        status: BillStatus.pendent.index,
-        categoryId: 5
-      ),
-      Bill(
-        id: '2',
-        title: 'Carteira de motorista',
-        value: 500,
-        portion: 4,
-        maxPortion: 5,
-        dueDate: 5,
-        status: BillStatus.paid.index,
-        categoryId: 5
-      ),
-    ]);
+  CategoryItemController(this.category);
+
+  double get percentage {
+    var paidBills =
+        bills.where((e) => e.status == BillStatus.paid.index).length;
+    return (paidBills * 100) / (bills.isNotEmpty ? bills.length : 1);
+  }
+
+  double get leftPrice {
+    var overdueBills = bills.where((e) => e.status == BillStatus.overdue.index);
+    double price = 0;
+    for (var bill in overdueBills) {
+      price += bill.value;
+    }
+    return price;
+  }
+
+  double get totalPrice {
+    double price = 0;
+    for (var bill in bills) {
+      price += bill.value;
+    }
+    return price;
+  }
+
+  getBills() {
+    billService.getBills(category.id).then((value) {
+      bills = value;
+      update();
+    });
+  }
+
+  addBill(Bill bill) {
+    bills.add(bill);
+    update();
   }
 
   @override
-  void onInit() {
-    super.onInit();
+  void onReady() {
+    super.onReady();
     getBills();
   }
 }

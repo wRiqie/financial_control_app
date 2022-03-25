@@ -71,7 +71,7 @@ class HomePage extends GetView<HomeController> {
                         height: 15,
                       ),
                       ...controller.categories
-                          .map((e) => CategoryItem(category: e, addBill: controller.addBill,))
+                          .map((e) => CategoryItem(category: e, addBillToCategory: controller.addBillToCategory,))
                           .toList(),
                     ],
                   ),

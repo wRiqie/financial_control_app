@@ -25,7 +25,9 @@ class RegisterBillPage extends GetView<RegisterBillController> {
               SizedBox(
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    controller.saveBill();
+                  },
                   child: const Text('Concluded'),
                 ),
               ),
@@ -36,7 +38,9 @@ class RegisterBillPage extends GetView<RegisterBillController> {
                 color: Colors.transparent,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: controller.addBill,
+                  onPressed: () {
+                    controller.saveBill(add: true);
+                  },
                   child: Text(
                     'Add other bill',
                     style: TextStyle(color: Get.theme.colorScheme.primary),
@@ -203,6 +207,7 @@ class RegisterBillPage extends GetView<RegisterBillController> {
       enabled: enabled,
       textInputAction: TextInputAction.next,
       keyboardType: keyboardType,
+      textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
         label: Text(label),
       ),

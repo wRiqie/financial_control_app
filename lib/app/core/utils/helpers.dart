@@ -65,6 +65,14 @@ class AppHelpers {
     return DateFormat('dd/MM/yyyy').format(date);
   }
 
+  static String formatDateToSave(DateTime date) {
+    return DateFormat('MM-yyyy').format(date);
+  }
+
+  static DateTime revertDateFromSave(String date) {
+    return DateFormat('MM-yyyy').parse(date);
+  }
+
   static num revertCurrencyFormat(String currency) {
     final formatter = NumberFormat.simpleCurrency(locale: "pt_Br");
     return formatter.parse(currency);
