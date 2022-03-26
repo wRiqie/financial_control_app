@@ -1,5 +1,6 @@
 import 'package:financial_control_app/app/core/theme/dark/dark_colors.dart';
 import 'package:financial_control_app/app/core/utils/helpers.dart';
+import 'package:financial_control_app/app/data/enums/bill_status.dart';
 import 'package:financial_control_app/app/data/models/bill.dart';
 import 'package:financial_control_app/app/data/models/category.dart';
 import 'package:financial_control_app/app/data/models/month.dart';
@@ -64,7 +65,7 @@ class HomeController extends GetxController {
 
   addBillToCategory(int categoryId, CategoryItemController controller) async {
     await Get.toNamed(Routes.registerBill,
-        arguments: {'categoryId': categoryId});
+        arguments: {'categoryId': categoryId, 'selectedDate': selectedDate});
     controller.getBills();
   }
 
@@ -90,7 +91,16 @@ class HomeController extends GetxController {
     update();
   }
 
-  openOptionsModal(Bill bill, {required BuildContext context}) {}
+  toogleBillStatus(Bill bill) async {
+    if (bill.status != BillStatus.paid.index) {
+      bill.status = BillStatus.paid.index;
+    } else {
+      bill.status = bill.dueDate > DateTime.now().day
+          ? BillStatus.pendent.index
+          : BillStatus.overdue.index;
+    }
+    await billRepository.saveBill(bill);
+  }
 
   @override
   void onInit() {

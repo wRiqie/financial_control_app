@@ -31,10 +31,10 @@ class RegisterBillPage extends GetView<RegisterBillController> {
                   child: const Text('Concluded'),
                 ),
               ),
-              const SizedBox(
+              controller.editingBill == null ? const SizedBox(
                 height: 20,
-              ),
-              Container(
+              ) : Container(),
+              controller.editingBill == null ? Container(
                 color: Colors.transparent,
                 height: 50,
                 child: ElevatedButton(
@@ -53,7 +53,7 @@ class RegisterBillPage extends GetView<RegisterBillController> {
                     elevation: MaterialStateProperty.all(0),
                   ),
                 ),
-              ),
+              ) : Container(),
             ],
           ),
         ),
@@ -82,7 +82,7 @@ class RegisterBillPage extends GetView<RegisterBillController> {
                     ),
                     _buildTextFormField(
                         controller: controller.totalValueController,
-                        label: 'Total value',
+                        label: 'Month value',
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly,
                           CurrencyInputFormatter(),

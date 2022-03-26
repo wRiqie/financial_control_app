@@ -12,7 +12,7 @@ import 'package:get/get.dart';
 class CategoryItem extends StatelessWidget {
   final Category category;
   final Function(int categoryId, CategoryItemController controller) addBillToCategory;
-  final Function(Bill bill) onTap;
+  final Function(Bill bill, CategoryItemController controller) onTap;
   const CategoryItem({Key? key, required this.onTap, required this.category, required this.addBillToCategory}) : super(key: key);
 
   @override
@@ -98,7 +98,7 @@ class CategoryItem extends StatelessWidget {
                         color: Get.theme.colorScheme.surface,
                         child: InkWell(
                           onTap: (){
-                            onTap(e);
+                            onTap(e, _);
                           },
                           child: _buildBill(e),
                         ),

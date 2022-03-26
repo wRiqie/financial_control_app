@@ -19,6 +19,8 @@ class RegisterBillController extends GetxController {
   bool paid = false;
   Month? selectedMonth;
 
+  Bill? editingBill;
+
   final formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
   final totalValueController = TextEditingController();
@@ -41,7 +43,7 @@ class RegisterBillController extends GetxController {
   saveBill({bool add = false}) async {
     if (formKey.currentState!.validate()) {
       Bill bill = Bill(
-        id: uuid.v4(),
+        id: editingBill != null ? editingBill!.id : uuid.v4(),
         categoryId: categoryId,
         title: titleController.text,
         value: AppHelpers.revertCurrencyFormat(totalValueController.text),
@@ -65,9 +67,10 @@ class RegisterBillController extends GetxController {
       }
 
       // Update Month
-      if (selectedMonth != null && paid) {
+      if (selectedMonth != null) {
         selectedMonth!.totalPrice =
-            (selectedMonth!.totalPrice ?? 0) + bill.value;
+            ((selectedMonth!.totalPrice ?? 0) + bill.value) -
+                (editingBill != null ? editingBill!.value : 0);
         await monthRepository.saveMonth(selectedMonth!);
       }
 
@@ -87,7 +90,7 @@ class RegisterBillController extends GetxController {
   }
 
   int get status {
-    if(paid){
+    if (paid) {
       return BillStatus.paid.index;
     }
     return DateTime.now().day > int.parse(dueDateController.text)
@@ -95,10 +98,36 @@ class RegisterBillController extends GetxController {
         : BillStatus.pendent.index;
   }
 
+  fillFields() {
+    titleController.text = editingBill?.title ?? '';
+    totalValueController.text = editingBill?.value.toString() ?? '';
+    dueDateController.text = editingBill?.dueDate.toString() ?? '';
+    portionController.text = editingBill?.portion?.toString() ?? '';
+    maxPortionController.text = editingBill?.maxPortion?.toString() ?? '';
+
+    paid = editingBill?.status == BillStatus.paid.index ? true : false;
+    havePortions = editingBill?.maxPortion != null ? true : false;
+  }
+
   @override
   void onInit() {
     super.onInit();
     categoryId = args['categoryId'];
     selectedMonth = args['selectedMonth'];
+
+    if (args['bill'] != null) {
+      editingBill = args['bill'];
+      fillFields();
+    }
+  }
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    totalValueController.dispose();
+    dueDateController.dispose();
+    portionController.dispose();
+    maxPortionController.dispose();
+    super.dispose();
   }
 }
