@@ -44,7 +44,8 @@ class HomePage extends GetView<HomeController> {
                         ),
                       ),
                       Text(
-                        AppHelpers.formatCurrency(controller.remainingBalance),
+                        AppHelpers.formatCurrency(
+                            controller.remainingBalance),
                         style: const TextStyle(
                           fontSize: 42,
                         ),
@@ -71,7 +72,11 @@ class HomePage extends GetView<HomeController> {
                         height: 15,
                       ),
                       ...controller.categories
-                          .map((e) => CategoryItem(category: e, addBillToCategory: controller.addBillToCategory,))
+                          .map((e) => CategoryItem(
+                                onTap: (bill) => controller.openOptionsModal(bill, context: context),
+                                category: e,
+                                addBillToCategory: controller.addBillToCategory,
+                              ))
                           .toList(),
                     ],
                   ),

@@ -168,20 +168,18 @@ class RegisterBillPage extends GetView<RegisterBillController> {
                           return null;
                         }),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Checkbox(
-                          value: controller.havePortions,
-                          onChanged: (value) {
-                            controller.togglePortion(value);
-                          },
+                        _buildCheckboxOption(
+                          toogle: controller.togglePaid,
+                          label: 'Already paid?',
+                          value: controller.paid,
                         ),
-                        Text(
-                          'Do you have parcels',
-                          style: TextStyle(
-                            color: Get.theme.colorScheme.onBackground,
-                          ),
-                        )
+                        _buildCheckboxOption(
+                          toogle: controller.togglePortion,
+                          label: 'Do you have parcels',
+                          value: controller.havePortions,
+                        ),
                       ],
                     ),
                   ],
@@ -213,6 +211,28 @@ class RegisterBillPage extends GetView<RegisterBillController> {
       ),
       validator: validator,
       inputFormatters: inputFormatters,
+    );
+  }
+
+  Widget _buildCheckboxOption(
+      {required Function(bool? value) toogle,
+      required String label,
+      required bool value}) {
+    return Row(
+      children: [
+        Checkbox(
+          value: value,
+          onChanged: (value) {
+            toogle(value);
+          },
+        ),
+        Text(
+          label,
+          style: TextStyle(
+            color: Get.theme.colorScheme.onBackground,
+          ),
+        ),
+      ],
     );
   }
 }

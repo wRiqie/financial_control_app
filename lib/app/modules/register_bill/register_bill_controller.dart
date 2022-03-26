@@ -2,18 +2,22 @@ import 'package:financial_control_app/app/core/theme/dark/dark_colors.dart';
 import 'package:financial_control_app/app/core/utils/helpers.dart';
 import 'package:financial_control_app/app/data/enums/bill_status.dart';
 import 'package:financial_control_app/app/data/models/bill.dart';
+import 'package:financial_control_app/app/data/models/month.dart';
 import 'package:financial_control_app/app/data/repository/bill_repository.dart';
+import 'package:financial_control_app/app/data/repository/month_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 
 class RegisterBillController extends GetxController {
   final BillRepository repository;
+  final MonthRepository monthRepository;
+  final uuid = const Uuid();
   final args = Get.arguments;
   int categoryId = 0;
   bool havePortions = false;
-  DateTime selectedDate = DateTime.now();
-  final uuid = const Uuid();
+  bool paid = false;
+  Month? selectedMonth;
 
   final formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
@@ -22,26 +26,16 @@ class RegisterBillController extends GetxController {
   final portionController = TextEditingController();
   final maxPortionController = TextEditingController();
 
-  RegisterBillController(this.repository);
+  RegisterBillController(this.repository, this.monthRepository);
 
   togglePortion(bool? value) {
     havePortions = value ?? !havePortions;
     update();
   }
 
-  swapDate(BuildContext context) async {
-    var date = await showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime.now().subtract(const Duration(days: 152)),
-      lastDate: DateTime.now(),
-      initialEntryMode: DatePickerEntryMode.calendarOnly,
-    );
-
-    if (date != null) {
-      selectedDate = date;
-      update();
-    }
+  togglePaid(bool? value) {
+    paid = value ?? !paid;
+    update();
   }
 
   saveBill({bool add = false}) async {
@@ -70,6 +64,13 @@ class RegisterBillController extends GetxController {
         Get.back();
       }
 
+      // Update Month
+      if (selectedMonth != null && paid) {
+        selectedMonth!.totalPrice =
+            (selectedMonth!.totalPrice ?? 0) + bill.value;
+        await monthRepository.saveMonth(selectedMonth!);
+      }
+
       Get.snackbar(
         'Success',
         'Successfully saved',
@@ -86,6 +87,9 @@ class RegisterBillController extends GetxController {
   }
 
   int get status {
+    if(paid){
+      return BillStatus.paid.index;
+    }
     return DateTime.now().day > int.parse(dueDateController.text)
         ? BillStatus.overdue.index
         : BillStatus.pendent.index;
@@ -95,5 +99,6 @@ class RegisterBillController extends GetxController {
   void onInit() {
     super.onInit();
     categoryId = args['categoryId'];
+    selectedMonth = args['selectedMonth'];
   }
 }

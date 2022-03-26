@@ -1,27 +1,34 @@
+import 'package:financial_control_app/app/core/utils/helpers.dart';
 import 'package:financial_control_app/app/data/enums/bill_status.dart';
 import 'package:financial_control_app/app/data/models/bill.dart';
 import 'package:financial_control_app/app/data/models/category.dart';
-import 'package:financial_control_app/app/data/services/bill_service.dart';
+import 'package:financial_control_app/app/data/repository/bill_repository.dart';
 import 'package:get/get.dart';
 
 class CategoryItemController extends GetxController {
+  final BillRepository repository;
   List<Bill> bills = [];
   final Category category;
-  final billService = Get.find<BillService>();
   final args = Get.arguments;
 
-  CategoryItemController(this.category);
+  CategoryItemController(this.repository, this.category);
 
   double get percentage {
+    double paidValue = 0;
+    double totalValue = totalPrice;
     var paidBills =
-        bills.where((e) => e.status == BillStatus.paid.index).length;
-    return (paidBills * 100) / (bills.isNotEmpty ? bills.length : 1);
+        bills.where((e) => e.status == BillStatus.paid.index);
+    for (var paidBill in paidBills) {
+      paidValue += paidBill.value;
+    }
+    
+    return ((paidValue * 100) / (totalValue != 0 ? totalValue : 1)) / 100;
   }
 
   double get leftPrice {
-    var overdueBills = bills.where((e) => e.status == BillStatus.overdue.index);
+    var leftBills = bills.where((e) => e.status != BillStatus.paid.index);
     double price = 0;
-    for (var bill in overdueBills) {
+    for (var bill in leftBills) {
       price += bill.value;
     }
     return price;
@@ -36,7 +43,10 @@ class CategoryItemController extends GetxController {
   }
 
   getBills() {
-    billService.getBills(category.id).then((value) {
+    repository
+        .getBillsByCategoryIdAndDate(
+            category.id, AppHelpers.formatDateToSave(DateTime.now()))
+        .then((value) {
       bills = value;
       update();
     });

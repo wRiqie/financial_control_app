@@ -3,6 +3,8 @@ import 'package:financial_control_app/app/core/theme/dark/dark_colors.dart';
 import 'package:financial_control_app/app/core/utils/helpers.dart';
 import 'package:financial_control_app/app/data/models/bill.dart';
 import 'package:financial_control_app/app/data/models/category.dart';
+import 'package:financial_control_app/app/data/provider/database_provider.dart';
+import 'package:financial_control_app/app/data/repository/bill_repository.dart';
 import 'package:financial_control_app/app/modules/home/widgets/category_item/category_item_controller.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
@@ -10,12 +12,13 @@ import 'package:get/get.dart';
 class CategoryItem extends StatelessWidget {
   final Category category;
   final Function(int categoryId, CategoryItemController controller) addBillToCategory;
-  const CategoryItem({Key? key, required this.category, required this.addBillToCategory}) : super(key: key);
+  final Function(Bill bill) onTap;
+  const CategoryItem({Key? key, required this.onTap, required this.category, required this.addBillToCategory}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CategoryItemController>(
-      init: CategoryItemController(category),
+      init: CategoryItemController(BillRepository(DatabaseProvider.db), category),
       global: false,
       tag: category.id.toString(),
       builder: (_) => ExpandablePanel(
@@ -44,7 +47,7 @@ class CategoryItem extends StatelessWidget {
                 ),
               ),
               Flexible(
-                flex: 2,
+                flex: 3,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -68,14 +71,13 @@ class CategoryItem extends StatelessWidget {
                     Text(
                       AppHelpers.formatCurrency(_.totalPrice),
                       style: const TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.end,
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      'Left ' + AppHelpers.formatCurrency(_.leftPrice),
-                      style: const TextStyle(color: DarkColors.grey),
-                    ),
+                    _.leftPrice > 0 ? Text(
+                      AppHelpers.formatCurrency(_.leftPrice),
+                      style: TextStyle(color: Get.theme.colorScheme.error),
+                      textAlign: TextAlign.end,
+                    ) : Container(),
                   ],
                 ),
               ),
@@ -95,7 +97,9 @@ class CategoryItem extends StatelessWidget {
                       (e) => Material(
                         color: Get.theme.colorScheme.surface,
                         child: InkWell(
-                          onTap: () {},
+                          onTap: (){
+                            onTap(e);
+                          },
                           child: _buildBill(e),
                         ),
                       ),
