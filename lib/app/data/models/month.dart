@@ -1,25 +1,25 @@
 class Month {
   late String date;
   num? totalPrice;
-  num? pricePaid;
+  num? balance;
 
   Month({
     required this.date,
     this.totalPrice,
-    this.pricePaid,
+    this.balance,
   });
 
   Month.fromMap(Map<String, dynamic> map) {
     date = map['date'];
     totalPrice = map['totalPrice'];
-    pricePaid = map['pricePaid'];
+    balance = map['balance'];
   }
 
   Map<String, dynamic> toMap() {
     return {
       'date': date,
       'totalPrice': totalPrice,
-      'pricePaid': pricePaid,
+      'balance': balance,
     };
   }
 }

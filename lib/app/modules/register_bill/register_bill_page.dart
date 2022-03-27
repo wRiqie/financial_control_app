@@ -89,7 +89,9 @@ class RegisterBillPage extends GetView<RegisterBillController> {
                         ],
                         validator: (value) {
                           if (value == null || value == '') {
-                            return 'Please enter a total value';
+                            return 'Please enter a month value';
+                          } else if(value == AppHelpers.formatCurrency(0)){
+                            return 'The value of the month cannot be zero';
                           }
 
                           return null;

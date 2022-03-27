@@ -5,11 +5,13 @@ import 'package:financial_control_app/app/data/models/bill.dart';
 import 'package:financial_control_app/app/data/models/month.dart';
 import 'package:financial_control_app/app/data/repository/bill_repository.dart';
 import 'package:financial_control_app/app/data/repository/month_repository.dart';
+import 'package:financial_control_app/app/modules/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 
 class RegisterBillController extends GetxController {
+  final homeController = Get.find<HomeController>();
   final BillRepository repository;
   final MonthRepository monthRepository;
   final uuid = const Uuid();
@@ -62,16 +64,17 @@ class RegisterBillController extends GetxController {
       portionController.text = '';
       maxPortionController.text = '';
 
-      if (!add) {
-        Get.back();
-      }
-
       // Update Month
       if (selectedMonth != null) {
         selectedMonth!.totalPrice =
             ((selectedMonth!.totalPrice ?? 0) + bill.value) -
                 (editingBill != null ? editingBill!.value : 0);
         await monthRepository.saveMonth(selectedMonth!);
+        await homeController.selectMonth();
+      }
+
+      if (!add) {
+        Get.back();
       }
 
       Get.snackbar(
@@ -100,7 +103,8 @@ class RegisterBillController extends GetxController {
 
   fillFields() {
     titleController.text = editingBill?.title ?? '';
-    totalValueController.text = editingBill?.value.toString() ?? '';
+    totalValueController.text =
+        AppHelpers.formatCurrency(editingBill?.value ?? 0);
     dueDateController.text = editingBill?.dueDate.toString() ?? '';
     portionController.text = editingBill?.portion?.toString() ?? '';
     maxPortionController.text = editingBill?.maxPortion?.toString() ?? '';

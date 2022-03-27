@@ -65,7 +65,7 @@ class HomeController extends GetxController {
 
   addBillToCategory(int categoryId, CategoryItemController controller) async {
     await Get.toNamed(Routes.registerBill,
-        arguments: {'categoryId': categoryId, 'selectedDate': selectedDate});
+        arguments: {'categoryId': categoryId, 'selectedMonth': selectedMonth});
     controller.getBills();
   }
 
@@ -100,6 +100,22 @@ class HomeController extends GetxController {
           : BillStatus.overdue.index;
     }
     await billRepository.saveBill(bill);
+  }
+
+  void deleteBill(Bill bill, CategoryItemController categoryController) async {
+    if (selectedMonth != null) {
+      var result = await billRepository.deleteBillById(bill.id);
+      if (result != 0) {
+        // caso nulo fica como o bill.value para resultar 0
+        // Evita valores negativos
+        selectedMonth!.totalPrice =
+            (selectedMonth!.totalPrice ?? bill.value) - bill.value;
+        await monthRepository.saveMonth(selectedMonth!);
+        await categoryController.getBills();
+        await selectMonth();
+      }
+    }
+    Get.back();
   }
 
   @override

@@ -142,13 +142,13 @@ class DatabaseProvider {
   static const monthTable = 'month';
   static const _monthDate = 'date';
   static const _monthTotalPrice = 'totalPrice';
-  static const _monthPricePaid = 'pricePaid';
+  static const _monthBalance = 'balance';
 
   static const _createTableMonth = """
     CREATE TABLE IF NOT EXISTS $monthTable(
       $_monthDate TEXT NOT NULL PRIMARY KEY,
       $_monthTotalPrice REAL,
-      $_monthPricePaid REAL
+      $_monthBalance REAL
     );
   """;
 

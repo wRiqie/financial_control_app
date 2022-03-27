@@ -74,7 +74,7 @@ class HomePage extends GetView<HomeController> {
                       ),
                       ...controller.categories
                           .map((e) => CategoryItem(
-                                onTap: (bill, billController) =>
+                                onTap: (bill, categoryController) =>
                                     showModalBottomSheet(
                                         context: context,
                                         builder: (_) {
@@ -99,7 +99,7 @@ class HomePage extends GetView<HomeController> {
                                                 onTap: () async {
                                                   await controller
                                                       .toogleBillStatus(bill);
-                                                  await billController
+                                                  await categoryController
                                                       .getBills();
                                                   Get.back();
                                                 },
@@ -123,7 +123,7 @@ class HomePage extends GetView<HomeController> {
                                                             controller
                                                                 .selectedMonth,
                                                       });
-                                                  await billController
+                                                  await categoryController
                                                       .getBills();
                                                   await controller
                                                       .selectMonth();
@@ -139,14 +139,16 @@ class HomePage extends GetView<HomeController> {
                                                 onTap: () async {
                                                   Get.back();
                                                   Get.defaultDialog(
-                                                    contentPadding: const EdgeInsets.all(20),
                                                     title: 'Alert',
+                                                    titleStyle: TextStyle(color: Get.theme.colorScheme.primary,),
                                                     middleText:
                                                         'Are you sure you want to delete this bill?',
-                                                    confirm: Text('yes'),
-                                                    cancel: Text('no'),
+                                                    textConfirm: 'Confirm',
+                                                    textCancel: 'Cancel',
                                                     onCancel: (){},
-                                                    onConfirm: (){print('confirm');},
+                                                    onConfirm: (){
+                                                      controller.deleteBill(bill, categoryController);
+                                                    },
                                                   );
                                                   // await controller.selectMonth();
                                                 },
