@@ -14,8 +14,8 @@ import 'package:get/get.dart';
 class HomeController extends GetxController {
   final BillRepository billRepository;
   final MonthRepository monthRepository;
-  final monthBalance = 2100.0;
-  double remainingBalance = 0.0;
+  final valueCardController = ScrollController();
+  num remainingBalance = 0.0;
   DateTime selectedDate = DateTime.now();
   Month? selectedMonth;
   List<Category> categories = [
@@ -48,6 +48,26 @@ class HomeController extends GetxController {
 
   HomeController(this.monthRepository, this.billRepository);
 
+  void openPreferences() async {
+    await Get.toNamed(
+      Routes.preferences,
+      arguments: {
+        'month': selectedMonth,
+      },
+    );
+    loadMonth();
+  }
+
+  scrollValueCard(double width, int position, {bool back = false}) {
+    valueCardController.animateTo(
+      back
+          ? width * (position > 0 ? position - 1 : position)
+          : width * (position + 1),
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.easeIn,
+    );
+  }
+
   swapDate(BuildContext context) async {
     var date = await showDatePicker(
       context: context,
@@ -69,7 +89,8 @@ class HomeController extends GetxController {
     controller.getBills();
   }
 
-  selectMonth() async {
+  /// loads the month from the database from the selected month
+  loadMonth() async {
     var month = await monthRepository
         .getMonthByDate(AppHelpers.formatDateToSave(selectedDate));
     if (month != null) {
@@ -79,6 +100,7 @@ class HomeController extends GetxController {
     }
     var monthToAdd = Month(
       date: AppHelpers.formatDateToSave(selectedDate),
+      balance: 2100,
     );
     selectedMonth = monthToAdd;
     calcRemainingBalance();
@@ -86,8 +108,10 @@ class HomeController extends GetxController {
     return monthToAdd;
   }
 
+  /// Calcule remaining balance of month by monthBalance minus month totalPrice
   calcRemainingBalance() {
-    remainingBalance = monthBalance - (selectedMonth?.totalPrice ?? 0);
+    remainingBalance =
+        (selectedMonth?.balance ?? 0.0) - (selectedMonth?.totalPrice ?? 0);
     update();
   }
 
@@ -112,7 +136,7 @@ class HomeController extends GetxController {
             (selectedMonth!.totalPrice ?? bill.value) - bill.value;
         await monthRepository.saveMonth(selectedMonth!);
         await categoryController.getBills();
-        await selectMonth();
+        await loadMonth();
       }
     }
     Get.back();
@@ -121,6 +145,6 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    selectMonth();
+    loadMonth();
   }
 }

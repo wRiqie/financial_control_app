@@ -18,39 +18,45 @@ class HomePage extends GetView<HomeController> {
         appBar: AppBar(
           title: InkWell(
             onTap: () {
-              controller.swapDate(context);
+              // controller.swapDate(context);
             },
             child: Text(
                 AppHelpers.monthResolver(controller.selectedDate.month) +
                     ' - ${controller.selectedDate.year}'),
           ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                controller.openPreferences();
+              },
+              icon: const Icon(Icons.app_registration_outlined),
+            ),
+          ],
         ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Container(
-                  width: size.width,
-                  height: size.height * .25,
-                  color: Get.theme.colorScheme.primary,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
+                SingleChildScrollView(
+                  controller: controller.valueCardController,
+                  scrollDirection: Axis.horizontal,
+                  physics: const NeverScrollableScrollPhysics(),
+                  child: Row(
                     children: [
-                      Text(
-                        'Remaining balance',
-                        style: TextStyle(
-                          fontSize: 32,
-                          color: Get.theme.colorScheme.onPrimary,
-                        ),
+                      _buildValueCard(
+                        title: 'Remaining Balance',
+                        value: controller.remainingBalance,
+                        position: 0,
+                        size: size,
                       ),
-                      Text(
-                        AppHelpers.formatCurrency(controller.remainingBalance),
-                        style: const TextStyle(
-                          fontSize: 42,
-                        ),
-                      ),
+                      _buildValueCard(
+                        title: 'Balance of Month',
+                        value: controller.selectedMonth?.balance ?? 0,
+                        position: 1,
+                        size: size,
+                        color: Get.theme.colorScheme.secondary,
+                      )
                     ],
                   ),
                 ),
@@ -125,8 +131,7 @@ class HomePage extends GetView<HomeController> {
                                                       });
                                                   await categoryController
                                                       .getBills();
-                                                  await controller
-                                                      .selectMonth();
+                                                  await controller.loadMonth();
                                                 },
                                               ),
                                               ListTile(
@@ -140,14 +145,19 @@ class HomePage extends GetView<HomeController> {
                                                   Get.back();
                                                   Get.defaultDialog(
                                                     title: 'Alert',
-                                                    titleStyle: TextStyle(color: Get.theme.colorScheme.primary,),
+                                                    titleStyle: TextStyle(
+                                                      color: Get.theme
+                                                          .colorScheme.primary,
+                                                    ),
                                                     middleText:
                                                         'Are you sure you want to delete this bill?',
                                                     textConfirm: 'Confirm',
                                                     textCancel: 'Cancel',
-                                                    onCancel: (){},
-                                                    onConfirm: (){
-                                                      controller.deleteBill(bill, categoryController);
+                                                    onCancel: () {},
+                                                    onConfirm: () {
+                                                      controller.deleteBill(
+                                                          bill,
+                                                          categoryController);
                                                     },
                                                   );
                                                   // await controller.selectMonth();
@@ -167,6 +177,70 @@ class HomePage extends GetView<HomeController> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildValueCard(
+      {required String title,
+      required num value,
+      Color? color,
+      required int position,
+      required Size size}) {
+    return Container(
+      width: size.width,
+      height: size.height * .25,
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      color: color ?? Get.theme.colorScheme.primary,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          GestureDetector(
+            child: Container(
+              height: size.height * .24,
+              color: Colors.transparent,
+              width: 30,
+              child: const Icon(
+                Icons.arrow_back_ios,
+              ),
+            ),
+            onTap: () {
+              controller.scrollValueCard(size.width, position, back: true);
+            },
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 32,
+                  color: Get.theme.colorScheme.onPrimary,
+                ),
+              ),
+              Text(
+                AppHelpers.formatCurrency(value),
+                style: const TextStyle(
+                  fontSize: 42,
+                ),
+              ),
+            ],
+          ),
+          GestureDetector(
+            child: Container(
+              color: Colors.transparent,
+              height: size.height * .24,
+              width: 30,
+              child: const Icon(
+                Icons.arrow_forward_ios,
+              ),
+            ),
+            onTap: () {
+              controller.scrollValueCard(size.width, position);
+            },
+          ),
+        ],
       ),
     );
   }

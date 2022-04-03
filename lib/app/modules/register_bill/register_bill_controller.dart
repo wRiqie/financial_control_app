@@ -34,6 +34,8 @@ class RegisterBillController extends GetxController {
 
   togglePortion(bool? value) {
     havePortions = value ?? !havePortions;
+    portionController.text = '';
+    maxPortionController.text = '';
     update();
   }
 
@@ -70,7 +72,7 @@ class RegisterBillController extends GetxController {
             ((selectedMonth!.totalPrice ?? 0) + bill.value) -
                 (editingBill != null ? editingBill!.value : 0);
         await monthRepository.saveMonth(selectedMonth!);
-        await homeController.selectMonth();
+        await homeController.loadMonth();
       }
 
       if (!add) {
