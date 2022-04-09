@@ -103,18 +103,19 @@ class HomeController extends GetxController {
       return;
     }
 
-    var previousBalance = await loadPreviousMonthBalance();
+    var previousMonthBalance = await loadPreviousMonthBalance();
 
     var monthToAdd = Month(
       date: AppHelpers.formatDateToSave(selectedDate),
-      balance: previousBalance,
+      balance: previousMonthBalance,
     );
-    final copyBills = box.read<bool>(Constants.copyBills);
-    loadAndCopyPreviousMonthBills(copy: copyBills ?? false);
-
     selectedMonth = monthToAdd;
+
+    final copyBills = box.read<bool>(Constants.copyBills);
+    await loadAndCopyPreviousMonthBills(copy: copyBills ?? false);
+
     calcRemainingBalance();
-    await monthRepository.saveMonth(monthToAdd);
+    await monthRepository.saveMonth(selectedMonth!);
     return monthToAdd;
   }
 
@@ -152,7 +153,8 @@ class HomeController extends GetxController {
   String get previousMonthDate {
     var month = selectedDate.month - 1 == 0 ? 12 : selectedDate.month - 1;
     var year = month == 12 ? selectedDate.year - 1 : selectedDate.year;
-    return '$month-$year';
+    var date = DateTime(year, month);
+    return AppHelpers.formatDateToSave(date);
   }
 
   Future<num> loadPreviousMonthBalance() async {
@@ -164,6 +166,7 @@ class HomeController extends GetxController {
 
   Future<List<Bill>> loadAndCopyPreviousMonthBills({bool copy = false}) async {
     List<Bill> billsToSave = [];
+    num totalPrice = 0.0;
     final previousMonthBills =
         await billRepository.getBillsByDate(previousMonthDate);
     if (!copy) {
@@ -187,8 +190,14 @@ class HomeController extends GetxController {
         if (bill.portion != null && bill.maxPortion != null) {
           bill.portion = bill.portion! + 1;
         }
+
+        totalPrice += bill.value;
       },
     );
+
+    if(selectedMonth != null) {
+      selectedMonth!.totalPrice = totalPrice;
+    }
 
     billsToSave.removeWhere((e) =>
         e.portion != null &&

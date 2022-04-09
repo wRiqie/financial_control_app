@@ -15,7 +15,21 @@ class SplashController extends GetxController {
     if(copyBills == null){
       await box.write(Constants.copyBills, true);
     }
-    Get.offAndToNamed(Routes.dashboard);
+
+    bool? firstTimeOpen = box.read(Constants.firstTimeOpen);
+
+    if(firstTimeOpen != null){
+      if(firstTimeOpen){
+        Get.offAndToNamed(Routes.changeBalance);
+        return;
+      }
+      Get.offAndToNamed(Routes.dashboard);
+      return;
+    } else {
+      box.write(Constants.firstTimeOpen, true);
+      Get.offAndToNamed(Routes.changeBalance);
+      return;
+    }
   }
 
   @override

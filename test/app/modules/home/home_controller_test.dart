@@ -1,14 +1,10 @@
 import 'package:financial_control_app/app/data/enums/bill_status.dart';
 import 'package:financial_control_app/app/data/models/bill.dart';
-import 'package:financial_control_app/app/data/repository/bill_repository.dart';
-import 'package:financial_control_app/app/data/repository/month_repository.dart';
 import 'package:financial_control_app/app/modules/home/home_controller.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MonthRepositoryMock extends Mock implements MonthRepository {}
-
-class BillRepositoryMock extends Mock implements BillRepository {}
+import '../../../mocks/mocks.dart';
 
 void main() {
   late HomeController controller;
@@ -102,7 +98,7 @@ void main() {
 
   test('Deve retornar o mês anterior', (){
     controller.selectedDate = DateTime(2022, 2, 1);
-    expect(controller.previousMonthDate, '1-2022');
+    expect(controller.previousMonthDate, '01-2022');
 
     controller.selectedDate = DateTime(2022, 1, 1);
     expect(controller.previousMonthDate, '12-2021');
