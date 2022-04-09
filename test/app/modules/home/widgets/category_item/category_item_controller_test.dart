@@ -61,17 +61,17 @@ void main() {
   });
 
   group('Price and Percentage |', (){
-    test('Calc left price', (){
+    test('deve calcular preço restante', (){
       var leftPrice = _controller.leftPrice;
       expect(leftPrice, 300);
     });
 
-    test('Calc total price', (){
+    test('deve calcular preço total', (){
       var totalPrice = _controller.totalPrice;
       expect(totalPrice, 400);
     });
 
-    test('Calc percentage', (){
+    test('deve calcular porcentagem', (){
       var percentage = _controller.percentage;
       expect(percentage, 0.25);
     });

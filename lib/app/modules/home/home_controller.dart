@@ -1,5 +1,6 @@
 import 'package:financial_control_app/app/core/theme/dark/dark_colors.dart';
 import 'package:financial_control_app/app/core/utils/helpers.dart';
+import 'package:financial_control_app/app/core/values/contants.dart';
 import 'package:financial_control_app/app/data/enums/bill_status.dart';
 import 'package:financial_control_app/app/data/models/bill.dart';
 import 'package:financial_control_app/app/data/models/category.dart';
@@ -10,8 +11,12 @@ import 'package:financial_control_app/app/modules/home/widgets/category_item/cat
 import 'package:financial_control_app/app/routes/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:uuid/uuid.dart';
 
 class HomeController extends GetxController {
+  GetStorage box = GetStorage(Constants.storageName);
+  final uuid = const Uuid();
   final BillRepository billRepository;
   final MonthRepository monthRepository;
   final valueCardController = ScrollController();
@@ -89,26 +94,30 @@ class HomeController extends GetxController {
     controller.getBills();
   }
 
-  /// loads the month from the database from the selected month
   loadMonth() async {
     var month = await monthRepository
         .getMonthByDate(AppHelpers.formatDateToSave(selectedDate));
     if (month != null) {
       selectedMonth = month;
       calcRemainingBalance();
-      return month;
+      return;
     }
+
+    var previousBalance = await loadPreviousMonthBalance();
+
     var monthToAdd = Month(
       date: AppHelpers.formatDateToSave(selectedDate),
-      balance: 2100,
+      balance: previousBalance,
     );
+    final copyBills = box.read<bool>(Constants.copyBills);
+    loadAndCopyPreviousMonthBills(copy: copyBills ?? false);
+
     selectedMonth = monthToAdd;
     calcRemainingBalance();
     await monthRepository.saveMonth(monthToAdd);
     return monthToAdd;
   }
 
-  /// Calcule remaining balance of month by monthBalance minus month totalPrice
   calcRemainingBalance() {
     remainingBalance =
         (selectedMonth?.balance ?? 0.0) - (selectedMonth?.totalPrice ?? 0);
@@ -130,8 +139,6 @@ class HomeController extends GetxController {
     if (selectedMonth != null) {
       var result = await billRepository.deleteBillById(bill.id);
       if (result != 0) {
-        // caso nulo fica como o bill.value para resultar 0
-        // Evita valores negativos
         selectedMonth!.totalPrice =
             (selectedMonth!.totalPrice ?? bill.value) - bill.value;
         await monthRepository.saveMonth(selectedMonth!);
@@ -140,6 +147,56 @@ class HomeController extends GetxController {
       }
     }
     Get.back();
+  }
+
+  String get previousMonthDate {
+    var month = selectedDate.month - 1 == 0 ? 12 : selectedDate.month - 1;
+    var year = month == 12 ? selectedDate.year - 1 : selectedDate.year;
+    return '$month-$year';
+  }
+
+  Future<num> loadPreviousMonthBalance() async {
+    final previousMonth =
+        await monthRepository.getMonthByDate(previousMonthDate);
+
+    return previousMonth?.balance ?? 0;
+  }
+
+  Future<List<Bill>> loadAndCopyPreviousMonthBills({bool copy = false}) async {
+    List<Bill> billsToSave = [];
+    final previousMonthBills =
+        await billRepository.getBillsByDate(previousMonthDate);
+    if (!copy) {
+      final previousMonthBillsWithPortions = previousMonthBills
+          .where((e) => e.portion != null && e.maxPortion != null)
+          .toList();
+      billsToSave = previousMonthBillsWithPortions;
+    } else {
+      billsToSave = previousMonthBills;
+    }
+
+    await Future.forEach<Bill>(
+      billsToSave,
+      (bill) {
+        bill.id = uuid.v4();
+        bill.date = AppHelpers.formatDateToSave(selectedDate);
+        bill.status = bill.dueDate > selectedDate.day
+            ? BillStatus.pendent.index
+            : BillStatus.overdue.index;
+
+        if (bill.portion != null && bill.maxPortion != null) {
+          bill.portion = bill.portion! + 1;
+        }
+      },
+    );
+
+    billsToSave.removeWhere((e) =>
+        e.portion != null &&
+        e.maxPortion != null &&
+        e.portion! > e.maxPortion!);
+
+    await billRepository.saveAllBills(billsToSave);
+    return billsToSave;
   }
 
   @override

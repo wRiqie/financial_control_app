@@ -58,13 +58,9 @@ class RegisterBillController extends GetxController {
         date: AppHelpers.formatDateToSave(DateTime.now()),
       );
 
-      await repository.saveBill(bill);
+      clearFields();
 
-      titleController.text = '';
-      totalValueController.text = '';
-      dueDateController.text = '';
-      portionController.text = '';
-      maxPortionController.text = '';
+      await repository.saveBill(bill);
 
       // Update Month
       if (selectedMonth != null) {
@@ -113,6 +109,17 @@ class RegisterBillController extends GetxController {
 
     paid = editingBill?.status == BillStatus.paid.index ? true : false;
     havePortions = editingBill?.maxPortion != null ? true : false;
+  }
+
+  clearFields() {
+    titleController.text = '';
+    totalValueController.text = '';
+    dueDateController.text = '';
+    portionController.text = '';
+    maxPortionController.text = '';
+    paid = false;
+    havePortions = false;
+    update();
   }
 
   @override
