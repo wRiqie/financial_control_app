@@ -12,8 +12,8 @@ class RegisterBillPage extends GetView<RegisterBillController> {
     return GetBuilder<RegisterBillController>(
       builder: (_) => Scaffold(
         appBar: AppBar(
-          title: const Text(
-            'Register a Bill',
+          title: Text(
+            'registerABill'.tr,
           ),
         ),
         bottomNavigationBar: Padding(
@@ -28,7 +28,7 @@ class RegisterBillPage extends GetView<RegisterBillController> {
                   onPressed: () {
                     controller.saveBill();
                   },
-                  child: const Text('Concluded'),
+                  child: Text('concluded'.tr),
                 ),
               ),
               controller.editingBill == null ? const SizedBox(
@@ -42,7 +42,7 @@ class RegisterBillPage extends GetView<RegisterBillController> {
                     controller.saveBill(add: true);
                   },
                   child: Text(
-                    'Add other bill',
+                    'addOtherBill'.tr,
                     style: TextStyle(color: Get.theme.colorScheme.primary),
                   ),
                   style: ButtonStyle(
@@ -70,10 +70,10 @@ class RegisterBillPage extends GetView<RegisterBillController> {
                     _buildTextFormField(
                         controller: controller.titleController,
                         keyboardType: TextInputType.name,
-                        label: 'Title',
+                        label: 'title'.tr,
                         validator: (value) {
                           if (value == null || value == '') {
-                            return 'Please enter a title';
+                            return 'enterATitle'.tr;
                           }
                           return null;
                         }),
@@ -82,16 +82,16 @@ class RegisterBillPage extends GetView<RegisterBillController> {
                     ),
                     _buildTextFormField(
                         controller: controller.totalValueController,
-                        label: 'Month value',
+                        label: 'monthValue'.tr,
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly,
                           CurrencyInputFormatter(),
                         ],
                         validator: (value) {
                           if (value == null || value == '') {
-                            return 'Please enter a month value';
+                            return 'enterAMonthValue'.tr;
                           } else if(value == AppHelpers.formatCurrency(0)){
-                            return 'The value of the month cannot be zero';
+                            return 'valueMonthCannotBeZero'.tr;
                           }
 
                           return null;
@@ -101,14 +101,14 @@ class RegisterBillPage extends GetView<RegisterBillController> {
                     ),
                     _buildTextFormField(
                         controller: controller.dueDateController,
-                        label: 'Due date',
+                        label: 'dueDate'.tr,
                         validator: (value) {
                           if (value != null) {
                             var toInt = int.tryParse(value);
                             if (toInt == null) {
-                              return 'Please enter a valid due date';
+                              return 'enterAValidDueDate'.tr;
                             } else if (toInt > 31 || toInt < 1) {
-                              return 'Please enter a valid due date';
+                              return 'enterAValidDueDate'.tr;
                             }
                           }
                           return null;
@@ -118,7 +118,7 @@ class RegisterBillPage extends GetView<RegisterBillController> {
                     ),
                     _buildTextFormField(
                         controller: controller.portionController,
-                        label: 'Current portion',
+                        label: 'currentPortion'.tr,
                         enabled: controller.havePortions,
                         validator: (value) {
                           if (!controller.havePortions) {
@@ -127,15 +127,15 @@ class RegisterBillPage extends GetView<RegisterBillController> {
                           if (value != null) {
                             var toInt = int.tryParse(value);
                             if (toInt == null) {
-                              return 'Please enter a valid portion';
+                              return 'enterAValidPortion'.tr;
                             } else {
                               var toIntMaxPortion = int.tryParse(
                                   controller.maxPortionController.text);
                               if (toIntMaxPortion != null &&
                                   toIntMaxPortion < toInt) {
-                                return 'Current portion cannot be greater than total';
+                                return 'currentPortionCannotBeGreaterThanTotal'.tr;
                               } else if (toInt < 1) {
-                                return 'Please enter a valid portion';
+                                return 'enterAValidPortion'.tr;
                               }
                             }
                           }
@@ -146,7 +146,7 @@ class RegisterBillPage extends GetView<RegisterBillController> {
                     ),
                     _buildTextFormField(
                         controller: controller.maxPortionController,
-                        label: 'Quantity of parcels',
+                        label: 'quantityOfParcels'.tr,
                         enabled: controller.havePortions,
                         validator: (value) {
                           if (!controller.havePortions) {
@@ -155,15 +155,15 @@ class RegisterBillPage extends GetView<RegisterBillController> {
                           if (value != null) {
                             var toInt = int.tryParse(value);
                             if (toInt == null) {
-                              return 'Please enter a valid total portion';
+                              return 'enterAValidTotalPortion'.tr;
                             } else {
                               var toIntPortion = int.tryParse(
                                   controller.portionController.text);
                               if (toIntPortion != null &&
                                   toIntPortion > toInt) {
-                                return 'Current portion cannot be greater than total';
+                                return 'currentPortionCannotBeGreaterThanTotal'.tr;
                               } else if (toInt < 1) {
-                                return 'Please enter a valid total portion';
+                                return 'enterAValidTotalPortion'.tr;
                               }
                             }
                           }
@@ -174,12 +174,12 @@ class RegisterBillPage extends GetView<RegisterBillController> {
                       children: [
                         _buildCheckboxOption(
                           toogle: controller.togglePaid,
-                          label: 'Already paid?',
+                          label: 'alreadyPaid'.tr,
                           value: controller.paid,
                         ),
                         _buildCheckboxOption(
                           toogle: controller.togglePortion,
-                          label: 'Do you have parcels',
+                          label: 'haveParcels'.tr,
                           value: controller.havePortions,
                         ),
                       ],

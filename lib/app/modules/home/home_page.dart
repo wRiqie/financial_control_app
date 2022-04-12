@@ -45,13 +45,13 @@ class HomePage extends GetView<HomeController> {
                   child: Row(
                     children: [
                       _buildValueCard(
-                        title: 'Remaining Balance',
+                        title: 'remainingBalance'.tr,
                         value: controller.remainingBalance,
                         position: 0,
                         size: size,
                       ),
                       _buildValueCard(
-                        title: 'Balance of Month',
+                        title: 'balanceOfMonth'.tr,
                         value: controller.selectedMonth?.balance ?? 0,
                         position: 1,
                         size: size,
@@ -68,9 +68,9 @@ class HomePage extends GetView<HomeController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      const Text(
-                        'Bills of the month',
-                        style: TextStyle(
+                      Text(
+                        'billsOfMonth'.tr,
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
                         ),
@@ -89,10 +89,10 @@ class HomePage extends GetView<HomeController> {
                                               ListTile(
                                                 title: bill.status ==
                                                         BillStatus.paid.index
-                                                    ? const Text(
-                                                        'Mark as unpaid')
-                                                    : const Text(
-                                                        'Mark as paid'),
+                                                    ? Text(
+                                                        'marksUnpaid'.tr)
+                                                    : Text(
+                                                        'marksPaid'.tr),
                                                 leading: Icon(
                                                   bill.status ==
                                                           BillStatus.paid.index
@@ -111,7 +111,7 @@ class HomePage extends GetView<HomeController> {
                                                 },
                                               ),
                                               ListTile(
-                                                title: const Text('Edit'),
+                                                title: Text('edit'.tr),
                                                 leading: Icon(
                                                   Icons.edit,
                                                   color: Get.theme.colorScheme
@@ -135,7 +135,7 @@ class HomePage extends GetView<HomeController> {
                                                 },
                                               ),
                                               ListTile(
-                                                title: const Text('Delete'),
+                                                title: Text('delete'.tr),
                                                 leading: Icon(
                                                   Icons.delete,
                                                   color: Get.theme.colorScheme
@@ -144,15 +144,15 @@ class HomePage extends GetView<HomeController> {
                                                 onTap: () async {
                                                   Get.back();
                                                   Get.defaultDialog(
-                                                    title: 'Alert',
+                                                    title: 'alert'.tr,
                                                     titleStyle: TextStyle(
                                                       color: Get.theme
                                                           .colorScheme.primary,
                                                     ),
                                                     middleText:
-                                                        'Are you sure you want to delete this bill?',
-                                                    textConfirm: 'Confirm',
-                                                    textCancel: 'Cancel',
+                                                        'wantDeleteBill'.tr,
+                                                    textConfirm: 'confirm'.tr,
+                                                    textCancel: 'cancel'.tr,
                                                     onCancel: () {},
                                                     onConfirm: () {
                                                       controller.deleteBill(

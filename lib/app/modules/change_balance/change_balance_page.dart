@@ -12,7 +12,7 @@ class ChangeBalancePage extends GetView<ChangeBalanceController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: controller.month != null
-          ? AppBar(title: const Text('Balance'))
+          ? AppBar(title: Text('balance'.tr))
           : null,
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(10),
@@ -24,7 +24,7 @@ class ChangeBalancePage extends GetView<ChangeBalanceController> {
               height: 50,
               child: ElevatedButton(
                 onPressed: controller.saveBalance,
-                child: const Text('Concluded'),
+                child: Text('concluded'.tr),
               ),
             ),
           ],
@@ -39,7 +39,7 @@ class ChangeBalancePage extends GetView<ChangeBalanceController> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  'Please\nEnter a balance of the month',
+                  'enterBalanceOfMonth'.tr,
                   style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -48,7 +48,7 @@ class ChangeBalancePage extends GetView<ChangeBalanceController> {
                 const SizedBox(
                   height: 30,
                 ),
-                const Text('Balance'),
+                Text('balance'.tr),
                 TextFormField(
                   controller: controller.balanceController,
                   keyboardType: TextInputType.number,
@@ -58,17 +58,17 @@ class ChangeBalancePage extends GetView<ChangeBalanceController> {
                   ],
                   validator: (value) {
                     if (value == null || value == '') {
-                      return 'Please enter a month value';
+                      return 'enterMonthValue'.tr;
                     } else if (value == AppHelpers.formatCurrency(0)) {
-                      return 'The value of the month cannot be zero';
+                      return 'valueMonthCannotBeZero'.tr;
                     }
                     return null;
                   },
                 ),
                 const SizedBox(height: 20,),
-                const Text(
-                  'Balance of the month would be the budget available for the month\'s bills',
-                  style: TextStyle(
+                Text(
+                  'balanceOfMonthDescription'.tr,
+                  style: const TextStyle(
                     fontSize: 14,
                     color: DarkColors.grey
                   ),

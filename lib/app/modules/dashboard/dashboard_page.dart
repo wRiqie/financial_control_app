@@ -14,11 +14,11 @@ class DashboardPage extends GetView<DashboardController> {
             controller.changePage(index);
           },
           currentIndex: controller.index.value,
-          items: const [
+          items: [
             BottomNavigationBarItem(
-                icon: Icon(Icons.home, size: 28,), label: '', tooltip: 'Home'),
+                icon: const Icon(Icons.home, size: 28,), label: '', tooltip: 'home'.tr),
             BottomNavigationBarItem(
-                icon: Icon(Icons.trending_up, size: 28,), label: '', tooltip: 'Statistics'),
+                icon: const Icon(Icons.trending_up, size: 28,), label: '', tooltip: 'statistics'.tr),
           ],
         ),
       ),

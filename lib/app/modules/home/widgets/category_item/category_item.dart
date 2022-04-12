@@ -108,7 +108,7 @@ class CategoryItem extends StatelessWidget {
                   height: 5,
                 ),
                 ElevatedButton(
-                  child: const Text('Add a bill'),
+                  child: Text('addABill'.tr),
                   onPressed: () {
                     addBillToCategory(category.id, _);
                   },

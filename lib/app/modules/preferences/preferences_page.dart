@@ -12,21 +12,21 @@ class PreferencesPage extends GetView<PreferencesController> {
       builder: (_) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Preferences'),
+            title: Text('preferences'.tr),
           ),
           body: SafeArea(
             child: SingleChildScrollView(
               child: Column(
                 children: [
                   _buildTile(
-                    title: 'Balance of Month',
-                    subtitle: 'Change the balance value for selected month',
+                    title: 'balanceOfMonth'.tr,
+                    subtitle: 'changeBalance'.tr,
                     icon: Icons.monetization_on,
                     onTap: controller.changeBalance,
                   ),
                   _buildTile(
-                    title: 'Copy bills',
-                    subtitle: 'Copy bills to the next month',
+                    title: 'copyBills'.tr,
+                    subtitle: 'copyBillsToTheNextMonth'.tr,
                     icon: Icons.copy,
                     haveSwitch: true,
                     switchValue: controller.copyBills,
