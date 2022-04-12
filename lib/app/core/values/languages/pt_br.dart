@@ -1,4 +1,9 @@
 final Map<String, String> ptBr = {
+  'houseBills': 'Contas da casa',
+  'foodAndDrink': 'Comidas e bebidas',
+  'gamesAndStreaming': 'Jogos e serviços de streaming',
+  'personalCare': 'Cuidados pessoais',
+  'others': 'Outros',
   'balance': 'Saldo',
   'concluded': 'Concluído',
   'enterBalanceOfMonth': 'Por favor\nDigite o saldo do mês',

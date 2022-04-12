@@ -67,7 +67,7 @@ class PreferencesPage extends GetView<PreferencesController> {
               : Container(),
         ],
       ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       trailing: haveSwitch
           ? Switch(
               value: switchValue,

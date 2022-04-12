@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class AppHelpers {
@@ -34,17 +35,17 @@ class AppHelpers {
   static String categoryResolver(int categoryId) {
     switch (categoryId) {
       case 1:
-        return 'House Bills';
+        return 'houseBills'.tr;
       case 2:
-        return 'Food and Drink';
+        return 'foodAndDrink'.tr;
       case 3:
-        return 'Games And Streaming';
+        return 'gamesAndStreaming'.tr;
       case 4:
-        return 'Personal care';
+        return 'personalCare'.tr;
       case 5:
-        return 'Others';
+        return 'others'.tr;
       default:
-        return 'Others';
+        return 'others'.tr;
     }
   }
 

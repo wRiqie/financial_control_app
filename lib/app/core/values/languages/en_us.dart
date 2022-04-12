@@ -1,4 +1,9 @@
 final Map<String, String> enUs = {
+  'houseBills': 'House Bills',
+  'foodAndDrink': 'Food and Drink',
+  'gamesAndStreaming': 'Games And Streaming',
+  'personalCare': 'Personal care',
+  'others': 'Others',
   'balance': 'Balance',
   'concluded': 'Concluded',
   'enterBalanceOfMonth': 'Please\nEnter a balance of the month',
