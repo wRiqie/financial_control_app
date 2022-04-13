@@ -10,6 +10,8 @@ import 'package:financial_control_app/app/modules/register_bill/register_bill_bi
 import 'package:financial_control_app/app/modules/register_bill/register_bill_page.dart';
 import 'package:financial_control_app/app/modules/splash/splash_binding.dart';
 import 'package:financial_control_app/app/modules/splash/splash_page.dart';
+import 'package:financial_control_app/app/modules/statistics/statistics_binding.dart';
+import 'package:financial_control_app/app/modules/statistics/statistics_page.dart';
 import 'package:get/get.dart';
 part './routes.dart';
 
@@ -29,6 +31,11 @@ abstract class AppPages {
       name: Routes.home,
       page: () => const HomePage(),
       binding: HomeBinding()
+    ),
+    GetPage(
+      name: Routes.statistics,
+      page: () => const StatisticsPage(),
+      binding: StatisticsBinding()
     ),
     GetPage(
       name: Routes.registerBill,

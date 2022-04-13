@@ -9,10 +9,27 @@ class SplashPage extends GetView<SplashController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Icon(
-          Icons.monetization_on_outlined,
-          size: 200,
-          color: Get.theme.colorScheme.primary,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 100,
+              child: Image.asset(
+                'assets/img/financeIcon.png',
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              'Finances App',
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+                color: Get.theme.colorScheme.onBackground
+              ),
+            ),
+          ],
         ),
       ),
     );
