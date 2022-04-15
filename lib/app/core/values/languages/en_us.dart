@@ -1,4 +1,16 @@
 final Map<String, String> enUs = {
+  'jan': 'Jan',
+  'feb': 'Feb',
+  'mar': 'Mar',
+  'apr': 'Apr',
+  'may': 'May',
+  'jun': 'Jun',
+  'jul': 'Jul',
+  'aug': 'Aug',
+  'sep': 'Sep',
+  'oct': 'Oct',
+  'nov': 'Nov',
+  'dec': 'Dec',
   'houseBills': 'House Bills',
   'foodAndDrink': 'Food and Drink',
   'gamesAndStreaming': 'Games And Streaming',
@@ -45,4 +57,6 @@ final Map<String, String> enUs = {
   'enterAValidTotalPortion': 'Please enter a valid total portion',
   'alreadyPaid': 'Already paid?',
   'haveParcels': 'Do you have parcels',
+  'success': 'Success',
+  'successfullySaved': 'Successfully saved',
 };

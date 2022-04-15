@@ -16,12 +16,11 @@ class CategoryItemController extends GetxController {
   double get percentage {
     double paidValue = 0;
     double totalValue = totalPrice;
-    var paidBills =
-        bills.where((e) => e.status == BillStatus.paid.index);
+    var paidBills = bills.where((e) => e.status == BillStatus.paid.index);
     for (var paidBill in paidBills) {
       paidValue += paidBill.value;
     }
-    
+
     return ((paidValue * 100) / (totalValue != 0 ? totalValue : 1)) / 100;
   }
 
@@ -45,7 +44,9 @@ class CategoryItemController extends GetxController {
   getBills() {
     repository
         .getBillsByCategoryIdAndDate(
-            category.id, AppHelpers.formatDateToSave(DateTime.now()))
+      category.id,
+      AppHelpers.formatDateToSave(DateTime.now()),
+    )
         .then((value) {
       bills = value;
       update();

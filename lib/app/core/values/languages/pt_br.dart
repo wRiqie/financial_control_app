@@ -1,4 +1,16 @@
 final Map<String, String> ptBr = {
+  'jan': 'Jan',
+  'feb': 'Fev',
+  'mar': 'Mar',
+  'apr': 'Abr',
+  'may': 'Mai',
+  'jun': 'Jun',
+  'jul': 'Jul',
+  'aug': 'Ago',
+  'sep': 'Set',
+  'oct': 'Out',
+  'nov': 'Nov',
+  'dec': 'Dez',
   'houseBills': 'Contas da casa',
   'foodAndDrink': 'Comidas e bebidas',
   'gamesAndStreaming': 'Jogos e serviços de streaming',
@@ -45,4 +57,6 @@ final Map<String, String> ptBr = {
   'enterAValidTotalPortion': 'Por favor digite uma quantidade válida de parcelas',
   'alreadyPaid': 'Já pago?',
   'haveParcels': 'Tem parcelas',
+  'success': 'Successo',
+  'successfullySaved': 'Salvo com sucesso',
 };

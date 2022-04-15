@@ -17,6 +17,7 @@ class RegisterBillController extends GetxController {
   final uuid = const Uuid();
   final args = Get.arguments;
   int categoryId = 0;
+  IconData? categoryIcon;
   bool havePortions = false;
   bool paid = false;
   Month? selectedMonth;
@@ -76,8 +77,8 @@ class RegisterBillController extends GetxController {
       }
 
       Get.snackbar(
-        'Success',
-        'Successfully saved',
+        'success'.tr,
+        'successfullySaved'.tr,
         snackPosition: SnackPosition.TOP,
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
@@ -126,6 +127,7 @@ class RegisterBillController extends GetxController {
   void onInit() {
     super.onInit();
     categoryId = args['categoryId'];
+    categoryIcon = args['categoryIcon'];
     selectedMonth = args['selectedMonth'];
 
     if (args['bill'] != null) {

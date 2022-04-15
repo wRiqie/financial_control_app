@@ -90,7 +90,7 @@ class HomeController extends GetxController {
 
   addBillToCategory(int categoryId, CategoryItemController controller) async {
     await Get.toNamed(Routes.registerBill,
-        arguments: {'categoryId': categoryId, 'selectedMonth': selectedMonth});
+        arguments: {'categoryId': categoryId, 'categoryIcon': categories[categoryId - 1].icon,'selectedMonth': selectedMonth});
     controller.getBills();
   }
 
@@ -116,6 +116,7 @@ class HomeController extends GetxController {
 
     calcRemainingBalance();
     await monthRepository.saveMonth(selectedMonth!);
+    Get.offAllNamed(Routes.dashboard);
     return monthToAdd;
   }
 
@@ -178,6 +179,11 @@ class HomeController extends GetxController {
       billsToSave = previousMonthBills;
     }
 
+    billsToSave.removeWhere((e) =>
+        e.portion != null &&
+        e.maxPortion != null &&
+        e.portion! == e.maxPortion!);
+
     await Future.forEach<Bill>(
       billsToSave,
       (bill) {
@@ -190,7 +196,7 @@ class HomeController extends GetxController {
         if (bill.portion != null && bill.maxPortion != null) {
           bill.portion = bill.portion! + 1;
         }
-
+        
         totalPrice += bill.value;
       },
     );
@@ -198,11 +204,6 @@ class HomeController extends GetxController {
     if(selectedMonth != null) {
       selectedMonth!.totalPrice = totalPrice;
     }
-
-    billsToSave.removeWhere((e) =>
-        e.portion != null &&
-        e.maxPortion != null &&
-        e.portion! > e.maxPortion!);
 
     await billRepository.saveAllBills(billsToSave);
     return billsToSave;

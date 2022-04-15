@@ -9,49 +9,66 @@ class StatisticsPage extends GetView<StatisticsController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Statistics'),
-      ),
-      body: SafeArea(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-            margin: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: Get.theme.colorScheme.surface,
-              borderRadius: BorderRadius.circular(10) 
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+    return GetBuilder<StatisticsController>(
+      builder: (_) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Statistics'),
+          ),
+          body: SafeArea(
+            child: Stack(
               children: [
-                const Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text(
-                    'Months total values',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
-                SfCartesianChart(
-                  primaryXAxis: CategoryAxis(
-                    majorGridLines: const MajorGridLines(width: 0),
-                  ),
-                  series: <ChartSeries>[
-                    SplineSeries<StatisticData, String>(
-                      dataSource: controller.datas,
-                      color: Get.theme.colorScheme.primary,
-                      width: 3,
-                      xValueMapper: (StatisticData data, _) => data.x,
-                      yValueMapper: (StatisticData data, _) => data.y,
-                    )
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          color: Get.theme.colorScheme.surface,
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Text(
+                              'Months total values',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          SfCartesianChart(
+                            primaryXAxis: CategoryAxis(
+                              majorGridLines: const MajorGridLines(width: 0),
+                            ),
+                            series: <ChartSeries>[
+                              SplineSeries<StatisticData, String>(
+                                dataSource: controller.datas,
+                                color: Get.theme.colorScheme.primary,
+                                width: 3,
+                                xValueMapper: (StatisticData data, _) => data.x,
+                                yValueMapper: (StatisticData data, _) => data.y,
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
+                ),
+                Visibility(
+                  visible: controller.isLoading,
+                  child: Container(
+                    color: Colors.black45,
+                    child: const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
                 ),
               ],
             ),
-          )
-        ],
-      )),
+          ),
+        );
+      },
     );
   }
 }

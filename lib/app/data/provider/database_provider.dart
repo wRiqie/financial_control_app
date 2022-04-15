@@ -164,4 +164,18 @@ class DatabaseProvider {
     }
     return null;
   }
+
+  Future<List<Month>> getLastMonths() async {
+    const int limit = 6;
+    final db = await database;
+    if (db != null) {
+      var res = await db.query(
+        monthTable,
+        orderBy: '$_monthDate DESC',
+        limit: limit,
+      );
+      return res.isNotEmpty ? res.map((e) => Month.fromMap(e)).toList() : [];
+    }
+    return [];
+  }
 }

@@ -12,4 +12,7 @@ class MonthRepository {
 
   Future<Month?> getMonthByDate(String date)
     => db.getMonthByDate(date);
+
+  Future<List<Month>> getLastMonths()
+    => db.getLastMonths();
 }

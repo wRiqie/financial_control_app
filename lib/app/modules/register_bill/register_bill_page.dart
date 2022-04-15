@@ -15,6 +15,15 @@ class RegisterBillPage extends GetView<RegisterBillController> {
           title: Text(
             'registerABill'.tr,
           ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                controller.categoryIcon,
+                color: Get.theme.colorScheme.onSurface,
+              ),
+            ),
+          ],
         ),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(10),
@@ -31,29 +40,34 @@ class RegisterBillPage extends GetView<RegisterBillController> {
                   child: Text('concluded'.tr),
                 ),
               ),
-              controller.editingBill == null ? const SizedBox(
-                height: 20,
-              ) : Container(),
-              controller.editingBill == null ? Container(
-                color: Colors.transparent,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: () {
-                    controller.saveBill(add: true);
-                  },
-                  child: Text(
-                    'addOtherBill'.tr,
-                    style: TextStyle(color: Get.theme.colorScheme.primary),
-                  ),
-                  style: ButtonStyle(
-                    side: MaterialStateProperty.all(BorderSide(
-                        width: 3, color: Get.theme.colorScheme.primary)),
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.transparent),
-                    elevation: MaterialStateProperty.all(0),
-                  ),
-                ),
-              ) : Container(),
+              controller.editingBill == null
+                  ? const SizedBox(
+                      height: 20,
+                    )
+                  : Container(),
+              controller.editingBill == null
+                  ? Container(
+                      color: Colors.transparent,
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          controller.saveBill(add: true);
+                        },
+                        child: Text(
+                          'addOtherBill'.tr,
+                          style:
+                              TextStyle(color: Get.theme.colorScheme.primary),
+                        ),
+                        style: ButtonStyle(
+                          side: MaterialStateProperty.all(BorderSide(
+                              width: 3, color: Get.theme.colorScheme.primary)),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.transparent),
+                          elevation: MaterialStateProperty.all(0),
+                        ),
+                      ),
+                    )
+                  : Container(),
             ],
           ),
         ),
@@ -90,7 +104,7 @@ class RegisterBillPage extends GetView<RegisterBillController> {
                         validator: (value) {
                           if (value == null || value == '') {
                             return 'enterAMonthValue'.tr;
-                          } else if(value == AppHelpers.formatCurrency(0)){
+                          } else if (value == AppHelpers.formatCurrency(0)) {
                             return 'valueMonthCannotBeZero'.tr;
                           }
 
@@ -133,7 +147,8 @@ class RegisterBillPage extends GetView<RegisterBillController> {
                                   controller.maxPortionController.text);
                               if (toIntMaxPortion != null &&
                                   toIntMaxPortion < toInt) {
-                                return 'currentPortionCannotBeGreaterThanTotal'.tr;
+                                return 'currentPortionCannotBeGreaterThanTotal'
+                                    .tr;
                               } else if (toInt < 1) {
                                 return 'enterAValidPortion'.tr;
                               }
@@ -161,7 +176,8 @@ class RegisterBillPage extends GetView<RegisterBillController> {
                                   controller.portionController.text);
                               if (toIntPortion != null &&
                                   toIntPortion > toInt) {
-                                return 'currentPortionCannotBeGreaterThanTotal'.tr;
+                                return 'currentPortionCannotBeGreaterThanTotal'
+                                    .tr;
                               } else if (toInt < 1) {
                                 return 'enterAValidTotalPortion'.tr;
                               }

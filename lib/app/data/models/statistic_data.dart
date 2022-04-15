@@ -1,6 +1,6 @@
 class StatisticData {
   String x;
-  double? y;
+  num? y;
 
   StatisticData({
     required this.x,
