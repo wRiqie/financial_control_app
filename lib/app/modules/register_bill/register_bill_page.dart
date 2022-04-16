@@ -103,11 +103,15 @@ class RegisterBillPage extends GetView<RegisterBillController> {
                         ],
                         validator: (value) {
                           if (value == null || value == '') {
-                            return 'enterAMonthValue'.tr;
-                          } else if (value == AppHelpers.formatCurrency(0)) {
-                            return 'valueMonthCannotBeZero'.tr;
+                            return 'enterMonthValue'.tr;
+                          } else {
+                            if (double.tryParse(value) == 0) {
+                              return 'valueMonthCannotBeZero'.tr;
+                            }
+                            if (value == AppHelpers.formatCurrency(0)) {
+                              return 'valueMonthCannotBeZero'.tr;
+                            }
                           }
-
                           return null;
                         }),
                     const SizedBox(

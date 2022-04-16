@@ -60,8 +60,13 @@ class ChangeBalancePage extends GetView<ChangeBalanceController> {
                   validator: (value) {
                     if (value == null || value == '') {
                       return 'enterMonthValue'.tr;
-                    } else if (value == AppHelpers.formatCurrency(0)) {
-                      return 'valueMonthCannotBeZero'.tr;
+                    } else {
+                      if (double.tryParse(value) == 0) {
+                        return 'valueMonthCannotBeZero'.tr;
+                      }
+                      if (value == AppHelpers.formatCurrency(0)) {
+                        return 'valueMonthCannotBeZero'.tr;
+                      }
                     }
                     return null;
                   },
@@ -73,7 +78,9 @@ class ChangeBalancePage extends GetView<ChangeBalanceController> {
                   'balanceOfMonthDescription'.tr,
                   style: const TextStyle(fontSize: 14, color: DarkColors.grey),
                 ),
-                const SizedBox(height: 60,),
+                const SizedBox(
+                  height: 60,
+                ),
                 Opacity(
                   opacity: .65,
                   child: SvgPicture.asset(
