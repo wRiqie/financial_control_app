@@ -23,10 +23,11 @@ class AppHelpers {
   }
 
   static String formatCurrency(num value) {
-    var formatted =
-        NumberFormat.simpleCurrency(locale: const Locale('pt', 'BR').toString())
-            .format(value)
-            .toString();
+    var formatted = NumberFormat.simpleCurrency(
+            locale: Get.deviceLocale?.toString() ??
+                const Locale('en', 'US').toString())
+        .format(value)
+        .toString();
     return formatted;
   }
 
@@ -88,7 +89,9 @@ class CurrencyInputFormatter extends TextInputFormatter {
 
     double value = double.parse(newValue.text);
 
-    final formatter = NumberFormat.simpleCurrency(locale: "pt_Br");
+    final formatter = NumberFormat.simpleCurrency(
+        locale: Get.deviceLocale?.toString() ??
+            const Locale('en', 'US').toString());
 
     String newText = formatter.format(value / 100);
 

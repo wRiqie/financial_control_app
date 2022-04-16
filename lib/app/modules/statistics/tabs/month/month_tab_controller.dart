@@ -38,6 +38,17 @@ class MonthTabController extends GetxController {
     totalPrice = lastMonth?.totalPrice ?? 0;
   }
 
+  bool get totalPriceIncreasedOrDecreased {
+    bool isFirstMonth = months.length <= 1;
+    Month? previousMonth = isFirstMonth
+        ? null
+        : months[months.indexOf(lastMonth ?? Month(date: '')) + 1];
+    if(previousMonth != null) {
+      
+    }
+    return false;
+  }
+
   num get balanceDifferencePercentage {
     bool isFirstMonth = months.length <= 1;
     Month? previousMonth = isFirstMonth
