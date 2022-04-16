@@ -1,8 +1,8 @@
-import 'package:financial_control_app/app/data/models/statistic_data.dart';
 import 'package:financial_control_app/app/modules/statistics/statistics_controller.dart';
+import 'package:financial_control_app/app/modules/statistics/tabs/category/category_tab.dart';
+import 'package:financial_control_app/app/modules/statistics/tabs/month/month_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class StatisticsPage extends GetView<StatisticsController> {
   const StatisticsPage({Key? key}) : super(key: key);
@@ -14,58 +14,17 @@ class StatisticsPage extends GetView<StatisticsController> {
         return Scaffold(
           appBar: AppBar(
             title: const Text('Statistics'),
-          ),
-          body: SafeArea(
-            child: Stack(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          color: Get.theme.colorScheme.surface,
-                          borderRadius: BorderRadius.circular(5)),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.all(10),
-                            child: Text(
-                              'Months total values',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          SfCartesianChart(
-                            primaryXAxis: CategoryAxis(
-                              majorGridLines: const MajorGridLines(width: 0),
-                            ),
-                            series: <ChartSeries>[
-                              SplineSeries<StatisticData, String>(
-                                dataSource: controller.datas,
-                                color: Get.theme.colorScheme.primary,
-                                width: 3,
-                                xValueMapper: (StatisticData data, _) => data.x,
-                                yValueMapper: (StatisticData data, _) => data.y,
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                Visibility(
-                  visible: controller.isLoading,
-                  child: Container(
-                    color: Colors.black45,
-                    child: const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  ),
-                ),
-              ],
+            bottom: TabBar(
+              controller: controller.tabController,
+              tabs: controller.tabs,
             ),
+          ),
+          body: TabBarView(
+            controller: controller.tabController,
+            children: const [
+              MonthTabPage(),
+              CategoryTabPage(),
+            ],
           ),
         );
       },

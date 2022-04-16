@@ -56,7 +56,7 @@ class RegisterBillController extends GetxController {
         portion: int.tryParse(portionController.text),
         maxPortion: int.tryParse(maxPortionController.text),
         status: status,
-        date: AppHelpers.formatDateToSave(DateTime.now()),
+        date: AppHelpers.formatDateToSave(DateTime.now().add(Duration(days: 30))),
       );
 
       clearFields();

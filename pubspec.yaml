@@ -42,6 +42,7 @@ dependencies:
   sqflite: ^2.0.2
   path: ^1.8.0
   syncfusion_flutter_charts: ^20.1.48
+  flutter_svg: ^1.0.3
 
 dev_dependencies:
   flutter_test:

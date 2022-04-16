@@ -1,8 +1,10 @@
 import 'package:financial_control_app/app/core/theme/dark/dark_colors.dart';
 import 'package:financial_control_app/app/core/utils/helpers.dart';
+import 'package:financial_control_app/app/core/values/images.dart';
 import 'package:financial_control_app/app/modules/change_balance/change_balance_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class ChangeBalancePage extends GetView<ChangeBalanceController> {
@@ -11,9 +13,8 @@ class ChangeBalancePage extends GetView<ChangeBalanceController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: controller.month != null
-          ? AppBar(title: Text('balance'.tr))
-          : null,
+      appBar:
+          controller.month != null ? AppBar(title: Text('balance'.tr)) : null,
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
@@ -65,12 +66,19 @@ class ChangeBalancePage extends GetView<ChangeBalanceController> {
                     return null;
                   },
                 ),
-                const SizedBox(height: 20,),
+                const SizedBox(
+                  height: 20,
+                ),
                 Text(
                   'balanceOfMonthDescription'.tr,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: DarkColors.grey
+                  style: const TextStyle(fontSize: 14, color: DarkColors.grey),
+                ),
+                const SizedBox(height: 60,),
+                Opacity(
+                  opacity: .65,
+                  child: SvgPicture.asset(
+                    AppImages.balance,
+                    width: Get.size.width * .75,
                   ),
                 ),
               ],

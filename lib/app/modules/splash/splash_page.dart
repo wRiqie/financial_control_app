@@ -1,3 +1,4 @@
+import 'package:financial_control_app/app/core/values/images.dart';
 import 'package:financial_control_app/app/modules/splash/splash_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,7 +16,7 @@ class SplashPage extends GetView<SplashController> {
             SizedBox(
               height: 100,
               child: Image.asset(
-                'assets/img/financeIcon.png',
+                AppImages.financeLogo,
               ),
             ),
             const SizedBox(

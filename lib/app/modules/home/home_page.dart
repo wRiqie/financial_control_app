@@ -189,7 +189,7 @@ class HomePage extends GetView<HomeController> {
       required Size size}) {
     return Container(
       width: size.width,
-      height: size.height * .25,
+      height: 230,
       padding: const EdgeInsets.symmetric(horizontal: 10),
       color: color ?? Get.theme.colorScheme.primary,
       child: Row(

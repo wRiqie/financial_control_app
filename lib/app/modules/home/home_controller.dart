@@ -21,7 +21,7 @@ class HomeController extends GetxController {
   final MonthRepository monthRepository;
   final valueCardController = ScrollController();
   num remainingBalance = 0.0;
-  DateTime selectedDate = DateTime.now();
+  DateTime selectedDate = DateTime.now().add(Duration(days: 30));
   Month? selectedMonth;
   List<Category> categories = [
     Category(
