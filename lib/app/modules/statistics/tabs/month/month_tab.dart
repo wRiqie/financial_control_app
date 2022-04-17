@@ -41,7 +41,9 @@ class MonthTabPage extends GetView<MonthTabController> {
                         ),
                       ),
                       controller.isLoading
-                          ? Container(height: 300,)
+                          ? Container(
+                              height: 300,
+                            )
                           : SfCartesianChart(
                               primaryXAxis: CategoryAxis(
                                 majorGridLines: const MajorGridLines(width: 0),
@@ -66,17 +68,20 @@ class MonthTabPage extends GetView<MonthTabController> {
                     crossAxisCount: 2,
                     children: [
                       _buildStatisticCard(
-                          label: 'Current month price',
-                          icon: Icons.monetization_on_outlined,
-                          iconColor: Get.theme.colorScheme.primary,
-                          value: controller.totalPrice,
-                          profit: controller.totalPrice < 0 ? false : true),
+                        label: 'Current month price',
+                        icon: Icons.monetization_on_outlined,
+                        iconColor: Get.theme.colorScheme.primary,
+                        value: controller.totalPrice,
+                        profit: controller.totalPriceDecreased,
+                      ),
                       _buildStatisticCard(
                         label: 'Balance difference',
                         icon: Icons.percent,
                         iconColor: Get.theme.colorScheme.secondary,
                         percent: controller.balanceDifferencePercentage,
-                        profit: controller.balanceDifferencePercentage < 0 ? false : true,
+                        profit: controller.balanceDifferencePercentage < 0
+                            ? false
+                            : true,
                       ),
                     ],
                   ),

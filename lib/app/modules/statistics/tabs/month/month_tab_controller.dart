@@ -38,13 +38,13 @@ class MonthTabController extends GetxController {
     totalPrice = lastMonth?.totalPrice ?? 0;
   }
 
-  bool get totalPriceIncreasedOrDecreased {
+  bool get totalPriceDecreased {
     bool isFirstMonth = months.length <= 1;
     Month? previousMonth = isFirstMonth
         ? null
         : months[months.indexOf(lastMonth ?? Month(date: '')) + 1];
     if(previousMonth != null) {
-      
+      return (previousMonth.totalPrice ?? 0) > (lastMonth?.totalPrice ?? 0);
     }
     return false;
   }
