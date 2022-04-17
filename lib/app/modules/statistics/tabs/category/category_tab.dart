@@ -7,7 +7,15 @@ class CategoryTabPage extends GetView<CategoryTabController> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-        body: Center(child: Text('CategoryTabController')));
+    return Scaffold(
+      body: GetBuilder<CategoryTabController>(
+        init: CategoryTabController(),
+        builder: (_) {
+          return Column(
+            children: const [],
+          );
+        },
+      ),
+    );
   }
 }
