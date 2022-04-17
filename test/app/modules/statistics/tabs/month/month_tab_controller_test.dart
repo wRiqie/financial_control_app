@@ -17,9 +17,9 @@ void main() {
 
   group('Total price decreased |', () {
     test('deve retornar true', () {
-      controller.lastMonth = Month(date: '10-2', totalPrice: 300);
+      controller.lastMonth = Month(date: '10-3', totalPrice: 200);
       controller.months = [
-        Month(date: '10-3', totalPrice: 200),
+        controller.lastMonth!,
         Month(date: '10-2', totalPrice: 300),
       ];
 

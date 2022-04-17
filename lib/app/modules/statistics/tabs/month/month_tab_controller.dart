@@ -1,6 +1,6 @@
 import 'package:financial_control_app/app/core/utils/helpers.dart';
 import 'package:financial_control_app/app/data/models/month.dart';
-import 'package:financial_control_app/app/data/models/statistic_data.dart';
+import 'package:financial_control_app/app/data/models/month_data.dart';
 import 'package:financial_control_app/app/data/repository/month_repository.dart';
 import 'package:get/get.dart';
 
@@ -9,7 +9,7 @@ class MonthTabController extends GetxController {
   bool isLoading = false;
   Month? lastMonth;
   num totalPrice = 0;
-  List<StatisticData> datas = [];
+  List<MonthData> datas = [];
   List<Month> months = [];
 
   MonthTabController(this.repository);
@@ -21,7 +21,7 @@ class MonthTabController extends GetxController {
       months = value;
       for (var month in value.reversed) {
         var monthNumber = AppHelpers.revertDateFromSave(month.date).month;
-        var statisticData = StatisticData(
+        var statisticData = MonthData(
           x: AppHelpers.monthResolver(monthNumber),
           y: (month.totalPrice ?? 0.0),
         );

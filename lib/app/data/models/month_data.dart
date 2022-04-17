@@ -1,8 +1,8 @@
-class StatisticData {
+class MonthData {
   String x;
   num? y;
 
-  StatisticData({
+  MonthData({
     required this.x,
     required this.y,
   });

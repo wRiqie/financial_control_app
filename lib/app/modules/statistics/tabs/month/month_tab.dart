@@ -1,5 +1,5 @@
 import 'package:financial_control_app/app/core/utils/helpers.dart';
-import 'package:financial_control_app/app/data/models/statistic_data.dart';
+import 'package:financial_control_app/app/data/models/month_data.dart';
 import 'package:financial_control_app/app/data/provider/database_provider.dart';
 import 'package:financial_control_app/app/data/repository/month_repository.dart';
 import 'package:financial_control_app/app/modules/statistics/tabs/month/month_tab_controller.dart';
@@ -49,13 +49,13 @@ class MonthTabPage extends GetView<MonthTabController> {
                                 majorGridLines: const MajorGridLines(width: 0),
                               ),
                               series: <ChartSeries>[
-                                SplineSeries<StatisticData, String>(
+                                SplineSeries<MonthData, String>(
                                   dataSource: controller.datas,
                                   color: Get.theme.colorScheme.primary,
                                   width: 3,
-                                  xValueMapper: (StatisticData data, _) =>
+                                  xValueMapper: (MonthData data, _) =>
                                       data.x,
-                                  yValueMapper: (StatisticData data, _) =>
+                                  yValueMapper: (MonthData data, _) =>
                                       data.y,
                                 )
                               ],
