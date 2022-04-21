@@ -1,4 +1,4 @@
-import 'package:financial_control_app/app/data/enums/bill_status.dart';
+import 'package:financial_control_app/app/data/enums/bill_status_enum.dart';
 import 'package:financial_control_app/app/data/models/bill.dart';
 import 'package:financial_control_app/app/modules/home/home_controller.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -24,7 +24,7 @@ void main() {
             title: '',
             value: 10,
             dueDate: 100,
-            status: BillStatus.paid.index,
+            status: EBillStatus.paid.index,
             date: ''),
         Bill(
             id: '',
@@ -34,7 +34,7 @@ void main() {
             dueDate: 100,
             portion: 3,
             maxPortion: 3,
-            status: BillStatus.paid.index,
+            status: EBillStatus.paid.index,
             date: ''),
       ];
       when(() => controller.billRepository.getBillsByDate(any()))
@@ -46,7 +46,7 @@ void main() {
           await controller.loadAndCopyPreviousMonthBills(copy: true);
 
       expect(savedBills.length, 1);
-      expect(savedBills[0].status, BillStatus.pendent.index);
+      expect(savedBills[0].status, EBillStatus.pendent.index);
       expect(savedBills[0].portion, null);
     }));
 
@@ -58,7 +58,7 @@ void main() {
             title: '',
             value: 10,
             dueDate: 100,
-            status: BillStatus.paid.index,
+            status: EBillStatus.paid.index,
             date: ''),
         Bill(
             id: '',
@@ -68,7 +68,7 @@ void main() {
             dueDate: 100,
             portion: 3,
             maxPortion: 3,
-            status: BillStatus.paid.index,
+            status: EBillStatus.paid.index,
             date: ''),
         Bill(
             id: '',
@@ -78,7 +78,7 @@ void main() {
             dueDate: 100,
             portion: 1,
             maxPortion: 3,
-            status: BillStatus.paid.index,
+            status: EBillStatus.paid.index,
             date: ''),
       ];
       when(() => controller.billRepository.getBillsByDate(any()))
@@ -92,7 +92,7 @@ void main() {
       expect(savedBills.length, 1);
       expect(savedBills[0].portion, 2);
       expect(savedBills[0].maxPortion, 3);
-      expect(savedBills[0].status, BillStatus.pendent.index);
+      expect(savedBills[0].status, EBillStatus.pendent.index);
     });
   });
 

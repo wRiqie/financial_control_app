@@ -1,7 +1,7 @@
 import 'package:financial_control_app/app/core/theme/dark/dark_colors.dart';
 import 'package:financial_control_app/app/core/utils/helpers.dart';
 import 'package:financial_control_app/app/core/values/contants.dart';
-import 'package:financial_control_app/app/data/enums/bill_status.dart';
+import 'package:financial_control_app/app/data/enums/bill_status_enum.dart';
 import 'package:financial_control_app/app/data/models/bill.dart';
 import 'package:financial_control_app/app/data/models/category.dart';
 import 'package:financial_control_app/app/data/models/month.dart';
@@ -21,33 +21,23 @@ class HomeController extends GetxController {
   final MonthRepository monthRepository;
   final valueCardController = ScrollController();
   num remainingBalance = 0.0;
-  DateTime selectedDate = DateTime.now().add(Duration(days: 30));
+  DateTime selectedDate = DateTime.now();
   Month? selectedMonth;
   List<Category> categories = [
     Category(
       id: 1,
-      color: DarkColors.homeColor,
-      icon: Icons.home,
     ),
     Category(
       id: 2,
-      color: DarkColors.foodDrinkColor,
-      icon: Icons.fastfood,
     ),
     Category(
       id: 3,
-      color: DarkColors.gamesColor,
-      icon: Icons.games,
     ),
     Category(
       id: 4,
-      color: DarkColors.personalColor,
-      icon: Icons.person,
     ),
     Category(
       id: 5,
-      color: DarkColors.othersColor,
-      icon: Icons.dashboard,
     ),
   ];
 
@@ -90,7 +80,7 @@ class HomeController extends GetxController {
 
   addBillToCategory(int categoryId, CategoryItemController controller) async {
     await Get.toNamed(Routes.registerBill,
-        arguments: {'categoryId': categoryId, 'categoryIcon': categories[categoryId - 1].icon,'selectedMonth': selectedMonth});
+        arguments: {'categoryId': categoryId,'selectedMonth': selectedMonth});
     controller.getBills();
   }
 
@@ -127,12 +117,12 @@ class HomeController extends GetxController {
   }
 
   toogleBillStatus(Bill bill) async {
-    if (bill.status != BillStatus.paid.index) {
-      bill.status = BillStatus.paid.index;
+    if (bill.status != EBillStatus.paid.index) {
+      bill.status = EBillStatus.paid.index;
     } else {
       bill.status = bill.dueDate > DateTime.now().day
-          ? BillStatus.pendent.index
-          : BillStatus.overdue.index;
+          ? EBillStatus.pendent.index
+          : EBillStatus.overdue.index;
     }
     await billRepository.saveBill(bill);
   }
@@ -190,8 +180,8 @@ class HomeController extends GetxController {
         bill.id = uuid.v4();
         bill.date = AppHelpers.formatDateToSave(selectedDate);
         bill.status = bill.dueDate > selectedDate.day
-            ? BillStatus.pendent.index
-            : BillStatus.overdue.index;
+            ? EBillStatus.pendent.index
+            : EBillStatus.overdue.index;
 
         if (bill.portion != null && bill.maxPortion != null) {
           bill.portion = bill.portion! + 1;

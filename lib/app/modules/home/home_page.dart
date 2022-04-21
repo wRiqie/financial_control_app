@@ -1,5 +1,5 @@
 import 'package:financial_control_app/app/core/utils/helpers.dart';
-import 'package:financial_control_app/app/data/enums/bill_status.dart';
+import 'package:financial_control_app/app/data/enums/bill_status_enum.dart';
 import 'package:financial_control_app/app/modules/home/home_controller.dart';
 import 'package:financial_control_app/app/modules/home/widgets/category_item/category_item.dart';
 import 'package:financial_control_app/app/routes/pages.dart';
@@ -88,14 +88,14 @@ class HomePage extends GetView<HomeController> {
                                             children: [
                                               ListTile(
                                                 title: bill.status ==
-                                                        BillStatus.paid.index
+                                                        EBillStatus.paid.index
                                                     ? Text(
                                                         'marksUnpaid'.tr)
                                                     : Text(
                                                         'marksPaid'.tr),
                                                 leading: Icon(
                                                   bill.status ==
-                                                          BillStatus.paid.index
+                                                          EBillStatus.paid.index
                                                       ? Icons.highlight_off
                                                       : Icons
                                                           .check_circle_outline,

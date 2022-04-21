@@ -1,13 +1,9 @@
-import 'package:flutter/Material.dart';
-
 class Category {
   late int id;
-  late IconData icon;
-  late Color color;
+  num? value;
 
   Category({
     required this.id,
-    required this.color,
-    required this.icon,
+    this.value
   });
 }

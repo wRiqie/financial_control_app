@@ -1,5 +1,5 @@
 import 'package:financial_control_app/app/core/utils/helpers.dart';
-import 'package:financial_control_app/app/data/enums/bill_status.dart';
+import 'package:financial_control_app/app/data/enums/bill_status_enum.dart';
 import 'package:financial_control_app/app/data/models/bill.dart';
 import 'package:financial_control_app/app/data/models/category.dart';
 import 'package:financial_control_app/app/data/repository/bill_repository.dart';
@@ -16,7 +16,7 @@ class CategoryItemController extends GetxController {
   double get percentage {
     double paidValue = 0;
     double totalValue = totalPrice;
-    var paidBills = bills.where((e) => e.status == BillStatus.paid.index);
+    var paidBills = bills.where((e) => e.status == EBillStatus.paid.index);
     for (var paidBill in paidBills) {
       paidValue += paidBill.value;
     }
@@ -25,7 +25,7 @@ class CategoryItemController extends GetxController {
   }
 
   double get leftPrice {
-    var leftBills = bills.where((e) => e.status != BillStatus.paid.index);
+    var leftBills = bills.where((e) => e.status != EBillStatus.paid.index);
     double price = 0;
     for (var bill in leftBills) {
       price += bill.value;
@@ -45,7 +45,7 @@ class CategoryItemController extends GetxController {
     repository
         .getBillsByCategoryIdAndDate(
       category.id,
-      AppHelpers.formatDateToSave(DateTime.now().add(Duration(days: 30))),
+      AppHelpers.formatDateToSave(DateTime.now()),
     )
         .then((value) {
       bills = value;

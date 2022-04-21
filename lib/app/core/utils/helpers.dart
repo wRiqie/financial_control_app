@@ -1,3 +1,5 @@
+import 'package:financial_control_app/app/core/theme/dark/dark_colors.dart';
+import 'package:financial_control_app/app/data/enums/category_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -58,6 +60,42 @@ class AppHelpers {
         return Colors.green;
       default:
         return Colors.green;
+    }
+  }
+
+  static Color categoryColorResolver(int categoryId) {
+    final category = CategoryExtension.getById(categoryId);
+    switch (category) {
+      case ECategory.home:
+        return DarkColors.homeColor;
+      case ECategory.foodAndDrinks:
+        return DarkColors.foodDrinkColor;
+      case ECategory.games:
+        return DarkColors.gamesColor;
+      case ECategory.person:
+        return DarkColors.personalColor;
+      case ECategory.others:
+        return DarkColors.othersColor;
+      default:
+        return DarkColors.othersColor;
+    }
+  }
+
+  static IconData categoryIconResolver(int categoryId) {
+    final category = CategoryExtension.getById(categoryId);
+    switch (category) {
+      case ECategory.home:
+        return Icons.home;
+      case ECategory.foodAndDrinks:
+        return Icons.fastfood;
+      case ECategory.games:
+        return Icons.games;
+      case ECategory.person:
+        return Icons.person;
+      case ECategory.others:
+        return Icons.add;
+      default:
+        return Icons.add;
     }
   }
 

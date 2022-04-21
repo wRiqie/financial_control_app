@@ -1,6 +1,6 @@
 import 'package:financial_control_app/app/core/theme/dark/dark_colors.dart';
 import 'package:financial_control_app/app/core/utils/helpers.dart';
-import 'package:financial_control_app/app/data/enums/bill_status.dart';
+import 'package:financial_control_app/app/data/enums/bill_status_enum.dart';
 import 'package:financial_control_app/app/data/models/bill.dart';
 import 'package:financial_control_app/app/data/models/month.dart';
 import 'package:financial_control_app/app/data/repository/bill_repository.dart';
@@ -17,7 +17,6 @@ class RegisterBillController extends GetxController {
   final uuid = const Uuid();
   final args = Get.arguments;
   int categoryId = 0;
-  IconData? categoryIcon;
   bool havePortions = false;
   bool paid = false;
   Month? selectedMonth;
@@ -56,7 +55,7 @@ class RegisterBillController extends GetxController {
         portion: int.tryParse(portionController.text),
         maxPortion: int.tryParse(maxPortionController.text),
         status: status,
-        date: AppHelpers.formatDateToSave(DateTime.now().add(Duration(days: 30))),
+        date: AppHelpers.formatDateToSave(DateTime.now()),
       );
 
       clearFields();
@@ -93,11 +92,11 @@ class RegisterBillController extends GetxController {
 
   int get status {
     if (paid) {
-      return BillStatus.paid.index;
+      return EBillStatus.paid.index;
     }
     return DateTime.now().day > int.parse(dueDateController.text)
-        ? BillStatus.overdue.index
-        : BillStatus.pendent.index;
+        ? EBillStatus.overdue.index
+        : EBillStatus.pendent.index;
   }
 
   fillFields() {
@@ -108,7 +107,7 @@ class RegisterBillController extends GetxController {
     portionController.text = editingBill?.portion?.toString() ?? '';
     maxPortionController.text = editingBill?.maxPortion?.toString() ?? '';
 
-    paid = editingBill?.status == BillStatus.paid.index ? true : false;
+    paid = editingBill?.status == EBillStatus.paid.index ? true : false;
     havePortions = editingBill?.maxPortion != null ? true : false;
   }
 
@@ -127,7 +126,6 @@ class RegisterBillController extends GetxController {
   void onInit() {
     super.onInit();
     categoryId = args['categoryId'];
-    categoryIcon = args['categoryIcon'];
     selectedMonth = args['selectedMonth'];
 
     if (args['bill'] != null) {

@@ -16,6 +16,12 @@ class CategoryTabPage extends GetView<CategoryTabController> {
           return Column(
             children: [
               SfCircularChart(
+                legend: Legend(
+                  position: LegendPosition.right,
+                  overflowMode: LegendItemOverflowMode.wrap,
+                  isVisible: true,
+                  isResponsive: true,
+                ),
                 series: <CircularSeries>[
                   PieSeries<CategoryData, String>(
                     dataSource: controller.datas,

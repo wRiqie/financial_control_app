@@ -1,4 +1,4 @@
-enum BillStatus {
+enum EBillStatus {
   overdue,
   pendent,
   paid,

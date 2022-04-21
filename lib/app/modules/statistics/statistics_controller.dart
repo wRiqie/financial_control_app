@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 
 class StatisticsController extends GetxController with GetSingleTickerProviderStateMixin {
   final tabs = <Tab>[
-    const Tab(text: 'Category'),
     const Tab(text: 'Month'),
+    const Tab(text: 'Category'),
   ];
 
   late TabController tabController;

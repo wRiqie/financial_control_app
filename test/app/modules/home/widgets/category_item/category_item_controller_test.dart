@@ -1,4 +1,4 @@
-import 'package:financial_control_app/app/data/enums/bill_status.dart';
+import 'package:financial_control_app/app/data/enums/bill_status_enum.dart';
 import 'package:financial_control_app/app/data/models/bill.dart';
 import 'package:financial_control_app/app/data/models/category.dart';
 import 'package:financial_control_app/app/data/provider/database_provider.dart';
@@ -16,7 +16,7 @@ void main() {
       title: 'Teste 1',
       value: 100.00,
       dueDate: 10,
-      status: BillStatus.paid.index,
+      status: EBillStatus.paid.index,
       date: '12-2022',
     ),
     Bill(
@@ -25,7 +25,7 @@ void main() {
       title: 'Teste 2',
       value: 100.00,
       dueDate: 10,
-      status: BillStatus.pendent.index,
+      status: EBillStatus.pendent.index,
       date: '12-2022',
     ),
     Bill(
@@ -34,7 +34,7 @@ void main() {
       title: 'Teste 3',
       value: 100.00,
       dueDate: 10,
-      status: BillStatus.overdue.index,
+      status: EBillStatus.overdue.index,
       date: '12-2022',
     ),
     Bill(
@@ -43,13 +43,13 @@ void main() {
       title: 'Teste 4',
       value: 100.00,
       dueDate: 10,
-      status: BillStatus.overdue.index,
+      status: EBillStatus.overdue.index,
       date: '12-2022',
     ),
   ];
 
   setUp(() {
-    final category = Category(id: 1, color: Colors.black, icon: Icons.abc);
+    final category = Category(id: 1,);
     _controller =
         CategoryItemController(BillRepository(DatabaseProvider.db), category);
 

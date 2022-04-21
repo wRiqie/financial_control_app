@@ -35,12 +35,12 @@ class CategoryItem extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    color: category.color,
+                    color: AppHelpers.categoryColorResolver(category.id),
                   ),
                   height: 50,
                   width: 50,
                   child: Icon(
-                    category.icon,
+                    AppHelpers.categoryIconResolver(category.id),
                     color: Colors.white,
                   ),
                 ),

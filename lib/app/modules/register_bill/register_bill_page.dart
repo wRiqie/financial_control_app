@@ -19,7 +19,7 @@ class RegisterBillPage extends GetView<RegisterBillController> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Icon(
-                controller.categoryIcon,
+                AppHelpers.categoryIconResolver(controller.categoryId),
                 color: Get.theme.colorScheme.onSurface,
               ),
             ),

@@ -1,7 +1,6 @@
 import 'package:financial_control_app/app/data/models/month.dart';
 import 'package:financial_control_app/app/modules/statistics/tabs/month/month_tab_controller.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 
 import '../../../../../mocks/mocks.dart';
 

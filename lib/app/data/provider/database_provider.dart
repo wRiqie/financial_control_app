@@ -26,10 +26,12 @@ class DatabaseProvider {
       onOpen: (db) async {
         await db.execute(_createTableMonth);
         await db.execute(_createTableBill);
+        await db.execute(_createTableCategory);
       },
       onCreate: (Database db, int version) async {
         await db.execute(_createTableMonth);
         await db.execute(_createTableBill);
+        await db.execute(_createTableCategory);
       },
     );
   }
@@ -138,6 +140,21 @@ class DatabaseProvider {
     return 0;
   }
 
+  Future<List<num>> getBillsPricesOfMonthCategory(
+      int categoryId, String date) async {
+    final db = await database;
+    if (db != null) {
+      var res = await db.query(
+        billTable,
+        columns: [_billValue],
+        where: '$_billCategoryId = ? AND $_billDate = ?',
+        whereArgs: [categoryId, date],
+      );
+      return res.isNotEmpty ? res.map((e) => e['value'] as num).toList() : [];
+    }
+    return [];
+  }
+
   // Month
   static const monthTable = 'month';
   static const _monthDate = 'date';
@@ -178,4 +195,16 @@ class DatabaseProvider {
     }
     return [];
   }
+
+  // Category
+  static const categoryTable = 'category';
+  static const _categoryId = 'id';
+  static const _categoryValue = 'value';
+
+  static const _createTableCategory = """
+    CREATE TABLE IF NOT EXISTS $categoryTable(
+      $_categoryId INTEGER NOT NULL PRIMARY KEY,
+      $_categoryValue REAL
+    );
+  """;
 }
