@@ -7,9 +7,11 @@ import 'package:get/get.dart';
 class RegisterBillBinding implements Bindings {
   @override
   void dependencies() {
+    Get.lazyPut<BillRepository>(() => BillRepository(DatabaseProvider.db));
+    Get.lazyPut<MonthRepository>(() => MonthRepository(DatabaseProvider.db));
     Get.lazyPut<RegisterBillController>(
-      () => RegisterBillController(BillRepository(DatabaseProvider.db),
-          MonthRepository(DatabaseProvider.db)),
+      () => RegisterBillController(
+          Get.find<BillRepository>(), Get.find<MonthRepository>()),
     );
   }
 }

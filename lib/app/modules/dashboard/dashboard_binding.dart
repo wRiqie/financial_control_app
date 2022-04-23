@@ -10,9 +10,10 @@ class DashboardBinding implements Bindings {
   @override
   void dependencies() {
     Get.lazyPut<DashboardController>(() => DashboardController());
-    Get.put<HomeController>(HomeController(MonthRepository(DatabaseProvider.db),
-        BillRepository(DatabaseProvider.db)));
-    Get.lazyPut<StatisticsController>(() => StatisticsController(),
-        fenix: true);
+    Get.lazyPut<MonthRepository>(() => MonthRepository(DatabaseProvider.db));
+    Get.lazyPut<BillRepository>(() => BillRepository(DatabaseProvider.db));
+    Get.put<HomeController>(HomeController(
+        Get.find<MonthRepository>(), Get.find<BillRepository>()));
+    Get.put<StatisticsController>(StatisticsController());
   }
 }

@@ -1,7 +1,6 @@
 import 'package:financial_control_app/app/core/theme/dark/dark_theme.dart';
 import 'package:financial_control_app/app/core/values/contants.dart';
 import 'package:financial_control_app/app/core/values/translation.dart';
-import 'package:financial_control_app/app/modules/splash/splash_binding.dart';
 import 'package:financial_control_app/app/routes/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,7 +28,6 @@ class MyApp extends StatelessWidget {
       theme: darkTheme,
       getPages: AppPages.pages,
       initialRoute: Routes.splash,
-      initialBinding: SplashBinding(),
       translationsKeys: AppTranslation().keys,
       locale: Get.deviceLocale ?? const Locale('en', 'US'),
       fallbackLocale: const Locale('en', 'US'),
