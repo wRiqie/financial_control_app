@@ -1,4 +1,6 @@
 import 'package:financial_control_app/app/data/models/bill.dart';
+import 'package:financial_control_app/app/data/models/category.dart';
+import 'package:financial_control_app/app/data/models/category_month.dart';
 import 'package:financial_control_app/app/data/models/month.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -27,11 +29,13 @@ class DatabaseProvider {
         await db.execute(_createTableMonth);
         await db.execute(_createTableBill);
         await db.execute(_createTableCategory);
+        await db.execute(_createTableCategoryMonth);
       },
       onCreate: (Database db, int version) async {
         await db.execute(_createTableMonth);
         await db.execute(_createTableBill);
         await db.execute(_createTableCategory);
+        await db.execute(_createTableCategoryMonth);
       },
     );
   }
@@ -199,12 +203,63 @@ class DatabaseProvider {
   // Category
   static const categoryTable = 'category';
   static const _categoryId = 'id';
-  static const _categoryValue = 'value';
+  static const _categorySelected = 'selected';
 
   static const _createTableCategory = """
     CREATE TABLE IF NOT EXISTS $categoryTable(
       $_categoryId INTEGER NOT NULL PRIMARY KEY,
-      $_categoryValue REAL
+      $_categorySelected INTEGER
     );
   """;
+
+  Future<List<Category>> getAllCategories() async {
+    final db = await database;
+    if (db != null) {
+      var res = await db.query(categoryTable);
+      return res.isNotEmpty ? res.map((e) => Category.fromMap(e)).toList() : [];
+    }
+    return [];
+  }
+
+  Future<List<Category>> getSelectedCategories() async {
+    final db = await database;
+    if (db != null) {
+      var res = await db.query(categoryTable,
+          where: '$_categorySelected = ?', whereArgs: [1]);
+      return res.isNotEmpty ? res.map((e) => Category.fromMap(e)).toList() : [];
+    }
+    return [];
+  }
+
+  // Category Month
+  static const categoryMonthTable = 'categoryMonth';
+  static const _categoryMonthId = 'categoryMonthId';
+  static const _categoryMonthCategoryId = 'categoryId';
+  static const _categoryMonthMonth = 'month';
+  static const _categoryMonthValue = 'value';
+
+  static const _createTableCategoryMonth = """
+    CREATE TABLE IF NOT EXISTS $categoryMonthTable(
+      $_categoryMonthId INTEGER NOT NULL PRIMARY KEY,
+      $_categoryMonthCategoryId INTEGER,
+      $_categoryMonthMonth TEXT,
+      $_categoryMonthValue REAL
+    );
+  """;
+
+  Future<List<CategoryMonth>> getCategoryMonthsByCategoryIdAndMonth(
+      int categoryId, String month) async {
+    final db = await database;
+    if (db != null) {
+      var res = await db.query(
+        categoryMonthTable,
+        where: '$_categoryMonthCategoryId = ? AND $_categoryMonthMonth = ?',
+        whereArgs: [categoryId, month],
+      );
+      return res.isNotEmpty
+          ? res.map((e) => CategoryMonth.fromMap(e)).toList()
+          : [];
+    }
+    return [];
+  }
 }

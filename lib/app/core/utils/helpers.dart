@@ -1,4 +1,5 @@
 import 'package:financial_control_app/app/core/theme/dark/dark_colors.dart';
+import 'package:financial_control_app/app/data/enums/bill_status_enum.dart';
 import 'package:financial_control_app/app/data/enums/category_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,21 +7,22 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class AppHelpers {
+  static final months = [
+    'jan'.tr,
+    'feb'.tr,
+    'mar'.tr,
+    'apr'.tr,
+    'may'.tr,
+    'jun'.tr,
+    'jul'.tr,
+    'aug'.tr,
+    'sep'.tr,
+    'oct'.tr,
+    'nov'.tr,
+    'dec'.tr,
+  ];
+
   static String monthResolver(int month) {
-    final months = [
-      'jan'.tr,
-      'feb'.tr,
-      'mar'.tr,
-      'apr'.tr,
-      'may'.tr,
-      'jun'.tr,
-      'jul'.tr,
-      'aug'.tr,
-      'sep'.tr,
-      'oct'.tr,
-      'nov'.tr,
-      'dec'.tr,
-    ];
     return months[month - 1];
   }
 
@@ -34,16 +36,17 @@ class AppHelpers {
   }
 
   static String categoryResolver(int categoryId) {
-    switch (categoryId) {
-      case 1:
+    var category = CategoryExtension.getById(categoryId);
+    switch (category) {
+      case ECategory.home:
         return 'houseBills'.tr;
-      case 2:
+      case ECategory.foodAndDrinks:
         return 'foodAndDrink'.tr;
-      case 3:
+      case ECategory.games:
         return 'gamesAndStreaming'.tr;
-      case 4:
+      case ECategory.person:
         return 'personalCare'.tr;
-      case 5:
+      case ECategory.others:
         return 'others'.tr;
       default:
         return 'others'.tr;
@@ -51,12 +54,13 @@ class AppHelpers {
   }
 
   static Color billStatusResolver(int status) {
-    switch (status) {
-      case 0:
+    var billStatus = BillStatusExtension.getById(status); 
+    switch (billStatus) {
+      case EBillStatus.overdue:
         return Colors.red;
-      case 1:
+      case EBillStatus.pendent:
         return Colors.yellow;
-      case 2:
+      case EBillStatus.paid:
         return Colors.green;
       default:
         return Colors.green;
