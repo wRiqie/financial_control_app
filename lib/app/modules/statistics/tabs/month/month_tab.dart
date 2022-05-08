@@ -53,10 +53,8 @@ class MonthTabPage extends GetView<MonthTabController> {
                                   dataSource: controller.datas,
                                   color: Get.theme.colorScheme.primary,
                                   width: 3,
-                                  xValueMapper: (MonthData data, _) =>
-                                      data.x,
-                                  yValueMapper: (MonthData data, _) =>
-                                      data.y,
+                                  xValueMapper: (MonthData data, _) => data.x,
+                                  yValueMapper: (MonthData data, _) => data.y,
                                 )
                               ],
                             ),
@@ -84,6 +82,17 @@ class MonthTabPage extends GetView<MonthTabController> {
                             : true,
                       ),
                     ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(
+                    controller.caption,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Get.theme.colorScheme.primary
+                    ),
                   ),
                 ),
               ],
@@ -153,15 +162,17 @@ class MonthTabPage extends GetView<MonthTabController> {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              profit
-                  ? const Icon(
-                      Icons.arrow_upward,
-                      color: Colors.green,
-                    )
-                  : const Icon(
-                      Icons.arrow_downward,
-                      color: Colors.red,
-                    ),
+              value != null && value != 0
+                  ? profit
+                      ? const Icon(
+                          Icons.arrow_upward,
+                          color: Colors.green,
+                        )
+                      : const Icon(
+                          Icons.arrow_downward,
+                          color: Colors.red,
+                        )
+                  : Container(),
             ],
           )
         ],

@@ -1,4 +1,5 @@
 import 'package:financial_control_app/app/core/utils/helpers.dart';
+import 'package:financial_control_app/app/data/enums/category_enum.dart';
 import 'package:financial_control_app/app/modules/register_bill/register_bill_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,7 +20,7 @@ class RegisterBillPage extends GetView<RegisterBillController> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Icon(
-                AppHelpers.categoryIconResolver(controller.categoryId),
+                CategoryExtension.icon(controller.categoryId),
                 color: Get.theme.colorScheme.onSurface,
               ),
             ),

@@ -1,5 +1,6 @@
 import 'package:expandable/expandable.dart';
 import 'package:financial_control_app/app/core/utils/helpers.dart';
+import 'package:financial_control_app/app/data/enums/category_enum.dart';
 import 'package:financial_control_app/app/data/models/bill.dart';
 import 'package:financial_control_app/app/data/models/category.dart';
 import 'package:financial_control_app/app/data/provider/database_provider.dart';
@@ -35,12 +36,12 @@ class CategoryItem extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    color: AppHelpers.categoryColorResolver(category.id),
+                    color: CategoryExtension.color(category.id),
                   ),
                   height: 50,
                   width: 50,
                   child: Icon(
-                    AppHelpers.categoryIconResolver(category.id),
+                    CategoryExtension.icon(category.id),
                     color: Colors.white,
                   ),
                 ),

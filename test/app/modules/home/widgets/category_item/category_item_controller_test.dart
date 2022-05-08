@@ -4,7 +4,6 @@ import 'package:financial_control_app/app/data/models/category.dart';
 import 'package:financial_control_app/app/data/provider/database_provider.dart';
 import 'package:financial_control_app/app/data/repository/bill_repository.dart';
 import 'package:financial_control_app/app/modules/home/widgets/category_item/category_item_controller.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

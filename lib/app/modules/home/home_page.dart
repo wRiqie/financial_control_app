@@ -26,9 +26,7 @@ class HomePage extends GetView<HomeController> {
           ),
           actions: [
             IconButton(
-              onPressed: () {
-                controller.openPreferences();
-              },
+              onPressed: controller.openPreferences,
               icon: const Icon(Icons.app_registration_outlined),
             ),
           ],

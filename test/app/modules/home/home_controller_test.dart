@@ -9,7 +9,11 @@ import '../../../mocks/mocks.dart';
 void main() {
   late HomeController controller;
   setUp(() {
-    controller = HomeController(MonthRepositoryMock(), BillRepositoryMock());
+    controller = HomeController(
+      CategoryRepositoryMock(),
+      MonthRepositoryMock(),
+      BillRepositoryMock(),
+    );
   });
   tearDown(() {
     controller.dispose();
@@ -96,7 +100,7 @@ void main() {
     });
   });
 
-  test('Deve retornar o mês anterior', (){
+  test('Deve retornar o mês anterior', () {
     controller.selectedDate = DateTime(2022, 2, 1);
     expect(controller.previousMonthDate, '01-2022');
 

@@ -67,42 +67,6 @@ class AppHelpers {
     }
   }
 
-  static Color categoryColorResolver(int categoryId) {
-    final category = CategoryExtension.getById(categoryId);
-    switch (category) {
-      case ECategory.home:
-        return DarkColors.homeColor;
-      case ECategory.foodAndDrinks:
-        return DarkColors.foodDrinkColor;
-      case ECategory.games:
-        return DarkColors.gamesColor;
-      case ECategory.person:
-        return DarkColors.personalColor;
-      case ECategory.others:
-        return DarkColors.othersColor;
-      default:
-        return DarkColors.othersColor;
-    }
-  }
-
-  static IconData categoryIconResolver(int categoryId) {
-    final category = CategoryExtension.getById(categoryId);
-    switch (category) {
-      case ECategory.home:
-        return Icons.home;
-      case ECategory.foodAndDrinks:
-        return Icons.fastfood;
-      case ECategory.games:
-        return Icons.games;
-      case ECategory.person:
-        return Icons.person;
-      case ECategory.others:
-        return Icons.add;
-      default:
-        return Icons.add;
-    }
-  }
-
   static String formatDateBR(DateTime date) {
     return DateFormat('dd/MM/yyyy').format(date);
   }

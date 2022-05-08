@@ -13,7 +13,7 @@ final Map<String, String> ptBr = {
   'dec': 'Dez',
   'houseBills': 'Contas da casa',
   'foodAndDrink': 'Comidas e bebidas',
-  'gamesAndStreaming': 'Jogos e serviços de streaming',
+  'gamesAndStreaming': 'Jogos e streaming',
   'personalCare': 'Cuidados pessoais',
   'others': 'Outros',
   'balance': 'Saldo',
@@ -59,4 +59,7 @@ final Map<String, String> ptBr = {
   'haveParcels': 'Tem parcelas',
   'success': 'Successo',
   'successfullySaved': 'Salvo com sucesso',
+  'youSaved': 'Você economizou',
+  'youSpent': 'Você gastou',
+  'comparedLastMonth': 'em comparação com o mês passado',
 };

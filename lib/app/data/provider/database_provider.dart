@@ -144,19 +144,18 @@ class DatabaseProvider {
     return 0;
   }
 
-  Future<List<num>> getBillsPricesOfMonthCategory(
+  Future<num> getBillsTotalPriceOfMonthCategory(
       int categoryId, String date) async {
     final db = await database;
     if (db != null) {
-      var res = await db.query(
-        billTable,
-        columns: [_billValue],
-        where: '$_billCategoryId = ? AND $_billDate = ?',
-        whereArgs: [categoryId, date],
-      );
-      return res.isNotEmpty ? res.map((e) => e['value'] as num).toList() : [];
+      var res = await db.rawQuery("""
+            SELECT SUM($_billValue) AS total FROM $billTable
+            WHERE $_billCategoryId = ? AND $_billDate = ?
+          """, [categoryId, date]);
+      num? total = res.isNotEmpty ? res.first['total'] as num? : 0.0;
+      return total ?? 0.0;
     }
-    return [];
+    return 0.0;
   }
 
   // Month

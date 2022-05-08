@@ -43,7 +43,7 @@ class MonthTabController extends GetxController {
     Month? previousMonth = isFirstMonth
         ? null
         : months[months.indexOf(lastMonth ?? Month(date: '')) + 1];
-    if(previousMonth != null) {
+    if (previousMonth != null) {
       return (previousMonth.totalPrice ?? 0) > (lastMonth?.totalPrice ?? 0);
     }
     return false;
@@ -54,11 +54,19 @@ class MonthTabController extends GetxController {
     Month? previousMonth = isFirstMonth
         ? null
         : months[months.indexOf(lastMonth ?? Month(date: '')) + 1];
-    if(previousMonth != null) {
+    if (previousMonth != null) {
       var difference = (lastMonth?.balance ?? 0) - (previousMonth.balance ?? 0);
       return (difference * 100) / (previousMonth.balance ?? 1);
     }
     return 0;
+  }
+
+  String get caption {
+    return (totalPriceDecreased ? 'youSaved'.tr : 'youSpent'.tr) +
+        ' ' +
+        AppHelpers.formatCurrency(totalPrice) +
+        ' ' +
+        'comparedLastMonth'.tr;
   }
 
   @override

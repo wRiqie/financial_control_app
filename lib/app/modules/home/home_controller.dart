@@ -1,4 +1,3 @@
-import 'package:financial_control_app/app/core/theme/dark/dark_colors.dart';
 import 'package:financial_control_app/app/core/utils/helpers.dart';
 import 'package:financial_control_app/app/core/values/contants.dart';
 import 'package:financial_control_app/app/data/enums/bill_status_enum.dart';
@@ -6,6 +5,7 @@ import 'package:financial_control_app/app/data/models/bill.dart';
 import 'package:financial_control_app/app/data/models/category.dart';
 import 'package:financial_control_app/app/data/models/month.dart';
 import 'package:financial_control_app/app/data/repository/bill_repository.dart';
+import 'package:financial_control_app/app/data/repository/category_repository.dart';
 import 'package:financial_control_app/app/data/repository/month_repository.dart';
 import 'package:financial_control_app/app/modules/home/widgets/category_item/category_item_controller.dart';
 import 'package:financial_control_app/app/routes/pages.dart';
@@ -17,33 +17,18 @@ import 'package:uuid/uuid.dart';
 class HomeController extends GetxController {
   GetStorage box = GetStorage(Constants.storageName);
   final uuid = const Uuid();
-  final BillRepository billRepository;
+  final CategoryRepository categoryRepository;
   final MonthRepository monthRepository;
+  final BillRepository billRepository;
   final valueCardController = ScrollController();
   num remainingBalance = 0.0;
   DateTime selectedDate = DateTime.now();
   Month? selectedMonth;
-  List<Category> categories = [
-    Category(
-      id: 1,
-    ),
-    Category(
-      id: 2,
-    ),
-    Category(
-      id: 3,
-    ),
-    Category(
-      id: 4,
-    ),
-    Category(
-      id: 5,
-    ),
-  ];
+  List<Category> categories = [];
 
-  HomeController(this.monthRepository, this.billRepository);
+  HomeController(this.categoryRepository, this.monthRepository, this.billRepository);
 
-  void openPreferences() async {
+  Future<void> openPreferences() async {
     await Get.toNamed(
       Routes.preferences,
       arguments: {
@@ -53,7 +38,7 @@ class HomeController extends GetxController {
     loadMonth();
   }
 
-  scrollValueCard(double width, int position, {bool back = false}) {
+  void scrollValueCard(double width, int position, {bool back = false}) {
     valueCardController.animateTo(
       back
           ? width * (position > 0 ? position - 1 : position)
@@ -63,7 +48,7 @@ class HomeController extends GetxController {
     );
   }
 
-  swapDate(BuildContext context) async {
+  Future<void> swapDate(BuildContext context) async {
     var date = await showDatePicker(
       context: context,
       initialDate: selectedDate,
@@ -78,19 +63,24 @@ class HomeController extends GetxController {
     }
   }
 
-  addBillToCategory(int categoryId, CategoryItemController controller) async {
+  Future<void> addBillToCategory(
+      int categoryId, CategoryItemController controller) async {
     await Get.toNamed(Routes.registerBill,
-        arguments: {'categoryId': categoryId,'selectedMonth': selectedMonth});
+        arguments: {'categoryId': categoryId, 'selectedMonth': selectedMonth});
     controller.getBills();
   }
 
-  loadMonth() async {
+  Future<void> loadCategories() async {
+    categories = await categoryRepository.getAllCategories();
+  }
+
+  Future<Month?> loadMonth() async {
     var month = await monthRepository
         .getMonthByDate(AppHelpers.formatDateToSave(selectedDate));
     if (month != null) {
       selectedMonth = month;
       calcRemainingBalance();
-      return;
+      return null;
     }
 
     var previousMonthBalance = await loadPreviousMonthBalance();
@@ -110,13 +100,13 @@ class HomeController extends GetxController {
     return monthToAdd;
   }
 
-  calcRemainingBalance() {
+  void calcRemainingBalance() {
     remainingBalance =
         (selectedMonth?.balance ?? 0.0) - (selectedMonth?.totalPrice ?? 0);
     update();
   }
 
-  toogleBillStatus(Bill bill) async {
+  Future<void> toogleBillStatus(Bill bill) async {
     if (bill.status != EBillStatus.paid.index) {
       bill.status = EBillStatus.paid.index;
     } else {
@@ -186,12 +176,12 @@ class HomeController extends GetxController {
         if (bill.portion != null && bill.maxPortion != null) {
           bill.portion = bill.portion! + 1;
         }
-        
+
         totalPrice += bill.value;
       },
     );
 
-    if(selectedMonth != null) {
+    if (selectedMonth != null) {
       selectedMonth!.totalPrice = totalPrice;
     }
 
@@ -202,6 +192,7 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    loadCategories();
     loadMonth();
   }
 }
