@@ -52,7 +52,7 @@ class CategoryItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      AppHelpers.categoryResolver(category.id),
+                      CategoryExtension.getById(category.id).name.tr,
                     ),
                     const SizedBox(
                       height: 20,

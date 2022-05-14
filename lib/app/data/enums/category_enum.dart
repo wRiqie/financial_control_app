@@ -13,30 +13,35 @@ extension CategoryExtension on ECategory {
   static final _categories = [
     {
       'id': 0,
+      'name': 'houseBills',
       'category': ECategory.home,
       'icon': Icons.home,
       'color': DarkColors.homeColor,
     },
     {
       'id': 1,
+      'name': 'foodAndDrink',
       'category': ECategory.foodAndDrinks,
       'icon': Icons.fastfood,
       'color': DarkColors.foodDrinkColor,
     },
     {
       'id': 2,
+      'name': 'gamesAndStreaming',
       'category': ECategory.games,
       'icon': Icons.games,
       'color': DarkColors.gamesColor,
     },
     {
       'id': 3,
+      'name': 'personalCare',
       'category': ECategory.person,
       'icon': Icons.person,
       'color': DarkColors.personalColor,
     },
     {
       'id': 4,
+      'name': 'others',
       'category': ECategory.others,
       'icon': Icons.add,
       'color': DarkColors.othersColor,
@@ -45,6 +50,9 @@ extension CategoryExtension on ECategory {
 
   int get id =>
       _categories.firstWhere((e) => e['category'] == this)['id'] as int;
+  
+  String get name =>
+      _categories.firstWhere((e) => e['category'] == this)['name'] as String;
 
   static ECategory getById(int id) =>
       _categories.firstWhere((e) => e['id'] == id)['category'] as ECategory;

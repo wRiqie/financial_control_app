@@ -16,7 +16,7 @@ class CategoryItemController extends GetxController {
   double get percentage {
     double paidValue = 0;
     double totalValue = totalPrice;
-    var paidBills = bills.where((e) => e.status == EBillStatus.paid.index);
+    var paidBills = bills.where((e) => e.status == EBillStatus.paid.id);
     for (var paidBill in paidBills) {
       paidValue += paidBill.value;
     }
@@ -25,7 +25,7 @@ class CategoryItemController extends GetxController {
   }
 
   double get leftPrice {
-    var leftBills = bills.where((e) => e.status != EBillStatus.paid.index);
+    var leftBills = bills.where((e) => e.status != EBillStatus.paid.id);
     double price = 0;
     for (var bill in leftBills) {
       price += bill.value;

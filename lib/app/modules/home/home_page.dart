@@ -86,14 +86,14 @@ class HomePage extends GetView<HomeController> {
                                             children: [
                                               ListTile(
                                                 title: bill.status ==
-                                                        EBillStatus.paid.index
+                                                        EBillStatus.paid.id
                                                     ? Text(
                                                         'marksUnpaid'.tr)
                                                     : Text(
                                                         'marksPaid'.tr),
                                                 leading: Icon(
                                                   bill.status ==
-                                                          EBillStatus.paid.index
+                                                          EBillStatus.paid.id
                                                       ? Icons.highlight_off
                                                       : Icons
                                                           .check_circle_outline,

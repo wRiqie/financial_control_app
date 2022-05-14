@@ -11,7 +11,9 @@ extension BillStatusExtension on EBillStatus {
     {'id': 2, 'status': EBillStatus.paid},
   ];
 
-  static EBillStatus getById(int id) {
-    return _status.firstWhere((e) => e['id'] == id)['status'] as EBillStatus;
-  }
+  int get id => 
+      _status.firstWhere((e) => e['status'] == this)['id'] as int;
+
+  static EBillStatus getById(int id) =>
+      _status.firstWhere((e) => e['id'] == id)['status'] as EBillStatus;
 }

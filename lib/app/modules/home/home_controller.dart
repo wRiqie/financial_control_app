@@ -107,12 +107,12 @@ class HomeController extends GetxController {
   }
 
   Future<void> toogleBillStatus(Bill bill) async {
-    if (bill.status != EBillStatus.paid.index) {
-      bill.status = EBillStatus.paid.index;
+    if (bill.status != EBillStatus.paid.id) {
+      bill.status = EBillStatus.paid.id;
     } else {
       bill.status = bill.dueDate > DateTime.now().day
-          ? EBillStatus.pendent.index
-          : EBillStatus.overdue.index;
+          ? EBillStatus.pendent.id
+          : EBillStatus.overdue.id;
     }
     await billRepository.saveBill(bill);
   }
@@ -170,8 +170,8 @@ class HomeController extends GetxController {
         bill.id = uuid.v4();
         bill.date = AppHelpers.formatDateToSave(selectedDate);
         bill.status = bill.dueDate > selectedDate.day
-            ? EBillStatus.pendent.index
-            : EBillStatus.overdue.index;
+            ? EBillStatus.pendent.id
+            : EBillStatus.overdue.id;
 
         if (bill.portion != null && bill.maxPortion != null) {
           bill.portion = bill.portion! + 1;

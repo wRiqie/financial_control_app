@@ -35,24 +35,6 @@ class AppHelpers {
     return formatted;
   }
 
-  static String categoryResolver(int categoryId) {
-    var category = CategoryExtension.getById(categoryId);
-    switch (category) {
-      case ECategory.home:
-        return 'houseBills'.tr;
-      case ECategory.foodAndDrinks:
-        return 'foodAndDrink'.tr;
-      case ECategory.games:
-        return 'gamesAndStreaming'.tr;
-      case ECategory.person:
-        return 'personalCare'.tr;
-      case ECategory.others:
-        return 'others'.tr;
-      default:
-        return 'others'.tr;
-    }
-  }
-
   static Color billStatusResolver(int status) {
     var billStatus = BillStatusExtension.getById(status); 
     switch (billStatus) {

@@ -28,7 +28,7 @@ void main() {
             title: '',
             value: 10,
             dueDate: 100,
-            status: EBillStatus.paid.index,
+            status: EBillStatus.paid.id,
             date: ''),
         Bill(
             id: '',
@@ -38,7 +38,7 @@ void main() {
             dueDate: 100,
             portion: 3,
             maxPortion: 3,
-            status: EBillStatus.paid.index,
+            status: EBillStatus.paid.id,
             date: ''),
       ];
       when(() => controller.billRepository.getBillsByDate(any()))
@@ -50,7 +50,7 @@ void main() {
           await controller.loadAndCopyPreviousMonthBills(copy: true);
 
       expect(savedBills.length, 1);
-      expect(savedBills[0].status, EBillStatus.pendent.index);
+      expect(savedBills[0].status, EBillStatus.pendent.id);
       expect(savedBills[0].portion, null);
     }));
 
@@ -62,7 +62,7 @@ void main() {
             title: '',
             value: 10,
             dueDate: 100,
-            status: EBillStatus.paid.index,
+            status: EBillStatus.paid.id,
             date: ''),
         Bill(
             id: '',
@@ -72,7 +72,7 @@ void main() {
             dueDate: 100,
             portion: 3,
             maxPortion: 3,
-            status: EBillStatus.paid.index,
+            status: EBillStatus.paid.id,
             date: ''),
         Bill(
             id: '',
@@ -82,7 +82,7 @@ void main() {
             dueDate: 100,
             portion: 1,
             maxPortion: 3,
-            status: EBillStatus.paid.index,
+            status: EBillStatus.paid.id,
             date: ''),
       ];
       when(() => controller.billRepository.getBillsByDate(any()))
@@ -96,7 +96,7 @@ void main() {
       expect(savedBills.length, 1);
       expect(savedBills[0].portion, 2);
       expect(savedBills[0].maxPortion, 3);
-      expect(savedBills[0].status, EBillStatus.pendent.index);
+      expect(savedBills[0].status, EBillStatus.pendent.id);
     });
   });
 

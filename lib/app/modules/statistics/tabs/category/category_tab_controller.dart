@@ -23,8 +23,9 @@ class CategoryTabController extends GetxController {
       );
       categoriesToAdd.add(
         CategoryData(
-          x: AppHelpers.categoryResolver(category.id),
-          y: totalValue * 1,
+          id: category.id,
+          name: CategoryExtension.getById(category.id).name.tr,
+          totalPrice: totalValue * 1,
           color: CategoryExtension.color(category.id),
         ),
       );
@@ -32,6 +33,11 @@ class CategoryTabController extends GetxController {
     datas = categoriesToAdd;
     isLoading = false;
     update();
+  }
+
+  num calcPercent(num price) {
+    num totalPrice = datas.map((e) => e.totalPrice).reduce((v, e) => v + e);
+    return (price * 100) / (totalPrice > 0 ? totalPrice : 1);
   }
 
   @override

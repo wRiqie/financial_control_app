@@ -15,7 +15,7 @@ void main() {
       title: 'Teste 1',
       value: 100.00,
       dueDate: 10,
-      status: EBillStatus.paid.index,
+      status: EBillStatus.paid.id,
       date: '12-2022',
     ),
     Bill(
@@ -24,7 +24,7 @@ void main() {
       title: 'Teste 2',
       value: 100.00,
       dueDate: 10,
-      status: EBillStatus.pendent.index,
+      status: EBillStatus.pendent.id,
       date: '12-2022',
     ),
     Bill(
@@ -33,7 +33,7 @@ void main() {
       title: 'Teste 3',
       value: 100.00,
       dueDate: 10,
-      status: EBillStatus.overdue.index,
+      status: EBillStatus.overdue.id,
       date: '12-2022',
     ),
     Bill(
@@ -42,7 +42,7 @@ void main() {
       title: 'Teste 4',
       value: 100.00,
       dueDate: 10,
-      status: EBillStatus.overdue.index,
+      status: EBillStatus.overdue.id,
       date: '12-2022',
     ),
   ];

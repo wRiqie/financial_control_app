@@ -14,8 +14,8 @@ class RegisterBillController extends GetxController {
   final homeController = Get.find<HomeController>();
   final BillRepository repository;
   final MonthRepository monthRepository;
-  final uuid = const Uuid();
   final args = Get.arguments;
+  final uuid = const Uuid();
   int categoryId = 0;
   bool havePortions = false;
   bool paid = false;
@@ -92,11 +92,11 @@ class RegisterBillController extends GetxController {
 
   int get status {
     if (paid) {
-      return EBillStatus.paid.index;
+      return EBillStatus.paid.id;
     }
     return DateTime.now().day > int.parse(dueDateController.text)
-        ? EBillStatus.overdue.index
-        : EBillStatus.pendent.index;
+        ? EBillStatus.overdue.id
+        : EBillStatus.pendent.id;
   }
 
   fillFields() {
@@ -107,7 +107,7 @@ class RegisterBillController extends GetxController {
     portionController.text = editingBill?.portion?.toString() ?? '';
     maxPortionController.text = editingBill?.maxPortion?.toString() ?? '';
 
-    paid = editingBill?.status == EBillStatus.paid.index ? true : false;
+    paid = editingBill?.status == EBillStatus.paid.id ? true : false;
     havePortions = editingBill?.maxPortion != null ? true : false;
   }
 

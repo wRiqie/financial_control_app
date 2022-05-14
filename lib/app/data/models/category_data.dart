@@ -1,13 +1,15 @@
 import 'package:flutter/Material.dart';
 
 class CategoryData {
-  String x;
-  double y;
+  int id;
+  String name;
+  double totalPrice;
   Color color;
 
   CategoryData({
-    required this.x,
-    required this.y,
+    required this.id,
+    required this.name,
+    required this.totalPrice,
     required this.color,
   });
 }
