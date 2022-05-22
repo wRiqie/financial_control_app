@@ -7,18 +7,23 @@ import 'package:permission_handler/permission_handler.dart';
 class DatabaseService {
   Future<Directory> get pathToCopy => getApplicationDocumentsDirectory();
 
-  Future<File?> getDb() async {
-    final dbFolder = await getDownloadsDirectory();
-    final sourceDb = File('$dbFolder/${Constants.dbName}');
-
+  Future<bool> checkPermissions() async {
     var permissionStatus = await Permission.storage.status;
     if (permissionStatus.isDenied) {
       permissionStatus = await Permission.storage.request();
       if (permissionStatus.isDenied) {
         print('Permission Denied');
-        return null;
+        return false;
       }
     }
+    return true;
+  }
+
+  Future<File?> getDb() async {
+    final dbFolder = await getDownloadsDirectory();
+    final sourceDb = File('$dbFolder/${Constants.dbName}');
+
+    
     return sourceDb;
   }
 
