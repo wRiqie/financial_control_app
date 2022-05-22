@@ -6,7 +6,7 @@ class BackupRepository {
   Future<String?> generateBackup()
     => db.generateBackup();
 
-  Future<void> restoreBackup(String backup)
+  Future<bool> restoreBackup(String backup)
     => db.restoreBackup(backup);
 
   Future<void> clearAllTables()

@@ -57,13 +57,12 @@ class DatabaseProvider {
     return [];
   }
 
-  Future<String?> generateBackup({bool isEncrypted = false}) async {
+  Future<String?> generateBackup({bool isEncrypted = true}) async {
     final db = await database;
     if (db != null) {
       List data = [];
       List<Map<String, dynamic>> listMaps = [];
       final tables = await _getTables();
-      print(tables);
 
       for (var i = 0; i < tables.length; i++) {
         listMaps = await db.query(tables[i]);
@@ -86,7 +85,7 @@ class DatabaseProvider {
     return null;
   }
 
-  Future<void> restoreBackup(String backup, {bool isEncrypted = true}) async {
+  Future<bool> restoreBackup(String backup, {bool isEncrypted = true}) async {
     final db = await database;
 
     if (db != null) {
@@ -99,14 +98,20 @@ class DatabaseProvider {
       List json = convert.jsonDecode(
           isEncrypted ? encrypter.decrypt64(backup, iv: iv) : backup);
 
-      for (var i = 0; i < json[0].length; i++) {
-        for (var k = 0; k < json[1][i].length; k++) {
-          batch.insert(json[0][i], json[1][i][k]);
+      try {
+        for (var i = 0; i < json[0].length; i++) {
+          for (var k = 0; k < json[1][i].length; k++) {
+            batch.insert(json[0][i], json[1][i][k]);
+          }
         }
-      }
 
-      await batch.commit(continueOnError: false, noResult: true);
+        await batch.commit(continueOnError: true, noResult: true);
+        return true;
+      } catch (e) {
+        return false;
+      }
     }
+    return false;
   }
 
   Future clearAllTables() async {
@@ -115,8 +120,7 @@ class DatabaseProvider {
       final tables = await _getTables();
       if (db != null) {
         for (String table in tables) {
-          await db.delete(table);
-          await db.rawQuery("DELETE FROM sqlite_sequence where name='$table'");
+            await db.delete(table);
         }
       }
     } catch (e) {}

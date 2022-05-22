@@ -5,6 +5,7 @@ import 'package:financial_control_app/app/data/models/bill.dart';
 import 'package:financial_control_app/app/data/models/month.dart';
 import 'package:financial_control_app/app/data/repository/bill_repository.dart';
 import 'package:financial_control_app/app/data/repository/month_repository.dart';
+import 'package:financial_control_app/app/data/services/snackbar_service.dart';
 import 'package:financial_control_app/app/modules/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,6 +15,7 @@ class RegisterBillController extends GetxController {
   final homeController = Get.find<HomeController>();
   final BillRepository repository;
   final MonthRepository monthRepository;
+  final SnackbarService snackService;
   final args = Get.arguments;
   final uuid = const Uuid();
   int categoryId = 0;
@@ -30,7 +32,8 @@ class RegisterBillController extends GetxController {
   final portionController = TextEditingController();
   final maxPortionController = TextEditingController();
 
-  RegisterBillController(this.repository, this.monthRepository);
+  RegisterBillController(this.repository, this.monthRepository,
+      {required this.snackService});
 
   togglePortion(bool? value) {
     havePortions = value ?? !havePortions;
@@ -74,18 +77,10 @@ class RegisterBillController extends GetxController {
       if (!add) {
         Get.back();
       }
-
-      Get.snackbar(
-        'success'.tr,
-        'successfullySaved'.tr,
-        snackPosition: SnackPosition.TOP,
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 10,
-        ),
-        backgroundColor: DarkColors.success,
-        colorText: Get.theme.colorScheme.onSurface,
-        icon: const Icon(Icons.done),
+      
+      snackService.showSnackbar(
+        title: 'success'.tr,
+        subtitle: 'successfullySaved'.tr,
       );
     }
   }
