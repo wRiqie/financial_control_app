@@ -1,3 +1,7 @@
+import 'dart:convert' as convert;
+import 'package:encrypt/encrypt.dart' as encrypt;
+
+import 'package:financial_control_app/app/core/values/contants.dart';
 import 'package:financial_control_app/app/data/models/bill.dart';
 import 'package:financial_control_app/app/data/models/category.dart';
 import 'package:financial_control_app/app/data/models/category_month.dart';
@@ -21,7 +25,7 @@ class DatabaseProvider {
 
   initDb() async {
     var databasePath = await getDatabasesPath();
-    String path = join(databasePath, 'finances.db');
+    String path = join(databasePath, Constants.dbName);
     return await openDatabase(
       path,
       version: 1,
@@ -38,6 +42,84 @@ class DatabaseProvider {
         await db.execute(_createTableCategoryMonth);
       },
     );
+  }
+
+  // Backup
+  Future<List<String>> _getTables() async {
+    final db = await database;
+    if (db != null) {
+      final tableNames = (await db
+              .query('sqlite_master', where: 'type = ?', whereArgs: ['table']))
+          .map((row) => row['name'] as String)
+          .toList(growable: false);
+      return tableNames;
+    }
+    return [];
+  }
+
+  Future<String?> generateBackup({bool isEncrypted = false}) async {
+    final db = await database;
+    if (db != null) {
+      List data = [];
+      List<Map<String, dynamic>> listMaps = [];
+      final tables = await _getTables();
+      print(tables);
+
+      for (var i = 0; i < tables.length; i++) {
+        listMaps = await db.query(tables[i]);
+
+        data.add(listMaps);
+      }
+
+      List backups = [tables, data];
+      String json = convert.jsonEncode(backups);
+      if (isEncrypted) {
+        var key = encrypt.Key.fromUtf8(Constants.secretKey);
+        var iv = encrypt.IV.fromLength(16);
+        var encrypter = encrypt.Encrypter(encrypt.AES(key));
+        var encrypted = encrypter.encrypt(json, iv: iv);
+
+        return encrypted.base64;
+      }
+      return json;
+    }
+    return null;
+  }
+
+  Future<void> restoreBackup(String backup, {bool isEncrypted = true}) async {
+    final db = await database;
+
+    if (db != null) {
+      Batch batch = db.batch();
+
+      var key = encrypt.Key.fromUtf8(Constants.secretKey);
+      var iv = encrypt.IV.fromLength(16);
+      var encrypter = encrypt.Encrypter(encrypt.AES(key));
+
+      List json = convert.jsonDecode(
+          isEncrypted ? encrypter.decrypt64(backup, iv: iv) : backup);
+
+      for (var i = 0; i < json[0].length; i++) {
+        for (var k = 0; k < json[1][i].length; k++) {
+          batch.insert(json[0][i], json[1][i][k]);
+        }
+      }
+
+      await batch.commit(continueOnError: false, noResult: true);
+    }
+  }
+
+  Future clearAllTables() async {
+    try {
+      var db = await database;
+      final tables = await _getTables();
+      if (db != null) {
+        for (String table in tables) {
+          await db.delete(table);
+          await db.rawQuery("DELETE FROM sqlite_sequence where name='$table'");
+        }
+      }
+    } catch (e) {}
   }
 
   // Generic

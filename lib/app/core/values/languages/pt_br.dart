@@ -47,7 +47,7 @@ final Map<String, String> ptBr = {
   'enterATitle': 'Por favor digite um título',
   'monthValue': 'Valor ao mês',
   'enterAMonthValue': 'Por favor digite um valor ao mês',
-  'dueDate': 'Data de vencimento/pagamento',
+  'dueDate': 'Data de pagamento/vencimento',
   'enterAValidDueDate': 'Por favor digite uma data de vencimento/pagamento válida',
   'currentPortion': 'Parcela atual',
   'enterAValidPortion': 'Por favor digite uma parcela atual válida',

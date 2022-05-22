@@ -43,6 +43,9 @@ dependencies:
   path: ^1.8.0
   syncfusion_flutter_charts: ^20.1.48
   flutter_svg: ^1.0.3
+  permission_handler: ^9.2.0
+  path_provider: ^2.0.10
+  encrypt: ^5.0.1
 
 dev_dependencies:
   flutter_test:

@@ -47,7 +47,7 @@ final Map<String, String> enUs = {
   'enterATitle': 'Please enter a title',
   'monthValue': 'Month value',
   'enterAMonthValue': 'Please enter a month value',
-  'dueDate': 'Due date/payment',
+  'dueDate': 'Payment/due date',
   'enterAValidDueDate': 'Please enter a valid due date',
   'currentPortion': 'Current portion',
   'enterAValidPortion': 'Please enter a valid portion',

@@ -32,6 +32,33 @@ class PreferencesPage extends GetView<PreferencesController> {
                     switchValue: controller.copyBills,
                     toggleSwitch: controller.toogleCopyBills,
                   ),
+                  _buildTile(
+                    title: 'Backup dos dados',
+                    subtitle: 'Utilize para exportar ou importar dados',
+                    icon: Icons.save,
+                    onTap: () {
+                      Get.bottomSheet(
+                        Wrap(
+                          children: [
+                            ListTile(
+                              tileColor: Get.theme.colorScheme.surface,
+                              leading: Icon(Icons.upload,
+                                  color: Get.theme.colorScheme.primary),
+                              title: const Text('Exportar dados'),
+                              // onTap: () => controller.exportDatabase(),
+                            ),
+                            ListTile(
+                              tileColor: Get.theme.colorScheme.surface,
+                              leading: Icon(Icons.download,
+                                  color: Get.theme.colorScheme.primary),
+                              title: const Text('Importar dados'),
+                              // onTap: () => controller.importDatabase(),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
