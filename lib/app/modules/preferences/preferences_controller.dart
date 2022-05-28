@@ -45,7 +45,6 @@ class PreferencesController extends GetxController {
 
   void importDb() async {
     final imported = await backupDbService.importDatabase();
-    Get.back();
     if (!imported) {
       snackService.showSnackbar(
         title: 'Erro',
@@ -54,6 +53,7 @@ class PreferencesController extends GetxController {
       );
       return;
     }
+    Get.offAllNamed(Routes.dashboard);
     snackService.showSnackbar(
       title: 'success'.tr,
       subtitle: 'successfullySaved'.tr,

@@ -1,4 +1,5 @@
 import 'package:financial_control_app/app/core/theme/dark/dark_colors.dart';
+import 'package:financial_control_app/app/global/widgets/confirm_dialog.dart';
 import 'package:financial_control_app/app/modules/preferences/preferences_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -48,12 +49,24 @@ class PreferencesPage extends GetView<PreferencesController> {
                               onTap: () => controller.exportDb(),
                             ),
                             ListTile(
-                              tileColor: Get.theme.colorScheme.surface,
-                              leading: Icon(Icons.download,
-                                  color: Get.theme.colorScheme.primary),
-                              title: const Text('Importar dados'),
-                              onTap: () => controller.importDb(),
-                            ),
+                                tileColor: Get.theme.colorScheme.surface,
+                                leading: Icon(Icons.download,
+                                    color: Get.theme.colorScheme.primary),
+                                title: const Text('Importar dados'),
+                                onTap: () {
+                                  Get.back();
+                                  Get.dialog(
+                                    ConfirmDialog(
+                                      icon: Icon(
+                                        Icons.download,
+                                        color: Get.theme.colorScheme.primary,
+                                      ),
+                                      body:
+                                          'Ao importar dados, os dados atuais serão excluídos, tem certeza que deseja continuar?',
+                                      onConfirm: controller.importDb,
+                                    ),
+                                  );
+                                }),
                           ],
                         ),
                       );
