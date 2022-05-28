@@ -1,6 +1,4 @@
-import 'package:financial_control_app/app/core/theme/dark/dark_colors.dart';
 import 'package:financial_control_app/app/data/enums/bill_status_enum.dart';
-import 'package:financial_control_app/app/data/enums/category_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';

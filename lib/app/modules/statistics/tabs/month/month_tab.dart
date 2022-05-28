@@ -17,52 +17,56 @@ class MonthTabPage extends GetView<MonthTabController> {
         init: MonthTabController(MonthRepository(DatabaseProvider.db)),
         builder: (_) => Stack(
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Container(
-                  margin: const EdgeInsets.all(10),
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      color: Get.theme.colorScheme.surface,
-                      borderRadius: BorderRadius.circular(5)),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        child: Text(
-                          'Months total values',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+            SingleChildScrollView(
+              primary: true,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: Get.theme.colorScheme.surface,
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          child: Text(
+                            'Months total values',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      controller.isLoading
-                          ? Container(
-                              height: 300,
-                            )
-                          : SfCartesianChart(
-                              primaryXAxis: CategoryAxis(
-                                majorGridLines: const MajorGridLines(width: 0),
+                        controller.isLoading
+                            ? Container(
+                                height: 300,
+                              )
+                            : SfCartesianChart(
+                                primaryXAxis: CategoryAxis(
+                                  majorGridLines: const MajorGridLines(width: 0),
+                                ),
+                                series: <ChartSeries>[
+                                  SplineSeries<MonthData, String>(
+                                    dataSource: controller.datas,
+                                    color: Get.theme.colorScheme.primary,
+                                    width: 3,
+                                    xValueMapper: (MonthData data, _) => data.x,
+                                    yValueMapper: (MonthData data, _) => data.y,
+                                  )
+                                ],
                               ),
-                              series: <ChartSeries>[
-                                SplineSeries<MonthData, String>(
-                                  dataSource: controller.datas,
-                                  color: Get.theme.colorScheme.primary,
-                                  width: 3,
-                                  xValueMapper: (MonthData data, _) => data.x,
-                                  yValueMapper: (MonthData data, _) => data.y,
-                                )
-                              ],
-                            ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: GridView.count(
+                  GridView.count(
+                    primary: false,
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
                     crossAxisCount: 2,
                     children: [
                       _buildStatisticCard(
@@ -83,19 +87,19 @@ class MonthTabPage extends GetView<MonthTabController> {
                       ),
                     ],
                   ),
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(
-                    controller.caption,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: Get.theme.colorScheme.primary
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(
+                      controller.caption,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Get.theme.colorScheme.primary
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             Visibility(
               visible: controller.isLoading,

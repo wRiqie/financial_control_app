@@ -123,7 +123,9 @@ class DatabaseProvider {
             await db.delete(table);
         }
       }
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
   }
 
   // Generic
