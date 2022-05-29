@@ -14,11 +14,17 @@ class ChangeBalanceController extends GetxController {
   final formKey = GlobalKey<FormState>();
   final balanceController = TextEditingController();
   Month? month;
+  bool? firstTime;
 
   ChangeBalanceController(this.repository);
 
   saveBalance() async {
     if (formKey.currentState!.validate()) {
+      if(firstTime != null && firstTime!) {
+        Get.toNamed(Routes.selectCategories);
+        return;
+      }
+
       if (month != null) {
         month!.balance =
             AppHelpers.revertCurrencyFormat(balanceController.text);
@@ -40,6 +46,7 @@ class ChangeBalanceController extends GetxController {
   void onInit() {
     super.onInit();
     month = args?['month'];
+    firstTime = args?['firstTime'];
     if (month != null) {
       balanceController.text = AppHelpers.formatCurrency(month!.balance ?? 0);
     } else {

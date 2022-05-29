@@ -15,6 +15,11 @@ final Map<String, String> ptBr = {
   'foodAndDrink': 'Comidas e bebidas',
   'gamesAndStreaming': 'Jogos e streaming',
   'personalCare': 'Cuidados pessoais',
+  'health': 'Saúde',
+  'studies': 'Estudos',
+  'creditCard': 'Cartão de crédito',
+  'investments': 'Investimentos',
+  'internetPurchases': 'Compras da internet',
   'others': 'Outros',
   'balance': 'Saldo',
   'concluded': 'Concluído',
@@ -48,13 +53,15 @@ final Map<String, String> ptBr = {
   'monthValue': 'Valor ao mês',
   'enterAMonthValue': 'Por favor digite um valor ao mês',
   'dueDate': 'Data de pagamento/vencimento',
-  'enterAValidDueDate': 'Por favor digite uma data de vencimento/pagamento válida',
+  'enterAValidDueDate':
+      'Por favor digite uma data de vencimento/pagamento válida',
   'currentPortion': 'Parcela atual',
   'enterAValidPortion': 'Por favor digite uma parcela atual válida',
   'currentPortionCannotBeGreaterThanTotal':
       'A parcela atual não pode ser maior que a final',
   'quantityOfParcels': 'Quantidade de parcelas',
-  'enterAValidTotalPortion': 'Por favor digite uma quantidade válida de parcelas',
+  'enterAValidTotalPortion':
+      'Por favor digite uma quantidade válida de parcelas',
   'alreadyPaid': 'Já pago?',
   'haveParcels': 'Tem parcelas',
   'success': 'Successo',
@@ -62,4 +69,5 @@ final Map<String, String> ptBr = {
   'youSaved': 'Você economizou',
   'youSpent': 'Você gastou',
   'comparedLastMonth': 'em comparação com o mês passado',
+  'missing': 'Faltam',
 };

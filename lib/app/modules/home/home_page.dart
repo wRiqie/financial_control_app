@@ -1,5 +1,6 @@
 import 'package:financial_control_app/app/core/utils/helpers.dart';
 import 'package:financial_control_app/app/data/enums/bill_status_enum.dart';
+import 'package:financial_control_app/app/global/widgets/confirm_dialog.dart';
 import 'package:financial_control_app/app/modules/home/home_controller.dart';
 import 'package:financial_control_app/app/modules/home/widgets/category_item/category_item.dart';
 import 'package:financial_control_app/app/routes/pages.dart';
@@ -87,10 +88,8 @@ class HomePage extends GetView<HomeController> {
                                               ListTile(
                                                 title: bill.status ==
                                                         EBillStatus.paid.id
-                                                    ? Text(
-                                                        'marksUnpaid'.tr)
-                                                    : Text(
-                                                        'marksPaid'.tr),
+                                                    ? Text('marksUnpaid'.tr)
+                                                    : Text('marksPaid'.tr),
                                                 leading: Icon(
                                                   bill.status ==
                                                           EBillStatus.paid.id
@@ -141,22 +140,20 @@ class HomePage extends GetView<HomeController> {
                                                 ),
                                                 onTap: () async {
                                                   Get.back();
-                                                  Get.defaultDialog(
-                                                    title: 'alert'.tr,
-                                                    titleStyle: TextStyle(
-                                                      color: Get.theme
-                                                          .colorScheme.primary,
+                                                  Get.dialog(
+                                                    ConfirmDialog(
+                                                      icon: Icon(Icons.delete,
+                                                          color: Get
+                                                              .theme
+                                                              .colorScheme
+                                                              .primary),
+                                                      body: 'wantDeleteBill'.tr,
+                                                      onConfirm: () {
+                                                        controller.deleteBill(
+                                                            bill,
+                                                            categoryController);
+                                                      },
                                                     ),
-                                                    middleText:
-                                                        'wantDeleteBill'.tr,
-                                                    textConfirm: 'confirm'.tr,
-                                                    textCancel: 'cancel'.tr,
-                                                    onCancel: () {},
-                                                    onConfirm: () {
-                                                      controller.deleteBill(
-                                                          bill,
-                                                          categoryController);
-                                                    },
                                                   );
                                                   // await controller.selectMonth();
                                                 },

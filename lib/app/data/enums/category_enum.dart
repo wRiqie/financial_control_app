@@ -2,10 +2,15 @@ import 'package:financial_control_app/app/core/theme/dark/dark_colors.dart';
 import 'package:flutter/material.dart';
 
 enum ECategory {
-  home,
-  foodAndDrinks,
-  games,
-  person,
+  houseBills,
+  foodAndDrink,
+  gamesAndStreaming,
+  personalCare,
+  health,
+  studies,
+  creditCard,
+  investments,
+  internetPurchases,
   others,
 }
 
@@ -13,46 +18,68 @@ extension CategoryExtension on ECategory {
   static final _categories = [
     {
       'id': 0,
-      'name': 'houseBills',
-      'category': ECategory.home,
+      'category': ECategory.houseBills,
       'icon': Icons.home,
       'color': DarkColors.homeColor,
     },
     {
       'id': 1,
-      'name': 'foodAndDrink',
-      'category': ECategory.foodAndDrinks,
+      'category': ECategory.foodAndDrink,
       'icon': Icons.fastfood,
       'color': DarkColors.foodDrinkColor,
     },
     {
       'id': 2,
-      'name': 'gamesAndStreaming',
-      'category': ECategory.games,
+      'category': ECategory.gamesAndStreaming,
       'icon': Icons.games,
       'color': DarkColors.gamesColor,
     },
     {
       'id': 3,
-      'name': 'personalCare',
-      'category': ECategory.person,
+      'category': ECategory.personalCare,
       'icon': Icons.person,
       'color': DarkColors.personalColor,
     },
     {
       'id': 4,
-      'name': 'others',
       'category': ECategory.others,
       'icon': Icons.add,
       'color': DarkColors.othersColor,
+    },
+    {
+      'id': 5,
+      'category': ECategory.health,
+      'icon': Icons.healing,
+      'color': DarkColors.healthColor,
+    },
+    {
+      'id': 6,
+      'category': ECategory.studies,
+      'icon': Icons.book,
+      'color': DarkColors.studiesColor,
+    },
+    {
+      'id': 7,
+      'category': ECategory.creditCard,
+      'icon': Icons.credit_card,
+      'color': DarkColors.creditCardColor,
+    },
+    {
+      'id': 8,
+      'category': ECategory.investments,
+      'icon': Icons.show_chart,
+      'color': DarkColors.investmentsColor,
+    },
+    {
+      'id': 9,
+      'category': ECategory.internetPurchases,
+      'icon': Icons.shopping_bag,
+      'color': DarkColors.internetPurchasesColor,
     },
   ];
 
   int get id =>
       _categories.firstWhere((e) => e['category'] == this)['id'] as int;
-  
-  String get name =>
-      _categories.firstWhere((e) => e['category'] == this)['name'] as String;
 
   static ECategory getById(int id) =>
       _categories.firstWhere((e) => e['id'] == id)['category'] as ECategory;

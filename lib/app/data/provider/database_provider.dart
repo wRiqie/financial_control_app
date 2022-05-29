@@ -120,7 +120,7 @@ class DatabaseProvider {
       final tables = await _getTables();
       if (db != null) {
         for (String table in tables) {
-            await db.delete(table);
+          await db.delete(table);
         }
       }
     } catch (e) {
@@ -147,7 +147,11 @@ class DatabaseProvider {
     final db = await database;
     if (db != null) {
       await Future.forEach<dynamic>(datas, (data) async {
-        await db.insert(table, data.toMap());
+        await db.insert(
+          table,
+          data.toMap(),
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        );
       });
     }
   }

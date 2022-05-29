@@ -6,6 +6,11 @@ class DarkColors {
   static const foodDrinkColor = Color(0xFF5BA8C5);
   static const gamesColor = Color(0xFFE25822);
   static const personalColor = Color(0xFFE2C522);
+  static const healthColor = Color(0xFFC3003D);
+  static const creditCardColor = Color(0xFF184173);
+  static const studiesColor = Color(0xFF5A3962);
+  static const investmentsColor = Color(0xFF009462);
+  static const internetPurchasesColor = Color(0xFFFF5220);
   static const othersColor = Color(0xFF9C22E2);
 
   // Normal Colors

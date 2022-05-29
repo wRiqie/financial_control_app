@@ -69,19 +69,21 @@ class CategoryItem extends StatelessWidget {
                           children: [
                             Text(
                               AppHelpers.formatCurrency(_.totalPrice),
-                              style: const TextStyle(fontWeight: FontWeight.bold),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
                             ),
                             _.leftPrice > 0
-                            ? Text(
-                                'Falta ${AppHelpers.formatCurrency(_.leftPrice)}',
-                                style: TextStyle(
-                                    color: Get.theme.colorScheme.primary),
-                                textAlign: TextAlign.end,
-                              )
-                            : Container(),
+                                ? Text(
+                                    'missing'.tr +
+                                        ' ' +
+                                        AppHelpers.formatCurrency(_.leftPrice),
+                                    style: TextStyle(
+                                        color: Get.theme.colorScheme.primary),
+                                    textAlign: TextAlign.end,
+                                  )
+                                : Container(),
                           ],
                         ),
-                        
                       ],
                     ),
                     const SizedBox(

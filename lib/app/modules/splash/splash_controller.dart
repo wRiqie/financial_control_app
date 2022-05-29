@@ -31,8 +31,11 @@ class SplashController extends GetxController {
       final categories =
           ECategory.values.map((e) => Category(id: e.id)).toList();
       await categoryRepository.saveCategories(categories);
-      box.write(Constants.firstTimeOpen, false);
-      Get.offAndToNamed(Routes.changeBalance);
+      box.write(Constants.firstTimeOpen, true);
+      Get.offAndToNamed(
+        Routes.changeBalance,
+        arguments: {'firstTime': true},
+      );
       return;
     }
   }

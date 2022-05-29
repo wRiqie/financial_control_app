@@ -15,6 +15,11 @@ final Map<String, String> enUs = {
   'foodAndDrink': 'Food and drink',
   'gamesAndStreaming': 'Games and streaming',
   'personalCare': 'Personal care',
+  'health': 'Health',
+  'studies': 'Studies',
+  'creditCard': 'Credit card',
+  'investments': 'Investments',
+  'internetPurchases': 'Internet Purchases',
   'others': 'Others',
   'balance': 'Balance',
   'concluded': 'Concluded',
@@ -63,4 +68,5 @@ final Map<String, String> enUs = {
   'youSpent': 'You spent',
   'thisMonth': 'this month',
   'comparedLastMonth': 'compared to last month',
+  'missing': 'Missing',
 };

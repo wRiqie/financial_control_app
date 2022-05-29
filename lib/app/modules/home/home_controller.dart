@@ -71,7 +71,7 @@ class HomeController extends GetxController {
   }
 
   Future<void> loadCategories() async {
-    categories = await categoryRepository.getAllCategories();
+    categories = await categoryRepository.getSelectedCategories();
   }
 
   Future<Month?> loadMonth() async {

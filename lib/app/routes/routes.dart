@@ -8,4 +8,5 @@ abstract class Routes{
   static const registerBill = '/register-bill';
   static const preferences = '/preferences';
   static const changeBalance = '/change-balance';
+  static const selectCategories = '/select-categories';
 }

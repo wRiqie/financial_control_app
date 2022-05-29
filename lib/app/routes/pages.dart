@@ -8,6 +8,8 @@ import 'package:financial_control_app/app/modules/preferences/preferences_bindin
 import 'package:financial_control_app/app/modules/preferences/preferences_page.dart';
 import 'package:financial_control_app/app/modules/register_bill/register_bill_binding.dart';
 import 'package:financial_control_app/app/modules/register_bill/register_bill_page.dart';
+import 'package:financial_control_app/app/modules/select_categories/select_categories_binding.dart';
+import 'package:financial_control_app/app/modules/select_categories/select_categories_page.dart';
 import 'package:financial_control_app/app/modules/splash/splash_binding.dart';
 import 'package:financial_control_app/app/modules/splash/splash_page.dart';
 import 'package:financial_control_app/app/modules/statistics/statistics_binding.dart';
@@ -51,6 +53,11 @@ abstract class AppPages {
       name: Routes.changeBalance,
       page: () => const ChangeBalancePage(),
       binding: ChangeBalanceBinding()
+    ),
+    GetPage(
+      name: Routes.selectCategories,
+      page: () => const SelectCategoriesPage(),
+      binding: SelectCategoriesBinding()
     ),
   ];
 }
