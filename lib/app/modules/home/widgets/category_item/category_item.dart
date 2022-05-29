@@ -11,14 +11,21 @@ import 'package:get/get.dart';
 
 class CategoryItem extends StatelessWidget {
   final Category category;
-  final Function(int categoryId, CategoryItemController controller) addBillToCategory;
+  final Function(int categoryId, CategoryItemController controller)
+      addBillToCategory;
   final Function(Bill bill, CategoryItemController controller) onTap;
-  const CategoryItem({Key? key, required this.onTap, required this.category, required this.addBillToCategory}) : super(key: key);
+  const CategoryItem(
+      {Key? key,
+      required this.onTap,
+      required this.category,
+      required this.addBillToCategory})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CategoryItemController>(
-      init: CategoryItemController(BillRepository(DatabaseProvider.db), category),
+      init:
+          CategoryItemController(BillRepository(DatabaseProvider.db), category),
       global: false,
       tag: category.id.toString(),
       builder: (_) => ExpandablePanel(
@@ -47,12 +54,35 @@ class CategoryItem extends StatelessWidget {
                 ),
               ),
               Flexible(
-                flex: 3,
+                flex: 5,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
-                      CategoryExtension.getById(category.id).name.tr,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          CategoryExtension.getById(category.id).name.tr,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              AppHelpers.formatCurrency(_.totalPrice),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            _.leftPrice > 0
+                            ? Text(
+                                'Falta ${AppHelpers.formatCurrency(_.leftPrice)}',
+                                style: TextStyle(
+                                    color: Get.theme.colorScheme.primary),
+                                textAlign: TextAlign.end,
+                              )
+                            : Container(),
+                          ],
+                        ),
+                        
+                      ],
                     ),
                     const SizedBox(
                       height: 20,
@@ -61,23 +91,6 @@ class CategoryItem extends StatelessWidget {
                       minHeight: 5,
                       value: _.percentage,
                     ),
-                  ],
-                ),
-              ),
-              Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      AppHelpers.formatCurrency(_.totalPrice),
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.end,
-                    ),
-                    _.leftPrice > 0 ? Text(
-                      AppHelpers.formatCurrency(_.leftPrice),
-                      style: TextStyle(color: Get.theme.colorScheme.error),
-                      textAlign: TextAlign.end,
-                    ) : Container(),
                   ],
                 ),
               ),
@@ -97,7 +110,7 @@ class CategoryItem extends StatelessWidget {
                       (e) => Material(
                         color: Get.theme.colorScheme.surface,
                         child: InkWell(
-                          onTap: (){
+                          onTap: () {
                             onTap(e, _);
                           },
                           child: _buildBill(e),
@@ -162,7 +175,9 @@ class CategoryItem extends StatelessWidget {
             ],
           ),
         ),
-        Divider(color: Get.theme.colorScheme.onBackground,),
+        Divider(
+          color: Get.theme.colorScheme.onBackground,
+        ),
       ],
     );
   }
