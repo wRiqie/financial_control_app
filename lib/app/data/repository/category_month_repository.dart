@@ -10,6 +10,9 @@ class CategoryMonthRepository {
   Future<int> saveCategoryMonth(CategoryMonth categoryMonth)
     => db.save(data: categoryMonth, table: _table);
 
+  // Future<int> deleteCategoryMonth(String id)
+  //   => db.
+
   Future<List<CategoryMonth>> getCategoryMonthsByCategoryIdAndMonth(int categoryId, String month)
     => db.getCategoryMonthsByCategoryIdAndMonth(categoryId, month);
 }

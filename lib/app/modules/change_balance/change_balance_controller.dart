@@ -20,11 +20,6 @@ class ChangeBalanceController extends GetxController {
 
   saveBalance() async {
     if (formKey.currentState!.validate()) {
-      if(firstTime != null && firstTime!) {
-        Get.toNamed(Routes.selectCategories);
-        return;
-      }
-
       if (month != null) {
         month!.balance =
             AppHelpers.revertCurrencyFormat(balanceController.text);
@@ -36,8 +31,7 @@ class ChangeBalanceController extends GetxController {
           balance: AppHelpers.revertCurrencyFormat(balanceController.text),
         );
         await repository.saveMonth(monthToAdd);
-        box.write(Constants.firstTimeOpen, false);
-        Get.offAllNamed(Routes.dashboard);
+        Get.toNamed(Routes.selectCategories);
       }
     }
   }
@@ -47,10 +41,6 @@ class ChangeBalanceController extends GetxController {
     super.onInit();
     month = args?['month'];
     firstTime = args?['firstTime'];
-    if (month != null) {
-      balanceController.text = AppHelpers.formatCurrency(month!.balance ?? 0);
-    } else {
-      balanceController.text = AppHelpers.formatCurrency(0);
-    }
+    balanceController.text = AppHelpers.formatCurrency(month?.balance ?? 0);
   }
 }

@@ -70,4 +70,9 @@ final Map<String, String> ptBr = {
   'youSpent': 'Você gastou',
   'comparedLastMonth': 'em comparação com o mês passado',
   'missing': 'Faltam',
+  'month': 'Mês',
+  'category': 'Categoria',
+  'totalPriceForMonths': 'Preço total dos meses',
+  'expensesOfMonth': 'Gastos do mês atual',
+  'balanceDifference': 'Diferença de saldo',
 };

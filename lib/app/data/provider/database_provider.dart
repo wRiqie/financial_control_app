@@ -264,7 +264,7 @@ class DatabaseProvider {
     );
   """;
 
-  Future<Month?> getMonthByDate(String date) async {
+  Future<Month?> getMonthByDate(String date, bool onlySelected) async {
     final db = await database;
     if (db != null) {
       var res = await db.query(
@@ -272,12 +272,16 @@ class DatabaseProvider {
         where: '$_monthDate = ?',
         whereArgs: [date],
       );
-      return res.isNotEmpty ? Month.fromMap(res.first) : null;
+      final month = res.isNotEmpty ? Month.fromMap(res.first) : null;
+      if (month != null) {
+        month.totalPrice = await getMonthTotalPrice(date, onlySelected);
+      }
+      return month;
     }
     return null;
   }
 
-  Future<List<Month>> getLastMonths() async {
+  Future<List<Month>> getLastMonths(bool onlySelected) async {
     const int limit = 6;
     final db = await database;
     if (db != null) {
@@ -286,9 +290,37 @@ class DatabaseProvider {
         orderBy: '$_monthDate DESC',
         limit: limit,
       );
-      return res.isNotEmpty ? res.map((e) => Month.fromMap(e)).toList() : [];
+
+      List<Month> months =
+          res.isNotEmpty ? res.map((e) => Month.fromMap(e)).toList() : [];
+      for (var month in months) {
+        month.totalPrice = await getMonthTotalPrice(month.date, onlySelected);
+      }
+      return months;
     }
     return [];
+  }
+
+  Future<num> getMonthTotalPrice(String date, bool onlySelected) async {
+    final db = await database;
+    if (db != null) {
+      final sql = StringBuffer();
+      sql.write(
+          " SELECT COALESCE(SUM(B.$_billValue), 0.0) AS $_monthTotalPrice ");
+      sql.write(" FROM $billTable B ");
+      sql.write(" INNER JOIN $categoryTable C ");
+      sql.write(" ON B.$_billCategoryId = C.$_categoryId ");
+      sql.write(" WHERE B.$_billDate = ? ");
+      sql.write(" AND C.$_categorySelected = ? ");
+
+      var res = await db.rawQuery(
+        sql.toString(),
+        [date, onlySelected ? 1 : 0],
+      );
+
+      return res.isNotEmpty ? res.first[_monthTotalPrice] as num : 0.0;
+    }
+    return 0.0;
   }
 
   // Category
@@ -315,8 +347,11 @@ class DatabaseProvider {
   Future<List<Category>> getSelectedCategories() async {
     final db = await database;
     if (db != null) {
-      var res = await db.query(categoryTable,
-          where: '$_categorySelected = ?', whereArgs: [1]);
+      var res = await db.query(
+        categoryTable,
+        where: '$_categorySelected = ?',
+        whereArgs: [1],
+      );
       return res.isNotEmpty ? res.map((e) => Category.fromMap(e)).toList() : [];
     }
     return [];
@@ -353,4 +388,6 @@ class DatabaseProvider {
     }
     return [];
   }
+
+  // Future<int> deleteCategoryMonth(String) async {}
 }

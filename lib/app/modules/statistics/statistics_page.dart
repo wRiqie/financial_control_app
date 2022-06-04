@@ -13,7 +13,7 @@ class StatisticsPage extends GetView<StatisticsController> {
       builder: (_) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Statistics'),
+            title: Text('statistics'.tr),
             bottom: TabBar(
               controller: controller.tabController,
               tabs: controller.tabs,

@@ -16,9 +16,9 @@ void main() {
 
   group('Total price decreased |', () {
     test('deve retornar true', () {
-      controller.lastMonth = Month(date: '10-3', totalPrice: 200);
+      controller.currentMonth = Month(date: '10-3', totalPrice: 200);
       controller.months = [
-        controller.lastMonth!,
+        controller.currentMonth!,
         Month(date: '10-2', totalPrice: 300),
       ];
 
@@ -26,7 +26,7 @@ void main() {
     });
 
     test('deve retornar false', () {
-      controller.lastMonth = Month(date: '10-2', totalPrice: 300);
+      controller.currentMonth = Month(date: '10-2', totalPrice: 300);
       controller.months = [
         Month(date: '10-3', totalPrice: 300),
         Month(date: '10-2', totalPrice: 300),
@@ -37,9 +37,9 @@ void main() {
   });
 
   test('deve retornar diferença de saldo em porcentagem', () {
-    controller.lastMonth = Month(date: '10-3', balance: 110);
+    controller.currentMonth = Month(date: '10-3', balance: 110);
     controller.months = [
-      controller.lastMonth!,
+      controller.currentMonth!,
       Month(date: '10-2', balance: 100),
     ];
 

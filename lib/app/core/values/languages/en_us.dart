@@ -69,4 +69,9 @@ final Map<String, String> enUs = {
   'thisMonth': 'this month',
   'comparedLastMonth': 'compared to last month',
   'missing': 'Missing',
+  'month': 'Month',
+  'category': 'Category',
+  'totalPriceForMonths': 'Total price for months',
+  'expensesOfMonth': 'Current month\'s expenses',
+  'balanceDifference': 'Balance difference',
 };

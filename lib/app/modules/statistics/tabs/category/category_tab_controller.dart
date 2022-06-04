@@ -16,7 +16,8 @@ class CategoryTabController extends GetxController {
   void loadDatas() async {
     isLoading = true;
     List<CategoryData> categoriesToAdd = [];
-    await Future.forEach<ECategory>(ECategory.values, (category) async {
+    final categories = await categoryRepository.getSelectedCategories();
+    for (var category in categories) {
       num totalValue = await billRepository.getBillsTotalPriceOfMonthCategory(
         category.id,
         AppHelpers.formatDateToSave(DateTime.now()),
@@ -29,7 +30,7 @@ class CategoryTabController extends GetxController {
           color: CategoryExtension.color(category.id),
         ),
       );
-    });
+    }
     datas = categoriesToAdd;
     isLoading = false;
     update();

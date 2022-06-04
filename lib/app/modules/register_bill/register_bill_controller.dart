@@ -4,6 +4,7 @@ import 'package:financial_control_app/app/data/enums/bill_status_enum.dart';
 import 'package:financial_control_app/app/data/models/bill.dart';
 import 'package:financial_control_app/app/data/models/month.dart';
 import 'package:financial_control_app/app/data/repository/bill_repository.dart';
+import 'package:financial_control_app/app/data/repository/category_month_repository.dart';
 import 'package:financial_control_app/app/data/repository/month_repository.dart';
 import 'package:financial_control_app/app/data/services/snackbar_service.dart';
 import 'package:financial_control_app/app/modules/home/home_controller.dart';
@@ -32,7 +33,8 @@ class RegisterBillController extends GetxController {
   final portionController = TextEditingController();
   final maxPortionController = TextEditingController();
 
-  RegisterBillController(this.repository, this.monthRepository,
+  RegisterBillController(
+      this.repository, this.monthRepository,
       {required this.snackService});
 
   togglePortion(bool? value) {
@@ -67,17 +69,13 @@ class RegisterBillController extends GetxController {
 
       // Update Month
       if (selectedMonth != null) {
-        selectedMonth!.totalPrice =
-            ((selectedMonth!.totalPrice ?? 0) + bill.value) -
-                (editingBill != null ? editingBill!.value : 0);
-        await monthRepository.saveMonth(selectedMonth!);
         await homeController.loadMonth();
       }
 
       if (!add) {
         Get.back();
       }
-      
+
       snackService.showSnackbar(
         title: 'success'.tr,
         subtitle: 'successfullySaved'.tr,

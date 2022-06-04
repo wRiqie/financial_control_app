@@ -15,9 +15,12 @@ class SelectCategoriesPage extends GetView<SelectCategoriesController> {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(10),
-        child: ElevatedButton(
-          child: const Text('Confirmar'),
-          onPressed: controller.confirm,
+        child: SizedBox(
+          height: 50,
+          child: ElevatedButton(
+            child: const Text('Confirmar'),
+            onPressed: controller.confirm,
+          ),
         ),
       ),
       body: SafeArea(

@@ -31,12 +31,12 @@ class MonthTabPage extends GetView<MonthTabController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        const Padding(
+                        Padding(
                           padding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                              const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                           child: Text(
-                            'Months total values',
-                            style: TextStyle(
+                            'totalPriceForMonths'.tr,
+                            style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
@@ -70,14 +70,14 @@ class MonthTabPage extends GetView<MonthTabController> {
                     crossAxisCount: 2,
                     children: [
                       _buildStatisticCard(
-                        label: 'Current month price',
+                        label: 'expensesOfMonth'.tr,
                         icon: Icons.monetization_on_outlined,
                         iconColor: Get.theme.colorScheme.primary,
                         value: controller.totalPrice,
                         profit: controller.totalPriceDecreased,
                       ),
                       _buildStatisticCard(
-                        label: 'Balance difference',
+                        label: 'balanceDifference'.tr,
                         icon: Icons.percent,
                         iconColor: Get.theme.colorScheme.secondary,
                         percent: controller.balanceDifferencePercentage,

@@ -26,7 +26,8 @@ class HomeController extends GetxController {
   Month? selectedMonth;
   List<Category> categories = [];
 
-  HomeController(this.categoryRepository, this.monthRepository, this.billRepository);
+  HomeController(
+      this.categoryRepository, this.monthRepository, this.billRepository);
 
   Future<void> openPreferences() async {
     await Get.toNamed(
@@ -121,9 +122,6 @@ class HomeController extends GetxController {
     if (selectedMonth != null) {
       var result = await billRepository.deleteBillById(bill.id);
       if (result != 0) {
-        selectedMonth!.totalPrice =
-            (selectedMonth!.totalPrice ?? bill.value) - bill.value;
-        await monthRepository.saveMonth(selectedMonth!);
         await categoryController.getBills();
         await loadMonth();
       }

@@ -34,6 +34,12 @@ class PreferencesPage extends GetView<PreferencesController> {
                     toggleSwitch: controller.toogleCopyBills,
                   ),
                   _buildTile(
+                    title: 'Escolher categorias',
+                    subtitle: 'Selecione as categorias que façam sentido para seu uso',
+                    icon: Icons.category,
+                    onTap: controller.chooseCategories,
+                  ),
+                  _buildTile(
                     title: 'Backup dos dados',
                     subtitle: 'Utilize para exportar ou importar dados',
                     icon: Icons.save,

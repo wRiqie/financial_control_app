@@ -1,5 +1,6 @@
 import 'package:financial_control_app/app/data/provider/database_provider.dart';
 import 'package:financial_control_app/app/data/repository/bill_repository.dart';
+import 'package:financial_control_app/app/data/repository/category_month_repository.dart';
 import 'package:financial_control_app/app/data/repository/month_repository.dart';
 import 'package:financial_control_app/app/data/services/snackbar_service.dart';
 import 'package:financial_control_app/app/modules/register_bill/register_bill_controller.dart';
@@ -10,6 +11,7 @@ class RegisterBillBinding implements Bindings {
   void dependencies() {
     Get.lazyPut<BillRepository>(() => BillRepository(DatabaseProvider.db));
     Get.lazyPut<MonthRepository>(() => MonthRepository(DatabaseProvider.db));
+    Get.lazyPut<CategoryMonthRepository>(() => CategoryMonthRepository(DatabaseProvider.db));
     Get.lazyPut<SnackbarService>(() => SnackbarService());
 
     Get.lazyPut<RegisterBillController>(

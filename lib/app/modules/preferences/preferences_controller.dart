@@ -26,6 +26,10 @@ class PreferencesController extends GetxController {
     Get.toNamed(Routes.changeBalance, arguments: {'month': month});
   }
 
+  void chooseCategories() {
+    Get.toNamed(Routes.selectCategories);
+  }
+
   void exportDb() async {
     final exported = await backupDbService.exportDatabase();
     Get.back();

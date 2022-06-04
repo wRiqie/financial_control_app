@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 class MonthTabController extends GetxController {
   final MonthRepository repository;
   bool isLoading = false;
-  Month? lastMonth;
+  Month? currentMonth;
   num totalPrice = 0;
   List<MonthData> datas = [];
   List<Month> months = [];
@@ -27,7 +27,7 @@ class MonthTabController extends GetxController {
         );
         datas.add(statisticData);
       }
-      lastMonth = months.first;
+      currentMonth = months.first;
       setTotalPrice();
       isLoading = false;
       update();
@@ -35,16 +35,16 @@ class MonthTabController extends GetxController {
   }
 
   void setTotalPrice() {
-    totalPrice = lastMonth?.totalPrice ?? 0;
+    totalPrice = currentMonth?.totalPrice ?? 0;
   }
 
   bool get totalPriceDecreased {
     bool isFirstMonth = months.length <= 1;
     Month? previousMonth = isFirstMonth
         ? null
-        : months[months.indexOf(lastMonth ?? Month(date: '')) + 1];
+        : months[months.indexOf(currentMonth ?? Month(date: '')) + 1];
     if (previousMonth != null) {
-      return (previousMonth.totalPrice ?? 0) > (lastMonth?.totalPrice ?? 0);
+      return (previousMonth.totalPrice ?? 0) > (currentMonth?.totalPrice ?? 0);
     }
     return false;
   }
@@ -53,18 +53,27 @@ class MonthTabController extends GetxController {
     bool isFirstMonth = months.length <= 1;
     Month? previousMonth = isFirstMonth
         ? null
-        : months[months.indexOf(lastMonth ?? Month(date: '')) + 1];
+        : months[months.indexOf(currentMonth ?? Month(date: '')) + 1];
     if (previousMonth != null) {
-      var difference = (lastMonth?.balance ?? 0) - (previousMonth.balance ?? 0);
+      var difference =
+          (currentMonth?.balance ?? 0) - (previousMonth.balance ?? 0);
       return (difference * 100) / (previousMonth.balance ?? 1);
     }
     return 0;
   }
 
   String get caption {
+    bool isFirstMonth = months.length <= 1;
+    Month? previousMonth = isFirstMonth
+        ? null
+        : months[months.indexOf(currentMonth ?? Month(date: '')) + 1];
     return (totalPriceDecreased ? 'youSaved'.tr : 'youSpent'.tr) +
         ' ' +
-        AppHelpers.formatCurrency(totalPrice) +
+        (totalPriceDecreased
+            ? AppHelpers.formatCurrency(
+                (previousMonth?.totalPrice ?? 0) - totalPrice)
+            : AppHelpers.formatCurrency(
+                totalPrice - (previousMonth?.totalPrice ?? 0))) +
         ' ' +
         'comparedLastMonth'.tr;
   }
