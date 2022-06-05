@@ -1,4 +1,5 @@
 import 'package:expandable/expandable.dart';
+import 'package:financial_control_app/app/core/theme/dark/dark_colors.dart';
 import 'package:financial_control_app/app/core/utils/helpers.dart';
 import 'package:financial_control_app/app/data/enums/category_enum.dart';
 import 'package:financial_control_app/app/data/models/bill.dart';
@@ -27,76 +28,84 @@ class CategoryItem extends StatelessWidget {
       init:
           CategoryItemController(BillRepository(DatabaseProvider.db), category),
       global: false,
-      tag: category.id.toString(),
       builder: (_) => ExpandablePanel(
+        controller: _.expandable,
         theme: const ExpandableThemeData(
           hasIcon: false,
-          tapHeaderToExpand: true,
+          tapHeaderToExpand: false,
         ),
-        header: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 15),
-          child: Flex(
-            direction: Axis.horizontal,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    color: CategoryExtension.color(category.id),
-                  ),
-                  height: 50,
-                  width: 50,
-                  child: Icon(
-                    CategoryExtension.icon(category.id),
-                    color: Colors.white,
+        header: InkWell(
+          onTap: _.expandable.toggle,
+          onLongPress: () {
+            if(!_.expandable.expanded) _.expandable.toggle();
+            _.toggleSelectedBills();
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            child: Flex(
+              direction: Axis.horizontal,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      color: CategoryExtension.color(category.id),
+                    ),
+                    height: 50,
+                    width: 50,
+                    child: Icon(
+                      CategoryExtension.icon(category.id),
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-              ),
-              Flexible(
-                flex: 5,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          CategoryExtension.getById(category.id).name.tr,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              AppHelpers.formatCurrency(_.totalPrice),
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            _.leftPrice > 0
-                                ? Text(
-                                    'missing'.tr +
-                                        ' ' +
-                                        AppHelpers.formatCurrency(_.leftPrice),
-                                    style: TextStyle(
-                                        color: Get.theme.colorScheme.primary),
-                                    textAlign: TextAlign.end,
-                                  )
-                                : Container(),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    LinearProgressIndicator(
-                      minHeight: 5,
-                      value: _.percentage,
-                    ),
-                  ],
+                Flexible(
+                  flex: 5,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            CategoryExtension.getById(category.id).name.tr,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                AppHelpers.formatCurrency(_.totalPrice),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              _.leftPrice > 0
+                                  ? Text(
+                                      'missing'.tr +
+                                          ' ' +
+                                          AppHelpers.formatCurrency(
+                                              _.leftPrice),
+                                      style: TextStyle(
+                                          color: Get.theme.colorScheme.primary),
+                                      textAlign: TextAlign.end,
+                                    )
+                                  : Container(),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      LinearProgressIndicator(
+                        minHeight: 5,
+                        value: _.percentage,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         collapsed: Container(),
@@ -109,15 +118,7 @@ class CategoryItem extends StatelessWidget {
               children: [
                 ..._.bills
                     .map(
-                      (e) => Material(
-                        color: Get.theme.colorScheme.surface,
-                        child: InkWell(
-                          onTap: () {
-                            onTap(e, _);
-                          },
-                          child: _buildBill(e),
-                        ),
-                      ),
+                      (e) => _buildBill(_, e),
                     )
                     .toList(),
                 const SizedBox(
@@ -137,44 +138,59 @@ class CategoryItem extends StatelessWidget {
     );
   }
 
-  Widget _buildBill(Bill bill) {
+  Widget _buildBill(CategoryItemController _, Bill bill) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    height: 40,
-                    width: 5,
-                    color: AppHelpers.billStatusResolver(bill.status),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        bill.title,
-                      ),
-                      bill.maxPortion != null
-                          ? Text(
-                              '${bill.portion}/${bill.maxPortion}',
-                            )
-                          : Container(),
-                    ],
-                  ),
-                ],
+        Material(
+          color: Get.theme.colorScheme.surface,
+          child: InkWell(
+            onLongPress: () => _.toggleSelectedBill(bill),
+            onTap: () {
+              _.homeController.selectedBills.isEmpty
+                  ? onTap(bill, _)
+                  : _.toggleSelectedBill(bill);
+            },
+            child: Container(
+              color:
+                  _.selected(bill) ? DarkColors.darkGrey : Colors.transparent,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          height: 40,
+                          width: 5,
+                          color: AppHelpers.billStatusResolver(bill.status),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              bill.title,
+                            ),
+                            bill.maxPortion != null
+                                ? Text(
+                                    '${bill.portion}/${bill.maxPortion}',
+                                  )
+                                : Container(),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Text(
+                      AppHelpers.formatCurrency(bill.value),
+                    ),
+                  ],
+                ),
               ),
-              Text(
-                AppHelpers.formatCurrency(bill.value),
-              ),
-            ],
+            ),
           ),
         ),
         Divider(

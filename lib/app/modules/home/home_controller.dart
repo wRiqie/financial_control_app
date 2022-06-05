@@ -25,6 +25,7 @@ class HomeController extends GetxController {
   DateTime selectedDate = DateTime.now();
   Month? selectedMonth;
   List<Category> categories = [];
+  List<Bill> selectedBills = [];
 
   HomeController(
       this.categoryRepository, this.monthRepository, this.billRepository);
@@ -72,7 +73,11 @@ class HomeController extends GetxController {
   }
 
   Future<void> loadCategories() async {
+    categories.clear();
+    update();
+    await Future.delayed(const Duration(milliseconds: 200));
     categories = await categoryRepository.getSelectedCategories();
+    update();
   }
 
   Future<Month?> loadMonth() async {
@@ -107,7 +112,7 @@ class HomeController extends GetxController {
     update();
   }
 
-  Future<void> toogleBillStatus(Bill bill) async {
+  Future<void> toggleBillStatus(Bill bill) async {
     if (bill.status != EBillStatus.paid.id) {
       bill.status = EBillStatus.paid.id;
     } else {
@@ -127,6 +132,15 @@ class HomeController extends GetxController {
       }
     }
     Get.back();
+  }
+
+  void deleteBills() async {
+    if (selectedBills.isNotEmpty) {
+      await billRepository.deleteBillsByIds(selectedBills);
+      clearSelectedBills();
+      await loadMonth();
+      await loadCategories();
+    }
   }
 
   String get previousMonthDate {
@@ -185,6 +199,21 @@ class HomeController extends GetxController {
 
     await billRepository.saveAllBills(billsToSave);
     return billsToSave;
+  }
+
+  void toggleSelectedBill(Bill bill) {
+    bool selected = selectedBills.contains(bill);
+    if (selected) {
+      selectedBills.remove(bill);
+    } else {
+      selectedBills.add(bill);
+    }
+    update();
+  }
+
+  void clearSelectedBills() {
+    selectedBills.clear();
+    update();
   }
 
   @override

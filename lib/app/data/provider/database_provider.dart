@@ -236,6 +236,27 @@ class DatabaseProvider {
     return 0;
   }
 
+  Future<int> deleteBillsByIds(List<Bill> bills) async {
+    final db = await database;
+    if (db != null) {
+      var res = await db.delete(
+        billTable,
+        where: '$_billId IN (${splitBillsList(bills)})',
+      );
+      return res;
+    }
+    return 0;
+  }
+
+  String splitBillsList(List<Bill> bills) {
+    final splittedList = StringBuffer();
+    for (var bill in bills) {
+      splittedList
+          .write(bills.last != bill ? "'${bill.id}', " : "'${bill.id}'");
+    }
+    return splittedList.toString();
+  }
+
   Future<num> getBillsTotalPriceOfMonthCategory(
       int categoryId, String date) async {
     final db = await database;

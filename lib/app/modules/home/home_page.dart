@@ -17,20 +17,47 @@ class HomePage extends GetView<HomeController> {
     return GetBuilder<HomeController>(
       builder: (_) => Scaffold(
         appBar: AppBar(
-          title: InkWell(
-            onTap: () {
-              // controller.swapDate(context);
-            },
-            child: Text(
-                AppHelpers.monthResolver(controller.selectedDate.month) +
-                    ' - ${controller.selectedDate.year}'),
-          ),
-          actions: [
-            IconButton(
-              onPressed: controller.openPreferences,
-              icon: const Icon(Icons.app_registration_outlined),
-            ),
-          ],
+          title: controller.selectedBills.isEmpty
+              ? InkWell(
+                  onTap: () {
+                    // controller.swapDate(context);
+                  },
+                  child: Text(
+                      AppHelpers.monthResolver(controller.selectedDate.month) +
+                          ' - ${controller.selectedDate.year}'),
+                )
+              : Text('${controller.selectedBills.length} Selecionado(s)'),
+          centerTitle: controller.selectedBills.isEmpty,
+          actions: controller.selectedBills.isEmpty
+              ? [
+                  IconButton(
+                    onPressed: controller.openPreferences,
+                    icon: const Icon(Icons.app_registration_outlined),
+                  ),
+                ]
+              : [
+                  IconButton(
+                    onPressed: () {
+                      Get.dialog(
+                        ConfirmDialog(
+                          icon: Icon(
+                            Icons.delete,
+                            size: 26,
+                            color: Get.theme.colorScheme.primary,
+                          ),
+                          body:
+                              'Tem certeza que deseja deletar as contas selecionadas?',
+                          onConfirm: controller.deleteBills,
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.delete),
+                  ),
+                  IconButton(
+                    onPressed: controller.clearSelectedBills,
+                    icon: const Icon(Icons.clear),
+                  ),
+                ],
         ),
         body: SafeArea(
           child: SingleChildScrollView(
@@ -79,88 +106,90 @@ class HomePage extends GetView<HomeController> {
                       ),
                       ...controller.categories
                           .map((e) => CategoryItem(
-                                onTap: (bill, categoryController) =>
-                                    showModalBottomSheet(
-                                        context: context,
-                                        builder: (_) {
-                                          return Wrap(
-                                            children: [
-                                              ListTile(
-                                                title: bill.status ==
+                                onTap: (bill, categoryController) {
+                                  controller.clearSelectedBills();
+                                  return showModalBottomSheet(
+                                      context: context,
+                                      builder: (_) {
+                                        return Wrap(
+                                          children: [
+                                            ListTile(
+                                              title: bill.status ==
+                                                      EBillStatus.paid.id
+                                                  ? Text('marksUnpaid'.tr)
+                                                  : Text('marksPaid'.tr),
+                                              leading: Icon(
+                                                bill.status ==
                                                         EBillStatus.paid.id
-                                                    ? Text('marksUnpaid'.tr)
-                                                    : Text('marksPaid'.tr),
-                                                leading: Icon(
-                                                  bill.status ==
-                                                          EBillStatus.paid.id
-                                                      ? Icons.highlight_off
-                                                      : Icons
-                                                          .check_circle_outline,
-                                                  color: Get.theme.colorScheme
-                                                      .primary,
-                                                ),
-                                                onTap: () async {
-                                                  await controller
-                                                      .toogleBillStatus(bill);
-                                                  await categoryController
-                                                      .getBills();
-                                                  Get.back();
-                                                },
+                                                    ? Icons.highlight_off
+                                                    : Icons
+                                                        .check_circle_outline,
+                                                color: Get
+                                                    .theme.colorScheme.primary,
                                               ),
-                                              ListTile(
-                                                title: Text('edit'.tr),
-                                                leading: Icon(
-                                                  Icons.edit,
-                                                  color: Get.theme.colorScheme
-                                                      .primary,
-                                                ),
-                                                onTap: () async {
-                                                  Get.back();
-                                                  await Get.toNamed(
-                                                      Routes.registerBill,
-                                                      arguments: {
-                                                        'categoryId':
-                                                            bill.categoryId,
-                                                        'bill': bill,
-                                                        'selectedMonth':
-                                                            controller
-                                                                .selectedMonth,
-                                                      });
-                                                  await categoryController
-                                                      .getBills();
-                                                  await controller.loadMonth();
-                                                },
+                                              onTap: () async {
+                                                await controller
+                                                    .toggleBillStatus(bill);
+                                                await categoryController
+                                                    .getBills();
+                                                Get.back();
+                                              },
+                                            ),
+                                            ListTile(
+                                              title: Text('edit'.tr),
+                                              leading: Icon(
+                                                Icons.edit,
+                                                color: Get
+                                                    .theme.colorScheme.primary,
                                               ),
-                                              ListTile(
-                                                title: Text('delete'.tr),
-                                                leading: Icon(
-                                                  Icons.delete,
-                                                  color: Get.theme.colorScheme
-                                                      .primary,
-                                                ),
-                                                onTap: () async {
-                                                  Get.back();
-                                                  Get.dialog(
-                                                    ConfirmDialog(
-                                                      icon: Icon(Icons.delete,
-                                                          color: Get
-                                                              .theme
-                                                              .colorScheme
-                                                              .primary),
-                                                      body: 'wantDeleteBill'.tr,
-                                                      onConfirm: () {
-                                                        controller.deleteBill(
-                                                            bill,
-                                                            categoryController);
-                                                      },
-                                                    ),
-                                                  );
-                                                  // await controller.selectMonth();
-                                                },
+                                              onTap: () async {
+                                                Get.back();
+                                                await Get.toNamed(
+                                                    Routes.registerBill,
+                                                    arguments: {
+                                                      'categoryId':
+                                                          bill.categoryId,
+                                                      'bill': bill,
+                                                      'selectedMonth':
+                                                          controller
+                                                              .selectedMonth,
+                                                    });
+                                                await categoryController
+                                                    .getBills();
+                                                await controller.loadMonth();
+                                              },
+                                            ),
+                                            ListTile(
+                                              title: Text('delete'.tr),
+                                              leading: Icon(
+                                                Icons.delete,
+                                                color: Get
+                                                    .theme.colorScheme.primary,
                                               ),
-                                            ],
-                                          );
-                                        }),
+                                              onTap: () async {
+                                                Get.back();
+                                                Get.dialog(
+                                                  ConfirmDialog(
+                                                    icon: Icon(Icons.delete,
+                                                        color: Get
+                                                            .theme
+                                                            .colorScheme
+                                                            .primary),
+                                                    body: 'wantDeleteBill'.tr,
+                                                    onConfirm: () {
+                                                      controller.deleteBill(
+                                                          bill,
+                                                          categoryController);
+                                                    },
+                                                  ),
+                                                );
+                                                // await controller.selectMonth();
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      });
+                                },
                                 category: e,
                                 addBillToCategory: controller.addBillToCategory,
                               ))

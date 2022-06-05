@@ -24,6 +24,9 @@ class BillRepository {
 
   Future<int> deleteBillsByCategoryIdAndDate(int categoryId, String date)
     => db.deleteBillsByCategoryIdAndDate(categoryId, date);
+
+  Future<void> deleteBillsByIds(List<Bill> bills)
+    => db.deleteBillsByIds(bills);
   
   Future<num> getBillsTotalPriceOfMonthCategory(int categoryId, String date)
     => db.getBillsTotalPriceOfMonthCategory(categoryId, date);

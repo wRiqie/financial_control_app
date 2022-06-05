@@ -52,7 +52,7 @@ class PreferencesPage extends GetView<PreferencesController> {
                               leading: Icon(Icons.upload,
                                   color: Get.theme.colorScheme.primary),
                               title: const Text('Exportar dados'),
-                              onTap: () => controller.exportDb(),
+                              // onTap: () => controller.exportDb(),
                             ),
                             ListTile(
                                 tileColor: Get.theme.colorScheme.surface,

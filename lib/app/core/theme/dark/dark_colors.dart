@@ -15,6 +15,7 @@ class DarkColors {
 
   // Normal Colors
   static const grey = Color(0xFFBDBDBD);
+  static const darkGrey = Color.fromARGB(255, 91, 91, 91);
   static const success = Color(0xFF28A745);
   static const error = Color(0xFFB00020);
 }

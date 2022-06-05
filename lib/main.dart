@@ -29,8 +29,8 @@ class MyApp extends StatelessWidget {
       getPages: AppPages.pages,
       initialRoute: Routes.splash,
       translationsKeys: AppTranslation().keys,
-      locale: Get.deviceLocale ?? const Locale('en', 'US'),
-      fallbackLocale: const Locale('en', 'US'),
+      locale: Get.deviceLocale ?? const Locale('pt', 'BR'),
+      fallbackLocale: const Locale('pt', 'BR'),
     );
   }
 }
