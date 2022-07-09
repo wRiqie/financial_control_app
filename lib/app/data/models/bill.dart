@@ -1,3 +1,4 @@
+import 'package:financial_control_app/app/data/enums/bill_status_enum.dart';
 class Bill {
   late String id;
   late int categoryId;
@@ -45,5 +46,35 @@ class Bill {
       'status': status,
       'date': date,
     };
+  }
+}
+
+extension BillExtension on List<Bill> {
+  double get leftPrice {
+    var leftBills = where((e) => e.status != EBillStatus.paid.id);
+    double price = 0;
+    for (var bill in leftBills) {
+      price += bill.value;
+    }
+    return price;
+  }
+
+  double get totalPrice {
+    double price = 0;
+    for (var bill in this) {
+      price += bill.value;
+    }
+    return price;
+  }
+
+  double get percentage {
+    double paidValue = 0;
+    double totalValue = totalPrice;
+    var paidBills = where((e) => e.status == EBillStatus.paid.id);
+    for (var paidBill in paidBills) {
+      paidValue += paidBill.value;
+    }
+
+    return ((paidValue * 100) / (totalValue != 0 ? totalValue : 1)) / 100;
   }
 }

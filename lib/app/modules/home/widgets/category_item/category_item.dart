@@ -75,16 +75,16 @@ class CategoryItem extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                AppHelpers.formatCurrency(_.totalPrice),
+                                AppHelpers.formatCurrency(_.bills.totalPrice),
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold),
                               ),
-                              _.leftPrice > 0
+                              _.bills.leftPrice > 0
                                   ? Text(
                                       'missing'.tr +
                                           ' ' +
                                           AppHelpers.formatCurrency(
-                                              _.leftPrice),
+                                              _.bills.leftPrice),
                                       style: TextStyle(
                                           color: Get.theme.colorScheme.primary),
                                       textAlign: TextAlign.end,
@@ -99,7 +99,7 @@ class CategoryItem extends StatelessWidget {
                       ),
                       LinearProgressIndicator(
                         minHeight: 5,
-                        value: _.percentage,
+                        value: _.bills.percentage,
                       ),
                     ],
                   ),

@@ -1,4 +1,6 @@
 import 'package:financial_control_app/app/core/theme/dark/dark_colors.dart';
+import 'package:financial_control_app/app/core/theme/dark/dark_theme.dart';
+import 'package:financial_control_app/app/data/services/theme_service.dart';
 import 'package:financial_control_app/app/global/widgets/confirm_dialog.dart';
 import 'package:financial_control_app/app/modules/preferences/preferences_controller.dart';
 import 'package:flutter/material.dart';
@@ -26,18 +28,27 @@ class PreferencesPage extends GetView<PreferencesController> {
                     onTap: controller.changeBalance,
                   ),
                   _buildTile(
+                    title: 'Escolher categorias',
+                    subtitle:
+                        'Selecione as categorias que façam sentido para seu uso',
+                    icon: Icons.category,
+                    onTap: controller.chooseCategories,
+                  ),
+                  _buildTile(
+                    title: 'Modo Escuro',
+                    subtitle: 'Alterna entre modo escuro e claro',
+                    icon: Icons.dark_mode,
+                    haveSwitch: true,
+                    switchValue: appTheme.currentTheme == darkTheme,
+                    toggleSwitch: controller.toggleTheme,
+                  ),
+                  _buildTile(
                     title: 'copyBills'.tr,
                     subtitle: 'copyBillsToTheNextMonth'.tr,
                     icon: Icons.copy,
                     haveSwitch: true,
                     switchValue: controller.copyBills,
                     toggleSwitch: controller.toogleCopyBills,
-                  ),
-                  _buildTile(
-                    title: 'Escolher categorias',
-                    subtitle: 'Selecione as categorias que façam sentido para seu uso',
-                    icon: Icons.category,
-                    onTap: controller.chooseCategories,
                   ),
                   _buildTile(
                     title: 'Backup dos dados',
@@ -52,7 +63,17 @@ class PreferencesPage extends GetView<PreferencesController> {
                               leading: Icon(Icons.upload,
                                   color: Get.theme.colorScheme.primary),
                               title: const Text('Exportar dados'),
-                              // onTap: () => controller.exportDb(),
+                              onTap: () {
+                                Get.back();
+                                Get.dialog(
+                                  ConfirmDialog(
+                                    icon: const Icon(Icons.save),
+                                    body:
+                                        'Tem certeza que deseja exportar os dados?',
+                                    onConfirm: () => controller.exportDb(),
+                                  ),
+                                );
+                              },
                             ),
                             ListTile(
                                 tileColor: Get.theme.colorScheme.surface,

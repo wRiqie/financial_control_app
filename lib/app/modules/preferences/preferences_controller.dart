@@ -3,6 +3,7 @@ import 'package:financial_control_app/app/core/values/contants.dart';
 import 'package:financial_control_app/app/data/models/month.dart';
 import 'package:financial_control_app/app/data/services/database_service.dart';
 import 'package:financial_control_app/app/data/services/snackbar_service.dart';
+import 'package:financial_control_app/app/data/services/theme_service.dart';
 import 'package:financial_control_app/app/routes/pages.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -28,6 +29,11 @@ class PreferencesController extends GetxController {
 
   void chooseCategories() {
     Get.toNamed(Routes.selectCategories);
+  }
+
+  void toggleTheme(bool value) {
+    appTheme.changeTheme();
+    update();
   }
 
   void exportDb() async {
