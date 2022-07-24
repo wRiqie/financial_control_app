@@ -17,7 +17,7 @@ class FinancialApp extends GetView<FinancialController> {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Financial App',
-          theme: appTheme.currentTheme,
+          theme: appTheme.currentTheme(),
           getPages: AppPages.pages,
           initialRoute: Routes.splash,
           translationsKeys: AppTranslation().keys,

@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 final appTheme = ThemeService();
 
 class ThemeService extends ChangeNotifier {
-  ThemeData currentTheme = darkTheme;
+  bool isDark = true;
+
+  ThemeData currentTheme() => isDark ? darkTheme : lightTheme;
 
   void changeTheme() {
-    currentTheme = currentTheme == darkTheme ? lightTheme : darkTheme;
+    isDark = !isDark;
     notifyListeners();
   }
 }

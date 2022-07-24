@@ -12,6 +12,7 @@ void main() {
     Category(
       id: 1,
     ),
+    null,
   );
   List<Bill> _bills = [
     Bill(

@@ -39,7 +39,7 @@ class PreferencesPage extends GetView<PreferencesController> {
                     subtitle: 'Alterna entre modo escuro e claro',
                     icon: Icons.dark_mode,
                     haveSwitch: true,
-                    switchValue: appTheme.currentTheme == darkTheme,
+                    switchValue: appTheme.isDark,
                     toggleSwitch: controller.toggleTheme,
                   ),
                   _buildTile(

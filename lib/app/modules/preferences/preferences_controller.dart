@@ -33,7 +33,9 @@ class PreferencesController extends GetxController {
 
   void toggleTheme(bool value) {
     appTheme.changeTheme();
-    update();
+    Future.delayed(const Duration(milliseconds: 100)).then(
+      (value) => update(),
+    );
   }
 
   void exportDb() async {
