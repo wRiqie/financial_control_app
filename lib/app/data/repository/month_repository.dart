@@ -10,6 +10,9 @@ class MonthRepository {
   Future<int> saveMonth(Month month)
     => db.save(data: month, table: _table);
 
+  Future<List<Month>> getMonths()
+    => db.getMonths();
+
   Future<Month?> getMonthByDate(String date, {bool onlySelected = true})
     => db.getMonthByDate(date, onlySelected);
 

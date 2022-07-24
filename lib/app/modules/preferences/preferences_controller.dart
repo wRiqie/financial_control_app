@@ -38,7 +38,6 @@ class PreferencesController extends GetxController {
 
   void exportDb() async {
     final exported = await backupDbService.exportDatabase();
-    Get.back();
     if (!exported) {
       snackService.showSnackbar(
         title: 'Erro',

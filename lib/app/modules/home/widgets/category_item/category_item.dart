@@ -4,6 +4,7 @@ import 'package:financial_control_app/app/core/utils/helpers.dart';
 import 'package:financial_control_app/app/data/enums/category_enum.dart';
 import 'package:financial_control_app/app/data/models/bill.dart';
 import 'package:financial_control_app/app/data/models/category.dart';
+import 'package:financial_control_app/app/data/models/month.dart';
 import 'package:financial_control_app/app/data/provider/database_provider.dart';
 import 'package:financial_control_app/app/data/repository/bill_repository.dart';
 import 'package:financial_control_app/app/modules/home/widgets/category_item/category_item_controller.dart';
@@ -15,18 +16,20 @@ class CategoryItem extends StatelessWidget {
   final Function(int categoryId, CategoryItemController controller)
       addBillToCategory;
   final Function(Bill bill, CategoryItemController controller) onTap;
-  const CategoryItem(
-      {Key? key,
-      required this.onTap,
-      required this.category,
-      required this.addBillToCategory})
-      : super(key: key);
+  final Month? month;
+  const CategoryItem({
+    Key? key,
+    required this.onTap,
+    required this.category,
+    required this.addBillToCategory,
+    required this.month,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CategoryItemController>(
       init:
-          CategoryItemController(BillRepository(DatabaseProvider.db), category),
+          CategoryItemController(BillRepository(DatabaseProvider.db), category, month),
       global: false,
       builder: (_) => ExpandablePanel(
         controller: _.expandable,
@@ -37,7 +40,7 @@ class CategoryItem extends StatelessWidget {
         header: InkWell(
           onTap: _.expandable.toggle,
           onLongPress: () {
-            if(!_.expandable.expanded) _.expandable.toggle();
+            if (!_.expandable.expanded) _.expandable.toggle();
             _.toggleSelectedBills();
           },
           child: Padding(

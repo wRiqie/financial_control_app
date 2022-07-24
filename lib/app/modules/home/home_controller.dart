@@ -24,6 +24,7 @@ class HomeController extends GetxController {
   num remainingBalance = 0.0;
   DateTime selectedDate = DateTime.now();
   Month? selectedMonth;
+  List<Month> availableMonths = [];
   List<Category> categories = [];
   List<Bill> selectedBills = [];
 
@@ -50,19 +51,16 @@ class HomeController extends GetxController {
     );
   }
 
-  Future<void> swapDate(BuildContext context) async {
-    var date = await showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime.now().subtract(const Duration(days: 152)),
-      lastDate: DateTime.now(),
-      initialEntryMode: DatePickerEntryMode.calendarOnly,
-    );
+  Future<void> swapDate() async {
+      // selectedDate = newDate;
+      // await reload();
 
-    if (date != null) {
-      selectedDate = date;
       update();
-    }
+  }
+
+  Future<void> reload() async {
+    await loadCategories();
+    await loadMonth();
   }
 
   Future<void> addBillToCategory(
@@ -77,6 +75,11 @@ class HomeController extends GetxController {
     update();
     await Future.delayed(const Duration(milliseconds: 200));
     categories = await categoryRepository.getSelectedCategories();
+    update();
+  }
+
+  Future<void> loadMonthsList() async {
+    availableMonths = await monthRepository.getMonths();
     update();
   }
 
@@ -138,8 +141,7 @@ class HomeController extends GetxController {
     if (selectedBills.isNotEmpty) {
       await billRepository.deleteBillsByIds(selectedBills);
       clearSelectedBills();
-      await loadMonth();
-      await loadCategories();
+      await reload();
     }
   }
 
@@ -217,9 +219,10 @@ class HomeController extends GetxController {
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    loadCategories();
-    loadMonth();
+    await loadCategories();
+    await loadMonthsList();
+    await loadMonth();
   }
 }

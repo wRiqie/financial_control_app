@@ -67,7 +67,10 @@ class PreferencesPage extends GetView<PreferencesController> {
                                 Get.back();
                                 Get.dialog(
                                   ConfirmDialog(
-                                    icon: const Icon(Icons.save),
+                                    icon: Icon(
+                                      Icons.save,
+                                      color: Get.theme.colorScheme.primary,
+                                    ),
                                     body:
                                         'Tem certeza que deseja exportar os dados?',
                                     onConfirm: () => controller.exportDb(),

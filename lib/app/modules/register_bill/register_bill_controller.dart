@@ -105,11 +105,11 @@ class RegisterBillController extends GetxController {
   }
 
   clearFields() {
-    titleController.text = '';
-    totalValueController.text = '';
-    dueDateController.text = '';
-    portionController.text = '';
-    maxPortionController.text = '';
+    titleController.clear();
+    totalValueController.clear();
+    dueDateController.clear();
+    portionController.clear();
+    maxPortionController.clear();
     paid = false;
     havePortions = false;
     update();
@@ -120,10 +120,12 @@ class RegisterBillController extends GetxController {
     super.onInit();
     categoryId = args['categoryId'];
     selectedMonth = args['selectedMonth'];
-
+    
     if (args['bill'] != null) {
       editingBill = args['bill'];
       fillFields();
+    } else {
+      dueDateController.text = DateTime.now().day.toString();
     }
   }
 

@@ -285,6 +285,15 @@ class DatabaseProvider {
     );
   """;
 
+  Future<List<Month>> getMonths() async {
+    final db = await database;
+    if (db != null) {
+      var res = await db.query(monthTable);
+      return res.isNotEmpty ? res.map((e) => Month.fromMap(e)).toList() : [];
+    }
+    return [];
+  }
+
   Future<Month?> getMonthByDate(String date, bool onlySelected) async {
     final db = await database;
     if (db != null) {
