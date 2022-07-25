@@ -1,3 +1,4 @@
+import 'package:financial_control_app/app/core/theme/dark/dark_colors.dart';
 import 'package:financial_control_app/app/core/utils/helpers.dart';
 import 'package:financial_control_app/app/data/enums/bill_status_enum.dart';
 import 'package:financial_control_app/app/global/widgets/confirm_dialog.dart';
@@ -242,11 +243,30 @@ class HomePage extends GetView<HomeController> {
                   color: Get.theme.colorScheme.onPrimary,
                 ),
               ),
-              Text(
-                AppHelpers.formatCurrency(value),
-                style: const TextStyle(
-                  fontSize: 42,
-                ),
+              Row(
+                children: [
+                  controller.isValuesVisible
+                      ? Text(
+                          AppHelpers.formatCurrency(value),
+                          style: const TextStyle(
+                            fontSize: 42,
+                          ),
+                        )
+                      : Container(
+                          color: Colors.white,
+                          width: Get.size.width * .3,
+                          height: 1,
+                        ),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: GestureDetector(
+                      onTap: controller.toggleValuesVisibility,
+                      child: controller.isValuesVisible
+                          ? const Icon(Icons.visibility)
+                          : const Icon(Icons.visibility_off),
+                    ),
+                  )
+                ],
               ),
             ],
           ),

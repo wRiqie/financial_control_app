@@ -27,6 +27,7 @@ class HomeController extends GetxController {
   List<Month> availableMonths = [];
   List<Category> categories = [];
   List<Bill> selectedBills = [];
+  bool isValuesVisible = false;
 
   HomeController(
       this.categoryRepository, this.monthRepository, this.billRepository);
@@ -39,6 +40,12 @@ class HomeController extends GetxController {
       },
     );
     loadMonth();
+  }
+
+  Future<void> toggleValuesVisibility() async {
+    isValuesVisible = !isValuesVisible;
+    await box.write(Constants.isValuesVisible, isValuesVisible);
+    update();
   }
 
   void scrollValueCard(double width, int position, {bool back = false}) {
