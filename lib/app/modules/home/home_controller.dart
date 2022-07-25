@@ -228,6 +228,7 @@ class HomeController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    isValuesVisible = box.read(Constants.isValuesVisible) ?? true;
     await loadCategories();
     await loadMonthsList();
     await loadMonth();
