@@ -1,25 +1,31 @@
-import 'package:financial_control_app/app/core/theme/dark/dark_colors.dart';
-import 'package:financial_control_app/app/core/values/contants.dart';
+import 'package:financial_control_app/app/core/values/constants.dart';
 import 'package:financial_control_app/app/data/models/month.dart';
 import 'package:financial_control_app/app/data/services/database_service.dart';
+import 'package:financial_control_app/app/data/services/local_auth_service.dart';
 import 'package:financial_control_app/app/data/services/snackbar_service.dart';
 import 'package:financial_control_app/app/data/services/theme_service.dart';
+import 'package:financial_control_app/app/global/widgets/confirm_dialog.dart';
 import 'package:financial_control_app/app/routes/pages.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class PreferencesController extends GetxController {
   final DatabaseService backupDbService;
   final SnackbarService snackService;
+  final LocalAuthService localAuthService;
   final box = GetStorage(Constants.storageName);
   final args = Get.arguments;
   bool copyBills = false;
+  bool biometryEnabled = false;
   Month? month;
 
-  PreferencesController(this.backupDbService, {required this.snackService});
+  PreferencesController(this.backupDbService,
+      {required this.snackService, required this.localAuthService});
 
-  toogleCopyBills(bool value) {
-    copyBills = value;
+  void toggleCopyBills(bool? value) async {
+    copyBills = value ?? true;
+    await box.write(Constants.copyBills, copyBills);
     update();
   }
 
@@ -36,6 +42,28 @@ class PreferencesController extends GetxController {
     Future.delayed(const Duration(milliseconds: 100)).then(
       (value) => update(),
     );
+  }
+
+  void toggleBiometry(bool? value) async {
+    final isCompatible =
+        await localAuthService.checkDeviceCompatility(localAuthService.auth);
+    if (isCompatible) {
+      biometryEnabled = value ?? false;
+      await box.write(Constants.biometryEnabled, biometryEnabled);
+      update();
+    } else {
+      Get.dialog(
+        ConfirmDialog(
+          body:
+              'biometryError'.tr,
+          icon: Icon(
+            Icons.fingerprint,
+            color: Get.theme.colorScheme.primary,
+          ),
+          isInfoDialog: true,
+        ),
+      );
+    }
   }
 
   void exportDb() async {
@@ -74,7 +102,8 @@ class PreferencesController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    toogleCopyBills(box.read(Constants.copyBills));
+    toggleCopyBills(box.read(Constants.copyBills));
+    toggleBiometry(box.read(Constants.biometryEnabled));
     month = args['month'];
   }
 }

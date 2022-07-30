@@ -48,7 +48,15 @@ class PreferencesPage extends GetView<PreferencesController> {
                     icon: Icons.copy,
                     haveSwitch: true,
                     switchValue: controller.copyBills,
-                    toggleSwitch: controller.toogleCopyBills,
+                    toggleSwitch: controller.toggleCopyBills,
+                  ),
+                  _buildTile(
+                    title: 'biometry'.tr,
+                    subtitle: 'enableBiometry'.tr,
+                    icon: Icons.fingerprint,
+                    haveSwitch: true,
+                    switchValue: controller.biometryEnabled,
+                    toggleSwitch: controller.toggleBiometry,
                   ),
                   _buildTile(
                     title: 'Backup dos dados',

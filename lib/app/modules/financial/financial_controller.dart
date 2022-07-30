@@ -1,4 +1,4 @@
-import 'package:financial_control_app/app/core/values/contants.dart';
+import 'package:financial_control_app/app/core/values/constants.dart';
 import 'package:financial_control_app/app/data/services/theme_service.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';

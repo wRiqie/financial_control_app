@@ -1,4 +1,4 @@
-import 'package:financial_control_app/app/core/values/contants.dart';
+import 'package:financial_control_app/app/core/values/constants.dart';
 import 'package:financial_control_app/app/data/models/category.dart';
 import 'package:financial_control_app/app/data/repository/category_repository.dart';
 import 'package:financial_control_app/app/data/services/snackbar_service.dart';

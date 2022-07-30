@@ -75,4 +75,9 @@ final Map<String, String> ptBr = {
   'totalPriceForMonths': 'Preço total dos meses',
   'expensesOfMonth': 'Gastos do mês atual',
   'balanceDifference': 'Diferença de saldo',
+  'biometry': 'Biometria',
+  'enableBiometry': 'Ative a biometria para ter mais segurança no app',
+  'authReason': 'Por favor se autentique para acessar o app',
+  'biometryError':
+      'Não é possível ativar a autenticação por biometria, verifique se o dispositivo é compativel e se ela está ativada e tente novamente...',
 };

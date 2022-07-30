@@ -5,15 +5,17 @@ class ConfirmDialog extends StatelessWidget {
   final String? title;
   final Icon? icon;
   final String body;
-  final VoidCallback onConfirm;
+  final VoidCallback? onConfirm;
   final VoidCallback? onCancel;
+  final bool isInfoDialog;
   const ConfirmDialog({
     Key? key,
     this.title,
     this.icon,
     required this.body,
     this.onCancel,
-    required this.onConfirm,
+    this.onConfirm,
+    this.isInfoDialog = false,
   }) : super(key: key);
 
   @override
@@ -27,12 +29,12 @@ class ConfirmDialog extends StatelessWidget {
           child: TextButton(
             onPressed: () {
               Get.back();
-              onConfirm();
+              if(onConfirm != null) onConfirm!();
             },
-            child: const Text('Confirmar'),
+            child: !isInfoDialog ? const Text('Confirmar') : const Text('Ok'),
           ),
         ),
-        SizedBox(
+        !isInfoDialog ? SizedBox(
           height: 60,
           child: TextButton(
             onPressed: () {
@@ -40,7 +42,7 @@ class ConfirmDialog extends StatelessWidget {
             },
             child: const Text('Cancelar'),
           ),
-        ),
+        ) : Container(),
       ],
     );
   }

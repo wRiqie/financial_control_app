@@ -1,3 +1,5 @@
+import 'package:financial_control_app/app/modules/auth/auth_binding.dart';
+import 'package:financial_control_app/app/modules/auth/auth_page.dart';
 import 'package:financial_control_app/app/modules/change_balance/change_balace_binding.dart';
 import 'package:financial_control_app/app/modules/change_balance/change_balance_page.dart';
 import 'package:financial_control_app/app/modules/dashboard/dashboard_binding.dart';
@@ -14,6 +16,7 @@ import 'package:financial_control_app/app/modules/splash/splash_binding.dart';
 import 'package:financial_control_app/app/modules/splash/splash_page.dart';
 import 'package:financial_control_app/app/modules/statistics/statistics_binding.dart';
 import 'package:financial_control_app/app/modules/statistics/statistics_page.dart';
+import 'package:financial_control_app/app/routes/middlewares/auth_middleware.dart';
 import 'package:get/get.dart';
 part './routes.dart';
 
@@ -27,7 +30,8 @@ abstract class AppPages {
     GetPage(
       name: Routes.dashboard,
       page: () => const DashboardPage(),
-      binding: DashboardBinding()
+      binding: DashboardBinding(),
+      middlewares: [AuthMiddleware()],
     ),
     GetPage(
       name: Routes.home,
@@ -58,6 +62,11 @@ abstract class AppPages {
       name: Routes.selectCategories,
       page: () => const SelectCategoriesPage(),
       binding: SelectCategoriesBinding()
+    ),
+    GetPage(
+      name: Routes.auth,
+      page: () => const AuthPage(),
+      binding: AuthBinding()
     ),
   ];
 }

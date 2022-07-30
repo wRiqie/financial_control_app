@@ -1,7 +1,7 @@
 import 'dart:convert' as convert;
 import 'package:encrypt/encrypt.dart' as encrypt;
 
-import 'package:financial_control_app/app/core/values/contants.dart';
+import 'package:financial_control_app/app/core/values/constants.dart';
 import 'package:financial_control_app/app/data/models/bill.dart';
 import 'package:financial_control_app/app/data/models/category.dart';
 import 'package:financial_control_app/app/data/models/category_month.dart';

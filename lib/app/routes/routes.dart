@@ -2,6 +2,7 @@ part of './pages.dart';
 
 abstract class Routes{
   static const splash = '/splash';
+  static const auth = '/auth';
   static const dashboard = '/dashboard';
   static const home = '/home';
   static const statistics = '/statistics';

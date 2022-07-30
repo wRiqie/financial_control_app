@@ -1,4 +1,4 @@
-import 'package:financial_control_app/app/core/values/contants.dart';
+import 'package:financial_control_app/app/core/values/constants.dart';
 import 'package:financial_control_app/app/modules/financial/financial_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
