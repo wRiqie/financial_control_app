@@ -44,6 +44,13 @@ class DatabaseProvider {
     );
   }
 
+  Future<void> createTables(Database db) async {
+        await db.execute(_createTableMonth);
+        await db.execute(_createTableBill);
+        await db.execute(_createTableCategory);
+        await db.execute(_createTableCategoryMonth);
+  }
+
   // Backup
   Future<List<String>> _getTables() async {
     final db = await database;
