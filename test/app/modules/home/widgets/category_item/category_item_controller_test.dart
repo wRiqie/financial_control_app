@@ -1,19 +1,15 @@
 import 'package:financial_control_app/app/data/enums/bill_status_enum.dart';
 import 'package:financial_control_app/app/data/models/bill.dart';
 import 'package:financial_control_app/app/data/models/category.dart';
+import 'package:financial_control_app/app/modules/home/home_controller.dart';
 import 'package:financial_control_app/app/modules/home/widgets/category_item/category_item_controller.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../../../mocks/mocks.dart';
 
 void main() {
-  CategoryItemController _controller = CategoryItemController(
-    BillRepositoryMock(),
-    Category(
-      id: 1,
-    ),
-    null,
-  );
+  late CategoryItemController _controller;
+
   List<Bill> _bills = [
     Bill(
       id: '1',
@@ -54,6 +50,19 @@ void main() {
   ];
 
   setUp(() {
+    _controller = CategoryItemController(
+      homeController: HomeController(
+        CategoryRepositoryMock(),
+        MonthRepositoryMock(),
+        BillRepositoryMock(),
+      ),
+      repository: BillRepositoryMock(),
+      category: Category(
+        id: 1,
+      ),
+      month: null,
+    );
+
     _controller.bills = _bills;
   });
 

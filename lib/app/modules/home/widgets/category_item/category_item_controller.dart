@@ -8,7 +8,7 @@ import 'package:financial_control_app/app/modules/home/home_controller.dart';
 import 'package:get/get.dart';
 
 class CategoryItemController extends GetxController {
-  final homeController = Get.find<HomeController>();
+  final HomeController homeController;
   final BillRepository repository;
   final expandable = ExpandableController();
   final Month? month;
@@ -16,7 +16,12 @@ class CategoryItemController extends GetxController {
   final Category category;
   final args = Get.arguments;
 
-  CategoryItemController(this.repository, this.category, this.month);
+  CategoryItemController({
+    required this.repository,
+    required this.category,
+    required this.homeController,
+    this.month,
+  });
 
   getBills() {
     repository

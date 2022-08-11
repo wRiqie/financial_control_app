@@ -28,8 +28,12 @@ class CategoryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CategoryItemController>(
-      init:
-          CategoryItemController(BillRepository(DatabaseProvider.db), category, month),
+      init: CategoryItemController(
+        homeController: Get.find(),
+        repository: BillRepository(DatabaseProvider.db),
+        category: category,
+        month: month,
+      ),
       global: false,
       builder: (_) => ExpandablePanel(
         controller: _.expandable,
