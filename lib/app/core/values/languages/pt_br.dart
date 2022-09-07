@@ -72,7 +72,7 @@ final Map<String, String> ptBr = {
   'missing': 'Faltam',
   'month': 'Mês',
   'category': 'Categoria',
-  'totalPriceForMonths': 'Preço total dos meses',
+  'totalPriceForMonths': 'Diferença de gastos entre os meses',
   'expensesOfMonth': 'Gastos do mês atual',
   'balanceDifference': 'Diferença de saldo',
   'biometry': 'Biometria',
@@ -80,4 +80,5 @@ final Map<String, String> ptBr = {
   'authReason': 'Por favor se autentique para acessar o app',
   'biometryError':
       'Não é possível ativar a autenticação por biometria, verifique se o dispositivo é compativel e se ela está ativada e tente novamente...',
+  'totalUnpaid': 'Total Não Pago',
 };

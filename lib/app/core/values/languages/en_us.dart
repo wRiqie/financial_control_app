@@ -71,7 +71,7 @@ final Map<String, String> enUs = {
   'missing': 'Missing',
   'month': 'Month',
   'category': 'Category',
-  'totalPriceForMonths': 'Total price for months',
+  'totalPriceForMonths': 'Difference in spending between months',
   'expensesOfMonth': 'Current month\'s expenses',
   'balanceDifference': 'Balance difference',
   'biometry': 'Biometry',
@@ -79,4 +79,5 @@ final Map<String, String> enUs = {
   'authReason': 'Please autenticate to access the app',
   'biometryError':
       'You cannot enable biometric authentication, check if your device is compatible and if it is enabled and try again...',
+  'totalUnpaid': 'Total Unpaid',
 };

@@ -2,6 +2,7 @@ import 'dart:convert' as convert;
 import 'package:encrypt/encrypt.dart' as encrypt;
 
 import 'package:financial_control_app/app/core/values/constants.dart';
+import 'package:financial_control_app/app/data/enums/bill_status_enum.dart';
 import 'package:financial_control_app/app/data/models/bill.dart';
 import 'package:financial_control_app/app/data/models/category.dart';
 import 'package:financial_control_app/app/data/models/category_month.dart';
@@ -45,10 +46,10 @@ class DatabaseProvider {
   }
 
   Future<void> createTables(Database db) async {
-        await db.execute(_createTableMonth);
-        await db.execute(_createTableBill);
-        await db.execute(_createTableCategory);
-        await db.execute(_createTableCategoryMonth);
+    await db.execute(_createTableMonth);
+    await db.execute(_createTableBill);
+    await db.execute(_createTableCategory);
+    await db.execute(_createTableCategoryMonth);
   }
 
   // Backup
@@ -283,6 +284,7 @@ class DatabaseProvider {
   static const _monthDate = 'date';
   static const _monthTotalPrice = 'totalPrice';
   static const _monthBalance = 'balance';
+  static const _monthTotalUnpaid = 'totalUnpaid';
 
   static const _createTableMonth = """
     CREATE TABLE IF NOT EXISTS $monthTable(
@@ -312,6 +314,8 @@ class DatabaseProvider {
       final month = res.isNotEmpty ? Month.fromMap(res.first) : null;
       if (month != null) {
         month.totalPrice = await getMonthTotalPrice(date, onlySelected);
+        month.totalUnpaid =
+            await getMonthTotalPrice(date, onlySelected, onlyUnpaid: true);
       }
       return month;
     }
@@ -332,30 +336,43 @@ class DatabaseProvider {
           res.isNotEmpty ? res.map((e) => Month.fromMap(e)).toList() : [];
       for (var month in months) {
         month.totalPrice = await getMonthTotalPrice(month.date, onlySelected);
+        month.totalUnpaid = await getMonthTotalPrice(month.date, onlySelected,
+            onlyUnpaid: true);
       }
       return months;
     }
     return [];
   }
 
-  Future<num> getMonthTotalPrice(String date, bool onlySelected) async {
+  Future<num> getMonthTotalPrice(String date, bool onlySelected,
+      {bool onlyUnpaid = false}) async {
     final db = await database;
     if (db != null) {
       final sql = StringBuffer();
+      sql.write(" SELECT ");
       sql.write(
-          " SELECT COALESCE(SUM(B.$_billValue), 0.0) AS $_monthTotalPrice ");
+          " COALESCE(SUM(B.$_billValue), 0.0) AS ${onlyUnpaid ? _monthTotalUnpaid : _monthTotalPrice} ");
       sql.write(" FROM $billTable B ");
       sql.write(" INNER JOIN $categoryTable C ");
       sql.write(" ON B.$_billCategoryId = C.$_categoryId ");
       sql.write(" WHERE B.$_billDate = ? ");
       sql.write(" AND C.$_categorySelected = ? ");
+      if (onlyUnpaid) {
+        sql.write(" AND B.$_billStatus <> ? ");
+      }
 
       var res = await db.rawQuery(
         sql.toString(),
-        [date, onlySelected ? 1 : 0],
+        onlyUnpaid
+            ? [
+                date,
+                onlySelected ? 1 : 0,
+                EBillStatus.paid.id,
+              ]
+            : [date, onlySelected ? 1 : 0],
       );
 
-      return res.isNotEmpty ? res.first[_monthTotalPrice] as num : 0.0;
+      return res.isNotEmpty ? res.first[onlyUnpaid ? _monthTotalUnpaid : _monthTotalPrice] as num : 0.0;
     }
     return 0.0;
   }

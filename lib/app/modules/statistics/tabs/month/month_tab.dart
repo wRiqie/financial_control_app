@@ -169,11 +169,11 @@ class MonthTabPage extends GetView<MonthTabController> {
               value != null && value != 0
                   ? profit
                       ? const Icon(
-                          Icons.arrow_upward,
+                          Icons.arrow_downward,
                           color: Colors.green,
                         )
                       : const Icon(
-                          Icons.arrow_downward,
+                          Icons.arrow_upward,
                           color: Colors.red,
                         )
                   : Container(),

@@ -4,11 +4,12 @@ import 'package:financial_control_app/app/data/models/category.dart';
 import 'package:financial_control_app/app/modules/home/home_controller.dart';
 import 'package:financial_control_app/app/modules/home/widgets/category_item/category_item_controller.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../../../mocks/mocks.dart';
 
 void main() {
-  late CategoryItemController _controller;
+  late CategoryItemController controller;
 
   List<Bill> _bills = [
     Bill(
@@ -50,7 +51,7 @@ void main() {
   ];
 
   setUp(() {
-    _controller = CategoryItemController(
+    controller = CategoryItemController(
       homeController: HomeController(
         CategoryRepositoryMock(),
         MonthRepositoryMock(),
@@ -63,27 +64,53 @@ void main() {
       month: null,
     );
 
-    _controller.bills = _bills;
+    controller.bills = _bills;
   });
 
   tearDown(() {
-    _controller.dispose();
+    controller.dispose();
   });
 
   group('Price and Percentage |', () {
     test('deve calcular preço restante', () {
-      var leftPrice = _controller.bills.leftPrice;
+      var leftPrice = controller.bills.leftPrice;
       expect(leftPrice, 300);
     });
 
     test('deve calcular preço total', () {
-      var totalPrice = _controller.bills.totalPrice;
+      var totalPrice = controller.bills.totalPrice;
       expect(totalPrice, 400);
     });
 
     test('deve calcular porcentagem', () {
-      var percentage = _controller.bills.percentage;
+      var percentage = controller.bills.percentage;
       expect(percentage, 0.25);
+    });
+  });
+
+  group('Bills management', () {
+    test('deve adicionar conta a lista de contas', () {
+      controller.bills.clear();
+      final fakeBill = Bill(
+        id: '',
+        categoryId: 1,
+        title: '',
+        value: 20,
+        dueDate: 10,
+        status: 1,
+        date: '',
+      );
+      when(() =>
+              controller.repository.getBillsByCategoryIdAndDate(any(), any()))
+          .thenAnswer(
+        (_) async => [fakeBill],
+      );
+      controller.getBills();
+
+      expect(controller.bills.length, 1);
+      expect(controller.bills.totalPrice, 20);
+      expect(controller.bills.leftPrice, 20);
+      expect(controller.bills.percentage, 0);
     });
   });
 }

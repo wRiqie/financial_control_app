@@ -83,12 +83,19 @@ class HomePage extends GetView<HomeController> {
                         size: size,
                       ),
                       _buildValueCard(
-                        title: 'balanceOfMonth'.tr,
-                        value: controller.selectedMonth?.balance ?? 0,
+                        title: 'totalUnpaid'.tr,
+                        value: controller.selectedMonth?.totalUnpaid ?? 0,
                         position: 1,
                         size: size,
+                        color: Get.theme.colorScheme.onBackground,
+                      ),
+                      _buildValueCard(
+                        title: 'balanceOfMonth'.tr,
+                        value: controller.selectedMonth?.balance ?? 0,
+                        position: 2,
+                        size: size,
                         color: Get.theme.colorScheme.secondary,
-                      )
+                      ),
                     ],
                   ),
                 ),
