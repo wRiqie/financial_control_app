@@ -131,8 +131,9 @@ class DatabaseProvider {
           await db.delete(table);
         }
       }
+    // ignore: empty_catches
     } catch (e) {
-      print(e);
+      
     }
   }
 

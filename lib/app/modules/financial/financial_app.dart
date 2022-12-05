@@ -1,4 +1,3 @@
-import 'package:financial_control_app/app/core/theme/dark/dark_theme.dart';
 import 'package:financial_control_app/app/core/values/translation.dart';
 import 'package:financial_control_app/app/data/services/theme_service.dart';
 import 'package:financial_control_app/app/modules/financial/financial_controller.dart';

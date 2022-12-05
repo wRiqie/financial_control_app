@@ -1,5 +1,4 @@
 import 'package:financial_control_app/app/core/theme/dark/dark_colors.dart';
-import 'package:financial_control_app/app/core/theme/dark/dark_theme.dart';
 import 'package:financial_control_app/app/data/services/theme_service.dart';
 import 'package:financial_control_app/app/global/widgets/confirm_dialog.dart';
 import 'package:financial_control_app/app/modules/preferences/preferences_controller.dart';

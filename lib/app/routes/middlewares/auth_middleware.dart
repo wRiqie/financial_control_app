@@ -1,6 +1,7 @@
 import 'package:financial_control_app/app/core/values/constants.dart';
 import 'package:financial_control_app/app/routes/pages.dart';
 import 'package:flutter/Material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -11,7 +12,7 @@ class AuthMiddleware extends GetMiddleware {
 
   @override
   RouteSettings? redirect(String? route) {
-    print('[Middleware] -> $authenticated');
+    if(kDebugMode) print('[Middleware] -> $authenticated');
     final authEnabled = box.read(Constants.biometryEnabled);
     if(authEnabled != null && authEnabled && !authenticated) {
       return const RouteSettings(name: Routes.auth);

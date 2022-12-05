@@ -1,5 +1,4 @@
 import 'package:financial_control_app/app/core/theme/dark/dark_colors.dart';
-import 'package:financial_control_app/app/core/utils/helpers.dart';
 import 'package:financial_control_app/app/data/enums/category_enum.dart';
 import 'package:financial_control_app/app/data/models/category_data.dart';
 import 'package:financial_control_app/app/data/provider/database_provider.dart';
@@ -98,7 +97,7 @@ class CategoryTabPage extends GetView<CategoryTabController> {
       ),
       trailing: Text(
         '${percent ?? 0}%',
-        style: TextStyle(color: DarkColors.grey),
+        style: const TextStyle(color: DarkColors.grey),
       ),
       contentPadding: const EdgeInsets.symmetric(
         vertical: 10,
