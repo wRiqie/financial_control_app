@@ -22,7 +22,7 @@ class HomeController extends GetxController {
   final BillRepository billRepository;
   final valueCardController = ScrollController();
   num remainingBalance = 0.0;
-  DateTime selectedDate = DateTime.now();
+  DateTime selectedDate = DateTime.now().add(const Duration(days: 50));
   Month? selectedMonth;
   List<Month> availableMonths = [];
   List<Category> categories = [];
@@ -107,8 +107,11 @@ class HomeController extends GetxController {
     );
     selectedMonth = monthToAdd;
 
-    final copyBills = box.read<bool>(Constants.copyBills);
-    await loadAndCopyPreviousMonthBills(copy: copyBills ?? false);
+    final previousDate = await previousMonthDate();
+    if (previousDate != null) {
+      final copyBills = box.read<bool>(Constants.copyBills);
+      await loadAndCopyPreviousMonthBills(previousDate, copy: copyBills ?? false);
+    }
 
     calcRemainingBalance();
     await monthRepository.saveMonth(selectedMonth!);
@@ -153,25 +156,27 @@ class HomeController extends GetxController {
     }
   }
 
-  String get previousMonthDate {
-    var month = selectedDate.month - 1 == 0 ? 12 : selectedDate.month - 1;
-    var year = month == 12 ? selectedDate.year - 1 : selectedDate.year;
-    var date = DateTime(year, month);
-    return AppHelpers.formatDateToSave(date);
+  Future<String?> previousMonthDate() {
+    return monthRepository.getLastMonthDate();
   }
 
   Future<num> loadPreviousMonthBalance() async {
-    final previousMonth =
-        await monthRepository.getMonthByDate(previousMonthDate);
+    final previousDate = await previousMonthDate();
+    if (previousDate != null) {
+      final previousMonth = await monthRepository.getMonthByDate(previousDate);
+      return previousMonth?.balance ?? 0;
+    }
 
-    return previousMonth?.balance ?? 0;
+    return 0;
   }
 
-  Future<List<Bill>> loadAndCopyPreviousMonthBills({bool copy = false}) async {
+  Future<List<Bill>> loadAndCopyPreviousMonthBills(String previousDate, {bool copy = false}) async {
     List<Bill> billsToSave = [];
     num totalPrice = 0.0;
+
     final previousMonthBills =
-        await billRepository.getBillsByDate(previousMonthDate);
+        await billRepository.getBillsByDate(previousDate);
+
     if (!copy) {
       final previousMonthBillsWithPortions = previousMonthBills
           .where((e) => e.portion != null && e.maxPortion != null)

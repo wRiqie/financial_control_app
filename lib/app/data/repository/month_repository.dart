@@ -18,4 +18,7 @@ class MonthRepository {
 
   Future<List<Month>> getLastMonths({bool onlySelected = true})
     => db.getLastMonths(onlySelected);
+
+  Future<String?> getLastMonthDate()
+    => db.getLastMonthDate();
 }

@@ -7,6 +7,7 @@ import 'package:financial_control_app/app/data/models/bill.dart';
 import 'package:financial_control_app/app/data/models/category.dart';
 import 'package:financial_control_app/app/data/models/category_month.dart';
 import 'package:financial_control_app/app/data/models/month.dart';
+import 'package:financial_control_app/app/data/models/month_data.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -131,10 +132,8 @@ class DatabaseProvider {
           await db.delete(table);
         }
       }
-    // ignore: empty_catches
-    } catch (e) {
-      
-    }
+      // ignore: empty_catches
+    } catch (e) {}
   }
 
   // Generic
@@ -323,6 +322,18 @@ class DatabaseProvider {
     return null;
   }
 
+  Future<String?> getLastMonthDate() async {
+    final db = await database;
+    if (db != null) {
+      final sql = StringBuffer();
+      sql.write(" SELECT MAX($_monthDate) as monthDate ");
+      sql.write(" FROM $monthTable ");
+      var res = await db.rawQuery(sql.toString());
+      return res.isNotEmpty ? res.first['monthDate'].toString() : null;
+    }
+    return null;
+  }
+
   Future<List<Month>> getLastMonths(bool onlySelected) async {
     const int limit = 6;
     final db = await database;
@@ -373,7 +384,9 @@ class DatabaseProvider {
             : [date, onlySelected ? 1 : 0],
       );
 
-      return res.isNotEmpty ? res.first[onlyUnpaid ? _monthTotalUnpaid : _monthTotalPrice] as num : 0.0;
+      return res.isNotEmpty
+          ? res.first[onlyUnpaid ? _monthTotalUnpaid : _monthTotalPrice] as num
+          : 0.0;
     }
     return 0.0;
   }

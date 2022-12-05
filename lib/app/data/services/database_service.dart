@@ -50,6 +50,7 @@ class DatabaseService {
       return false;
     }
     final file = File('${directory.path}/.${Constants.dbName}');
+    print(file);
     await backupRepository.clearAllTables();
     final restored =
         await backupRepository.restoreBackup(await file.readAsString());
