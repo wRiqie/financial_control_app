@@ -57,6 +57,9 @@ class ChangeBalancePage extends GetView<ChangeBalanceController> {
                     FilteringTextInputFormatter.digitsOnly,
                     CurrencyInputFormatter(),
                   ],
+                  onFieldSubmitted: (value) {
+                    controller.saveBalance();
+                  },
                   validator: (value) {
                     if (value == null || value == '') {
                       return 'enterMonthValue'.tr;

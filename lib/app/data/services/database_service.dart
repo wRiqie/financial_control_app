@@ -49,12 +49,16 @@ class DatabaseService {
     if (!(await checkPermissions())) {
       return false;
     }
-    final file = File('${directory.path}/.${Constants.dbName}');
-    print(file);
-    await backupRepository.clearAllTables();
-    final restored =
-        await backupRepository.restoreBackup(await file.readAsString());
-    
-    return restored;
+    try {
+      final file = File('${directory.path}/.${Constants.dbName}');
+      final fileStr = await file.readAsString();
+      await backupRepository.clearAllTables();
+      final restored =
+          await backupRepository.restoreBackup(fileStr);
+
+      return restored;
+    } catch (e) {
+      return false;
+    }
   }
 }
