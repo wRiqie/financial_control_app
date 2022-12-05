@@ -59,10 +59,10 @@ class HomeController extends GetxController {
   }
 
   Future<void> swapDate() async {
-      // selectedDate = newDate;
-      // await reload();
+    // selectedDate = newDate;
+    // await reload();
 
-      update();
+    update();
   }
 
   Future<void> reload() async {
@@ -126,11 +126,12 @@ class HomeController extends GetxController {
     if (bill.status != EBillStatus.paid.id) {
       bill.status = EBillStatus.paid.id;
     } else {
-      bill.status = bill.dueDate > DateTime.now().day
+      bill.status = bill.dueDate >= DateTime.now().day
           ? EBillStatus.pendent.id
           : EBillStatus.overdue.id;
     }
     await billRepository.saveBill(bill);
+    await loadMonth();
   }
 
   void deleteBill(Bill bill, CategoryItemController categoryController) async {
