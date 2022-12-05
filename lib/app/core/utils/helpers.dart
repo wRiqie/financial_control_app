@@ -60,7 +60,7 @@ class AppHelpers {
   }
 
   static num revertCurrencyFormat(String currency) {
-    final formatter = NumberFormat.simpleCurrency(locale: "pt_Br");
+    final formatter = NumberFormat.simpleCurrency(locale: Get.deviceLocale?.toString() ?? "en_US");
     return formatter.parse(currency);
   }
 }
