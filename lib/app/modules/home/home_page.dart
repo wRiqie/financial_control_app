@@ -1,5 +1,7 @@
+import 'package:financial_control_app/app/core/theme/dark/dark_colors.dart';
 import 'package:financial_control_app/app/core/utils/helpers.dart';
 import 'package:financial_control_app/app/data/enums/bill_status_enum.dart';
+import 'package:financial_control_app/app/data/models/bill.dart';
 import 'package:financial_control_app/app/global/widgets/confirm_dialog.dart';
 import 'package:financial_control_app/app/modules/home/home_controller.dart';
 import 'package:financial_control_app/app/modules/home/widgets/category_item/category_item.dart';
@@ -31,7 +33,24 @@ class HomePage extends GetView<HomeController> {
                       ),
                     )
                   : Container()
-              : Text('${controller.selectedBills.length} Selecionado(s)'),
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${controller.selectedBills.length} Selecionado(s)',
+                      style: const TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),
+                    Text(
+                      AppHelpers.formatCurrency(controller.selectedBills.totalPrice),
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: DarkColors.grey,
+                      ),
+                    ),
+                  ],
+                ),
           centerTitle: controller.selectedBills.isEmpty,
           actions: controller.selectedBills.isEmpty
               ? [
@@ -106,12 +125,33 @@ class HomePage extends GetView<HomeController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Text(
-                        'billsOfMonth'.tr,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'billsOfMonth'.tr,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          DropdownButton<String>(
+                            underline: Container(),
+                            icon: const Icon(Icons.expand_more),
+                            value: 'showAll',
+                            items: const [
+                              DropdownMenuItem(
+                                value: 'showAll',
+                                child: Text('Exibir tudo'),
+                              ),
+                              DropdownMenuItem(
+                                value: 'unpaid',
+                                child: Text('Não pagas'),
+                              ),
+                            ],
+                            onChanged: (value) {},
+                          )
+                        ],
                       ),
                       const SizedBox(
                         height: 15,
