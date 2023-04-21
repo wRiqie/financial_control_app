@@ -1,9 +1,10 @@
-import 'package:financial_control_app/app/core/values/translation.dart';
-import 'package:financial_control_app/app/data/services/theme_service.dart';
-import 'package:financial_control_app/app/modules/financial/financial_controller.dart';
-import 'package:financial_control_app/app/routes/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../core/values/translation.dart';
+import '../../data/services/theme_service.dart';
+import '../../routes/pages.dart';
+import 'financial_controller.dart';
 
 class FinancialApp extends GetView<FinancialController> {
   const FinancialApp({Key? key}) : super(key: key);

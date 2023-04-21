@@ -1,4 +1,4 @@
-import 'package:financial_control_app/app/core/theme/dark/dark_colors.dart';
+import '../../core/theme/dark/dark_colors.dart';
 import 'package:flutter/material.dart';
 
 enum ECategory {

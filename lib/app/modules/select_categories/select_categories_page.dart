@@ -1,6 +1,6 @@
-import 'package:financial_control_app/app/data/enums/category_enum.dart';
-import 'package:financial_control_app/app/data/models/category.dart';
-import 'package:financial_control_app/app/modules/select_categories/select_categories_controller.dart';
+import '../../data/enums/category_enum.dart';
+import '../../data/models/category.dart';
+import 'select_categories_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

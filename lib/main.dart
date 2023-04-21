@@ -1,8 +1,9 @@
-import 'package:financial_control_app/app/core/values/constants.dart';
-import 'package:financial_control_app/app/modules/financial/financial_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
+
+import 'app/core/values/constants.dart';
+import 'app/modules/financial/financial_app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -23,11 +23,11 @@ final Map<String, String> ptBr = {
   'others': 'Outros',
   'balance': 'Saldo',
   'concluded': 'Concluído',
-  'enterBalanceOfMonth': 'Por favor\nDigite o saldo do mês',
+  'enterBalanceOfMonth': 'Digite o seu\norçamento do mês',
   'enterMonthValue': 'Por favor digite o saldo disponível no mês',
   'valueMonthCannotBeZero': 'O saldo do mês não pode ser zero',
   'balanceOfMonthDescription':
-      'Saldo do mês é o orçamento disponível em um determinado mês para as contas do mesmo',
+      'Digite o valor disponível para as suas contas neste mês',
   'home': 'Início',
   'statistics': 'Estatísticas',
   'remainingBalance': 'Saldo Restante',

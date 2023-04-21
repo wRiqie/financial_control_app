@@ -1,10 +1,10 @@
-import 'package:financial_control_app/app/core/theme/dark/dark_colors.dart';
-import 'package:financial_control_app/app/data/enums/category_enum.dart';
-import 'package:financial_control_app/app/data/models/category_data.dart';
-import 'package:financial_control_app/app/data/provider/database_provider.dart';
-import 'package:financial_control_app/app/data/repository/bill_repository.dart';
-import 'package:financial_control_app/app/data/repository/category_repository.dart';
-import 'package:financial_control_app/app/modules/statistics/tabs/category/category_tab_controller.dart';
+import '../../../../core/theme/dark/dark_colors.dart';
+import '../../../../data/enums/category_enum.dart';
+import '../../../../data/models/category_data.dart';
+import '../../../../data/provider/database_provider.dart';
+import '../../../../data/repository/bill_repository.dart';
+import '../../../../data/repository/category_repository.dart';
+import 'category_tab_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';

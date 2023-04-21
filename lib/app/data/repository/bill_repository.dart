@@ -1,5 +1,5 @@
-import 'package:financial_control_app/app/data/models/bill.dart';
-import 'package:financial_control_app/app/data/provider/database_provider.dart';
+import '../models/bill.dart';
+import '../provider/database_provider.dart';
 
 class BillRepository {
   final _table = DatabaseProvider.billTable;

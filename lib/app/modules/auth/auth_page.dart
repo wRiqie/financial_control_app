@@ -1,5 +1,5 @@
-import 'package:financial_control_app/app/core/theme/dark/dark_colors.dart';
-import 'package:financial_control_app/app/modules/auth/auth_controller.dart';
+import '../../core/theme/dark/dark_colors.dart';
+import 'auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

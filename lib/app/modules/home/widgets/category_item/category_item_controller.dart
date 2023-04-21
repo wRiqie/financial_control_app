@@ -1,11 +1,12 @@
 import 'package:expandable/expandable.dart';
-import 'package:financial_control_app/app/core/utils/helpers.dart';
-import 'package:financial_control_app/app/data/models/bill.dart';
-import 'package:financial_control_app/app/data/models/category.dart';
-import 'package:financial_control_app/app/data/models/month.dart';
-import 'package:financial_control_app/app/data/repository/bill_repository.dart';
-import 'package:financial_control_app/app/modules/home/home_controller.dart';
 import 'package:get/get.dart';
+
+import '../../../../core/utils/helpers.dart';
+import '../../../../data/models/bill.dart';
+import '../../../../data/models/category.dart';
+import '../../../../data/models/month.dart';
+import '../../../../data/repository/bill_repository.dart';
+import '../../home_controller.dart';
 
 class CategoryItemController extends GetxController {
   final HomeController homeController;

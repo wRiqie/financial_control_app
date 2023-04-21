@@ -1,18 +1,19 @@
-import 'package:financial_control_app/app/core/utils/helpers.dart';
-import 'package:financial_control_app/app/core/values/constants.dart';
-import 'package:financial_control_app/app/data/enums/bill_status_enum.dart';
-import 'package:financial_control_app/app/data/models/bill.dart';
-import 'package:financial_control_app/app/data/models/category.dart';
-import 'package:financial_control_app/app/data/models/month.dart';
-import 'package:financial_control_app/app/data/repository/bill_repository.dart';
-import 'package:financial_control_app/app/data/repository/category_repository.dart';
-import 'package:financial_control_app/app/data/repository/month_repository.dart';
-import 'package:financial_control_app/app/modules/home/widgets/category_item/category_item_controller.dart';
-import 'package:financial_control_app/app/routes/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:uuid/uuid.dart';
+
+import '../../core/utils/helpers.dart';
+import '../../core/values/constants.dart';
+import '../../data/enums/bill_status_enum.dart';
+import '../../data/models/bill.dart';
+import '../../data/models/category.dart';
+import '../../data/models/month.dart';
+import '../../data/repository/bill_repository.dart';
+import '../../data/repository/category_repository.dart';
+import '../../data/repository/month_repository.dart';
+import '../../routes/pages.dart';
+import 'widgets/category_item/category_item_controller.dart';
 
 class HomeController extends GetxController {
   GetStorage box = GetStorage(Constants.storageName);
@@ -90,13 +91,13 @@ class HomeController extends GetxController {
     update();
   }
 
-  Future<Month?> loadMonth() async {
+  Future<void> loadMonth() async {
     var month = await monthRepository
         .getMonthByDate(AppHelpers.formatDateToSave(selectedDate));
     if (month != null) {
       selectedMonth = month;
       calcRemainingBalance();
-      return null;
+      return;
     }
 
     var previousMonthBalance = await loadPreviousMonthBalance();
@@ -115,8 +116,7 @@ class HomeController extends GetxController {
 
     calcRemainingBalance();
     await monthRepository.saveMonth(selectedMonth!);
-    Get.offAllNamed(Routes.dashboard);
-    return monthToAdd;
+    // Get.offAllNamed(Routes.dashboard);
   }
 
   void calcRemainingBalance() {

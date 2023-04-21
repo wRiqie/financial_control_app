@@ -1,5 +1,5 @@
-import 'package:financial_control_app/app/modules/home/home_page.dart';
-import 'package:financial_control_app/app/modules/statistics/statistics_page.dart';
+import '../home/home_page.dart';
+import '../statistics/statistics_page.dart';
 import 'package:get/get.dart';
 
 class DashboardController extends GetxController {

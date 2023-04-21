@@ -1,5 +1,5 @@
-import 'package:financial_control_app/app/core/values/constants.dart';
-import 'package:financial_control_app/app/routes/pages.dart';
+import '../../core/values/constants.dart';
+import '../pages.dart';
 import 'package:flutter/Material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';

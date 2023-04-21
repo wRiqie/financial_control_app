@@ -1,8 +1,8 @@
-import 'package:financial_control_app/app/data/repository/backup_repository.dart';
-import 'package:financial_control_app/app/data/services/database_service.dart';
-import 'package:financial_control_app/app/data/services/local_auth_service.dart';
-import 'package:financial_control_app/app/data/services/snackbar_service.dart';
-import 'package:financial_control_app/app/modules/preferences/preferences_controller.dart';
+import '../../data/repository/backup_repository.dart';
+import '../../data/services/database_service.dart';
+import '../../data/services/local_auth_service.dart';
+import '../../data/services/snackbar_service.dart';
+import 'preferences_controller.dart';
 import 'package:get/get.dart';
 
 class PreferencesBinding implements Bindings {

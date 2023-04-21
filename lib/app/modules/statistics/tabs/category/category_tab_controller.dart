@@ -1,8 +1,8 @@
-import 'package:financial_control_app/app/core/utils/helpers.dart';
-import 'package:financial_control_app/app/data/enums/category_enum.dart';
-import 'package:financial_control_app/app/data/models/category_data.dart';
-import 'package:financial_control_app/app/data/repository/bill_repository.dart';
-import 'package:financial_control_app/app/data/repository/category_repository.dart';
+import '../../../../core/utils/helpers.dart';
+import '../../../../data/enums/category_enum.dart';
+import '../../../../data/models/category_data.dart';
+import '../../../../data/repository/bill_repository.dart';
+import '../../../../data/repository/category_repository.dart';
 import 'package:get/get.dart';
 
 class CategoryTabController extends GetxController {

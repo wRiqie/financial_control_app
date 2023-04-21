@@ -1,7 +1,7 @@
-import 'package:financial_control_app/app/core/theme/dark/dark_colors.dart';
-import 'package:financial_control_app/app/data/services/theme_service.dart';
-import 'package:financial_control_app/app/global/widgets/confirm_dialog.dart';
-import 'package:financial_control_app/app/modules/preferences/preferences_controller.dart';
+import '../../core/theme/dark/dark_colors.dart';
+import '../../data/services/theme_service.dart';
+import '../../global/widgets/confirm_dialog.dart';
+import 'preferences_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

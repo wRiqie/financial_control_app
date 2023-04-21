@@ -1,8 +1,8 @@
-import 'package:financial_control_app/app/core/utils/helpers.dart';
-import 'package:financial_control_app/app/data/models/month_data.dart';
-import 'package:financial_control_app/app/data/provider/database_provider.dart';
-import 'package:financial_control_app/app/data/repository/month_repository.dart';
-import 'package:financial_control_app/app/modules/statistics/tabs/month/month_tab_controller.dart';
+import '../../../../core/utils/helpers.dart';
+import '../../../../data/models/month_data.dart';
+import '../../../../data/provider/database_provider.dart';
+import '../../../../data/repository/month_repository.dart';
+import 'month_tab_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';

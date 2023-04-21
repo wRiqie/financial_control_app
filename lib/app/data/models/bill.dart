@@ -1,4 +1,4 @@
-import 'package:financial_control_app/app/data/enums/bill_status_enum.dart';
+import '../enums/bill_status_enum.dart';
 class Bill {
   late String id;
   late int categoryId;

@@ -1,6 +1,6 @@
-import 'package:financial_control_app/app/modules/statistics/statistics_controller.dart';
-import 'package:financial_control_app/app/modules/statistics/tabs/category/category_tab.dart';
-import 'package:financial_control_app/app/modules/statistics/tabs/month/month_tab.dart';
+import 'statistics_controller.dart';
+import 'tabs/category/category_tab.dart';
+import 'tabs/month/month_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

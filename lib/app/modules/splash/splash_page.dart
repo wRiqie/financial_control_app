@@ -1,5 +1,5 @@
-import 'package:financial_control_app/app/core/values/images.dart';
-import 'package:financial_control_app/app/modules/splash/splash_controller.dart';
+import '../../core/values/images.dart';
+import 'splash_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

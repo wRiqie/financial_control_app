@@ -23,11 +23,11 @@ final Map<String, String> enUs = {
   'others': 'Others',
   'balance': 'Balance',
   'concluded': 'Concluded',
-  'enterBalanceOfMonth': 'Please\nEnter a balance of the month',
+  'enterBalanceOfMonth': 'Enter your budget for the month',
   'enterMonthValue': 'Please enter a month value',
   'valueMonthCannotBeZero': 'The value of the month cannot be zero',
   'balanceOfMonthDescription':
-      'Balance of the month would be the budget available for the month\'s bills',
+      'Enter the amount available for your accounts this month',
   'home': 'Home',
   'statistics': 'Statistics',
   'remainingBalance': 'Remaining Balance',

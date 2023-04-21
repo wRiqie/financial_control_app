@@ -1,7 +1,8 @@
-import 'package:financial_control_app/app/core/values/constants.dart';
-import 'package:financial_control_app/app/data/services/theme_service.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+
+import '../../core/values/constants.dart';
+import '../../data/services/theme_service.dart';
 
 class FinancialController extends GetxController {
   final box = GetStorage(Constants.storageName);

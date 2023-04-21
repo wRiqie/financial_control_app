@@ -1,6 +1,6 @@
-import 'package:financial_control_app/app/data/services/local_auth_service.dart';
-import 'package:financial_control_app/app/routes/middlewares/auth_middleware.dart';
-import 'package:financial_control_app/app/routes/pages.dart';
+import '../../data/services/local_auth_service.dart';
+import '../../routes/middlewares/auth_middleware.dart';
+import '../../routes/pages.dart';
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {

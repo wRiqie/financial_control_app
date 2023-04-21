@@ -1,7 +1,7 @@
-import 'package:financial_control_app/app/core/utils/helpers.dart';
-import 'package:financial_control_app/app/data/models/month.dart';
-import 'package:financial_control_app/app/data/models/month_data.dart';
-import 'package:financial_control_app/app/data/repository/month_repository.dart';
+import '../../../../core/utils/helpers.dart';
+import '../../../../data/models/month.dart';
+import '../../../../data/models/month_data.dart';
+import '../../../../data/repository/month_repository.dart';
 import 'package:get/get.dart';
 
 class MonthTabController extends GetxController {

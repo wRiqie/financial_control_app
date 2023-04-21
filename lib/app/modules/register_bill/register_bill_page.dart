@@ -1,6 +1,6 @@
-import 'package:financial_control_app/app/core/utils/helpers.dart';
-import 'package:financial_control_app/app/data/enums/category_enum.dart';
-import 'package:financial_control_app/app/modules/register_bill/register_bill_controller.dart';
+import '../../core/utils/helpers.dart';
+import '../../data/enums/category_enum.dart';
+import 'register_bill_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';

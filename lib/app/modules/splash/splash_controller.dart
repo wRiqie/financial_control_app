@@ -1,8 +1,8 @@
-import 'package:financial_control_app/app/core/values/constants.dart';
-import 'package:financial_control_app/app/data/enums/category_enum.dart';
-import 'package:financial_control_app/app/data/models/category.dart';
-import 'package:financial_control_app/app/data/repository/category_repository.dart';
-import 'package:financial_control_app/app/routes/pages.dart';
+import '../../core/values/constants.dart';
+import '../../data/enums/category_enum.dart';
+import '../../data/models/category.dart';
+import '../../data/repository/category_repository.dart';
+import '../../routes/pages.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 

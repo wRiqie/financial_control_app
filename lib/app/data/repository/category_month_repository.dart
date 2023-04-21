@@ -1,5 +1,5 @@
-import 'package:financial_control_app/app/data/models/category_month.dart';
-import 'package:financial_control_app/app/data/provider/database_provider.dart';
+import '../models/category_month.dart';
+import '../provider/database_provider.dart';
 
 class CategoryMonthRepository {
   final _table = DatabaseProvider.categoryMonthTable;

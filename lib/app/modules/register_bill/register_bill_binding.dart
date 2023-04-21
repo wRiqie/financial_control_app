@@ -1,9 +1,9 @@
-import 'package:financial_control_app/app/data/provider/database_provider.dart';
-import 'package:financial_control_app/app/data/repository/bill_repository.dart';
-import 'package:financial_control_app/app/data/repository/category_month_repository.dart';
-import 'package:financial_control_app/app/data/repository/month_repository.dart';
-import 'package:financial_control_app/app/data/services/snackbar_service.dart';
-import 'package:financial_control_app/app/modules/register_bill/register_bill_controller.dart';
+import '../../data/provider/database_provider.dart';
+import '../../data/repository/bill_repository.dart';
+import '../../data/repository/category_month_repository.dart';
+import '../../data/repository/month_repository.dart';
+import '../../data/services/snackbar_service.dart';
+import 'register_bill_controller.dart';
 import 'package:get/get.dart';
 
 class RegisterBillBinding implements Bindings {

@@ -1,7 +1,7 @@
-import 'package:financial_control_app/app/core/theme/dark/dark_colors.dart';
-import 'package:financial_control_app/app/core/utils/helpers.dart';
-import 'package:financial_control_app/app/core/values/images.dart';
-import 'package:financial_control_app/app/modules/change_balance/change_balance_controller.dart';
+import '../../core/theme/dark/dark_colors.dart';
+import '../../core/utils/helpers.dart';
+import '../../core/values/images.dart';
+import 'change_balance_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -42,9 +42,16 @@ class ChangeBalancePage extends GetView<ChangeBalanceController> {
                 Text(
                   'enterBalanceOfMonth'.tr,
                   style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 26,
                       fontWeight: FontWeight.bold,
                       color: Get.theme.colorScheme.primary),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Text(
+                  'balanceOfMonthDescription'.tr,
+                  style: const TextStyle(fontSize: 14, color: DarkColors.grey),
                 ),
                 const SizedBox(
                   height: 30,
@@ -73,23 +80,6 @@ class ChangeBalancePage extends GetView<ChangeBalanceController> {
                     }
                     return null;
                   },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  'balanceOfMonthDescription'.tr,
-                  style: const TextStyle(fontSize: 14, color: DarkColors.grey),
-                ),
-                const SizedBox(
-                  height: 60,
-                ),
-                Opacity(
-                  opacity: .65,
-                  child: SvgPicture.asset(
-                    AppImages.balance,
-                    width: Get.size.width * .75,
-                  ),
                 ),
               ],
             ),
