@@ -153,6 +153,7 @@ class CategoryItem extends StatelessWidget {
           child: InkWell(
             onLongPress: () => _.toggleSelectedBill(bill),
             onTap: () {
+              print(bill);
               _.homeController.selectedBills.isEmpty
                   ? onTap(bill, _)
                   : _.toggleSelectedBill(bill);

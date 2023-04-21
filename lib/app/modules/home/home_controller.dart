@@ -23,7 +23,7 @@ class HomeController extends GetxController {
   final BillRepository billRepository;
   final valueCardController = ScrollController();
   num remainingBalance = 0.0;
-  DateTime selectedDate = DateTime.now().add(const Duration(days: 50));
+  DateTime selectedDate = DateTime.now();
   Month? selectedMonth;
   List<Month> availableMonths = [];
   List<Category> categories = [];

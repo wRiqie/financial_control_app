@@ -153,9 +153,6 @@ class HomePage extends GetView<HomeController> {
                           )
                         ],
                       ),
-                      const SizedBox(
-                        height: 15,
-                      ),
                       ...controller.categories
                           .map((e) => CategoryItem(
                               onTap: (bill, categoryController) {
@@ -285,7 +282,7 @@ class HomePage extends GetView<HomeController> {
               Text(
                 title,
                 style: TextStyle(
-                  fontSize: 32,
+                  fontSize: 28,
                   color: Get.theme.colorScheme.onPrimary,
                 ),
               ),
@@ -295,7 +292,7 @@ class HomePage extends GetView<HomeController> {
                       ? Text(
                           AppHelpers.formatCurrency(value),
                           style: const TextStyle(
-                            fontSize: 42,
+                            fontSize: 38,
                           ),
                         )
                       : Container(

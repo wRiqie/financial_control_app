@@ -7,7 +7,7 @@ final appTheme = ThemeService();
 class ThemeService extends ChangeNotifier {
   bool isDark = true;
 
-  ThemeData currentTheme() => isDark ? darkTheme : lightTheme;
+  ThemeData get currentTheme => isDark ? darkTheme : lightTheme;
 
   void changeTheme() {
     isDark = !isDark;

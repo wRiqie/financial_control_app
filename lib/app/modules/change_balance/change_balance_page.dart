@@ -1,10 +1,8 @@
 import '../../core/theme/dark/dark_colors.dart';
 import '../../core/utils/helpers.dart';
-import '../../core/values/images.dart';
 import 'change_balance_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class ChangeBalancePage extends GetView<ChangeBalanceController> {
