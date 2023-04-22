@@ -11,6 +11,7 @@ class SelectCategoriesPage extends GetView<SelectCategoriesController> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Selecione suas categorias'),
+        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.add))],
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(10),
@@ -29,12 +30,12 @@ class SelectCategoriesPage extends GetView<SelectCategoriesController> {
                   child: CircularProgressIndicator(),
                 )
               : SingleChildScrollView(
-                child: Column(
+                  child: Column(
                     children: controller.categoryOptions
                         .map((e) => categoryOption(e))
                         .toList(),
                   ),
-              ),
+                ),
         ),
       ),
     );

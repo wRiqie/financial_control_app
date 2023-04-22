@@ -72,9 +72,9 @@ class HomeController extends GetxController {
   }
 
   Future<void> addBillToCategory(
-      int categoryId, CategoryItemController controller) async {
+      Category category, CategoryItemController controller) async {
     await Get.toNamed(Routes.registerBill,
-        arguments: {'categoryId': categoryId, 'selectedMonth': selectedMonth});
+        arguments: {'categoryId': category.id, 'categoryIconPoint': category.iconCodePoint, 'selectedMonth': selectedMonth});
     controller.getBills();
   }
 

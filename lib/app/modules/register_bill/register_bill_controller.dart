@@ -18,6 +18,7 @@ class RegisterBillController extends GetxController {
   final args = Get.arguments;
   final uuid = const Uuid();
   int categoryId = 0;
+  int? categoryIconPoint;
   bool havePortions = false;
   bool paid = false;
   Month? selectedMonth;
@@ -117,6 +118,7 @@ class RegisterBillController extends GetxController {
   void onInit() {
     super.onInit();
     categoryId = args['categoryId'];
+    categoryIconPoint = args['categoryIconPoint'];
     selectedMonth = args['selectedMonth'];
     
     if (args['bill'] != null) {

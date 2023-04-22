@@ -15,15 +15,19 @@ class RegisterBillPage extends GetView<RegisterBillController> {
           title: Text(
             'registerABill'.tr,
           ),
-          actions: const [
-            // TODO mostrar icone categoria
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: Icon(
-            //     IconData(controller.categoryId),
-            //     color: Get.theme.colorScheme.onSurface,
-            //   ),
-            // ),
+          actions: [
+            controller.categoryIconPoint != null
+                ? Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(
+                      IconData(
+                        controller.categoryIconPoint!,
+                        fontFamily: 'MaterialIcons',
+                      ),
+                      color: Get.theme.colorScheme.onSurface,
+                    ),
+                  )
+                : Container(),
           ],
         ),
         bottomNavigationBar: Padding(

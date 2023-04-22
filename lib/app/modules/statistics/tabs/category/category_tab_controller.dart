@@ -29,7 +29,7 @@ class CategoryTabController extends GetxController {
           name: category.translateName?.tr ?? category.name,
           totalPrice: totalValue * 1,
           color: Color(category.color),
-          icon: IconData(category.iconCodePoint, fontFamily: 'MaterialIcons'),
+          icon: category.icon,
         ),
       );
     }

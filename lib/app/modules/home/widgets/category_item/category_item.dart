@@ -12,7 +12,7 @@ import 'package:get/get.dart';
 
 class CategoryItem extends StatelessWidget {
   final Category category;
-  final Function(int categoryId, CategoryItemController controller)
+  final Function(Category category, CategoryItemController controller)
       addBillToCategory;
   final Function(Bill bill, CategoryItemController controller) onTap;
   final Month? month;
@@ -61,7 +61,7 @@ class CategoryItem extends StatelessWidget {
                     height: 50,
                     width: 50,
                     child: Icon(
-                      IconData(category.iconCodePoint, fontFamily: 'MaterialIcons'),
+                      category.icon,
                       color: Colors.white,
                     ),
                   ),
@@ -133,7 +133,7 @@ class CategoryItem extends StatelessWidget {
                 ElevatedButton(
                   child: Text('addABill'.tr),
                   onPressed: () {
-                    addBillToCategory(category.id, _);
+                    addBillToCategory(category, _);
                   },
                 ),
               ],

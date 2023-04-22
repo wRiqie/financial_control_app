@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class Category {
   final int id;
   final String name;
@@ -40,4 +42,6 @@ class Category {
       'sortOrder': sortOrder,
     };
   }
+
+  IconData get icon => IconData(iconCodePoint, fontFamily: 'MaterialIcons');
 }
