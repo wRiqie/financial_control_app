@@ -1,6 +1,4 @@
 import '../../core/values/constants.dart';
-import '../../data/enums/category_enum.dart';
-import '../../data/models/category.dart';
 import '../../data/repository/category_repository.dart';
 import '../../routes/pages.dart';
 import 'package:get/get.dart';
@@ -28,9 +26,6 @@ class SplashController extends GetxController {
       Get.offAndToNamed(Routes.dashboard);
       return;
     } else {
-      final categories =
-          ECategory.values.map((e) => Category(id: e.id)).toList();
-      await categoryRepository.saveCategories(categories);
       box.write(Constants.firstTimeOpen, true);
       Get.offAndToNamed(
         Routes.changeBalance,

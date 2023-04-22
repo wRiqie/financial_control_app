@@ -1,7 +1,6 @@
 import 'package:expandable/expandable.dart';
 import '../../../../core/theme/dark/dark_colors.dart';
 import '../../../../core/utils/helpers.dart';
-import '../../../../data/enums/category_enum.dart';
 import '../../../../data/models/bill.dart';
 import '../../../../data/models/category.dart';
 import '../../../../data/models/month.dart';
@@ -57,12 +56,12 @@ class CategoryItem extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      color: CategoryExtension.color(category.id),
+                      color: Color(category.color),
                     ),
                     height: 50,
                     width: 50,
                     child: Icon(
-                      CategoryExtension.icon(category.id),
+                      IconData(category.iconCodePoint, fontFamily: 'MaterialIcons'),
                       color: Colors.white,
                     ),
                   ),
@@ -76,7 +75,7 @@ class CategoryItem extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            CategoryExtension.getById(category.id).name.tr,
+                            category.translateName?.tr ?? category.name,
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,

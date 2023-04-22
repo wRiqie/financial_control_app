@@ -1,5 +1,6 @@
 import 'dart:convert' as convert;
 import 'package:encrypt/encrypt.dart' as encrypt;
+import 'package:financial_control_app/app/core/values/categories.dart';
 
 import '../../core/values/constants.dart';
 import '../enums/bill_status_enum.dart';
@@ -31,21 +32,16 @@ class DatabaseProvider {
       path,
       version: 1,
       onOpen: (db) async {
-        await db.execute(_createTableMonth);
-        await db.execute(_createTableBill);
-        await db.execute(_createTableCategory);
-        await db.execute(_createTableCategoryMonth);
+        await _createTables(db);
       },
       onCreate: (Database db, int version) async {
-        await db.execute(_createTableMonth);
-        await db.execute(_createTableBill);
-        await db.execute(_createTableCategory);
-        await db.execute(_createTableCategoryMonth);
+        await _createTables(db);
+        await _insertBaseCategories(db);
       },
     );
   }
 
-  Future<void> createTables(Database db) async {
+  Future<void> _createTables(Database db) async {
     await db.execute(_createTableMonth);
     await db.execute(_createTableBill);
     await db.execute(_createTableCategory);
@@ -411,14 +407,46 @@ class DatabaseProvider {
   // Category
   static const categoryTable = 'category';
   static const _categoryId = 'id';
+  static const _categoryName = 'name';
+  static const _categoryTranslateName = 'translateName';
   static const _categorySelected = 'selected';
+  static const _categoryColor = 'color';
+  static const _categoryIconCodePoint = 'iconCodePoint';
+  static const _categorySortOrder = 'sortOrder';
 
   static const _createTableCategory = """
     CREATE TABLE IF NOT EXISTS $categoryTable(
-      $_categoryId INTEGER NOT NULL PRIMARY KEY,
-      $_categorySelected INTEGER
+      $_categoryId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+      $_categoryName TEXT,
+      $_categoryTranslateName TEXT,
+      $_categorySelected INTEGER,
+      $_categoryColor INTEGER,
+      $_categoryIconCodePoint INTEGER,
+      $_categorySortOrder INTEGER
     );
   """;
+
+  Future<void> _insertBaseCategories(Database db) async {
+    final sql = StringBuffer();
+    for (var category in Categories.baseValues) {
+      sql.clear();
+
+      sql.write(" INSERT INTO $categoryTable ");
+      sql.write(" ($_categoryTranslateName, ");
+      sql.write(" $_categorySelected, ");
+      sql.write(" $_categoryColor, ");
+      sql.write(" $_categoryIconCodePoint, ");
+      sql.write(" $_categorySortOrder) ");
+      sql.write(" SELECT '${category.translateName}', ");
+      sql.write(" ${category.selected}, ");
+      sql.write(" ${category.color}, ");
+      sql.write(" ${category.iconCodePoint}, ");
+      sql.write(" COALESCE(MAX($_categorySortOrder), -1) + 1 ");
+      sql.write(" FROM $categoryTable ");
+
+      await db.rawInsert(sql.toString());
+    }
+  }
 
   Future<List<Category>> getAllCategories() async {
     final db = await database;

@@ -1,5 +1,6 @@
+import 'package:flutter/material.dart';
+
 import '../../../../core/utils/helpers.dart';
-import '../../../../data/enums/category_enum.dart';
 import '../../../../data/models/category_data.dart';
 import '../../../../data/repository/bill_repository.dart';
 import '../../../../data/repository/category_repository.dart';
@@ -25,9 +26,10 @@ class CategoryTabController extends GetxController {
       categoriesToAdd.add(
         CategoryData(
           id: category.id,
-          name: CategoryExtension.getById(category.id).name.tr,
+          name: category.translateName?.tr ?? category.name,
           totalPrice: totalValue * 1,
-          color: CategoryExtension.color(category.id),
+          color: Color(category.color),
+          icon: IconData(category.iconCodePoint, fontFamily: 'MaterialIcons'),
         ),
       );
     }

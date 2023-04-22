@@ -1,5 +1,4 @@
 import '../../../../core/theme/dark/dark_colors.dart';
-import '../../../../data/enums/category_enum.dart';
 import '../../../../data/models/category_data.dart';
 import '../../../../data/provider/database_provider.dart';
 import '../../../../data/repository/bill_repository.dart';
@@ -59,7 +58,8 @@ class CategoryTabPage extends GetView<CategoryTabController> {
                         id: e.id,
                         title: e.name,
                         totalPrice: e.totalPrice,
-                        color: CategoryExtension.color(e.id),
+                        color: e.color,
+                        icon: e.icon,
                         percent: controller
                             .calcPercent(e.totalPrice)
                             .toStringAsFixed(2),
@@ -80,6 +80,7 @@ class CategoryTabPage extends GetView<CategoryTabController> {
     String? title,
     num? totalPrice,
     String? percent,
+    IconData? icon,
     Color? color,
   }) {
     return ListTile(
@@ -87,12 +88,11 @@ class CategoryTabPage extends GetView<CategoryTabController> {
         title ?? '',
         style: TextStyle(
           fontSize: 15,
-          fontWeight: FontWeight.bold,
-          color: color
+          color: Get.theme.colorScheme.onSurface,
         ),
       ),
       leading: Icon(
-        CategoryExtension.icon(id),
+        icon,
         color: color,
       ),
       trailing: Text(

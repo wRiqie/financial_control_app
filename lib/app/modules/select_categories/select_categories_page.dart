@@ -1,4 +1,3 @@
-import '../../data/enums/category_enum.dart';
 import '../../data/models/category.dart';
 import 'select_categories_controller.dart';
 import 'package:flutter/material.dart';
@@ -43,10 +42,10 @@ class SelectCategoriesPage extends GetView<SelectCategoriesController> {
 
   Widget categoryOption(Category category) {
     return CheckboxListTile(
-      title: Text(CategoryExtension.getById(category.id).name.tr),
+      title: Text(category.translateName?.tr ?? category.name),
       secondary: Icon(
-        CategoryExtension.icon(category.id),
-        color: CategoryExtension.color(category.id),
+        IconData(category.iconCodePoint),
+        color: Color(category.color),
       ),
       value: category.selected,
       controlAffinity: ListTileControlAffinity.leading,
