@@ -43,7 +43,7 @@ final Map<String, String> enUs = {
   'cancel': 'Cancel',
   'addABill': 'Add a bill',
   'preferences': 'Preferences',
-  'changeBalance': 'Change the balance value for selected month',
+  'changeBalance': 'Set your balance for this month',
   'copyBills': 'Copy bills',
   'copyBillsToTheNextMonth': 'Copy bills to the next month',
   'registerABill': 'Register a Bill',

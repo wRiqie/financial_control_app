@@ -1,3 +1,6 @@
+import 'package:financial_control_app/app/modules/add_category/add_category_binding.dart';
+import 'package:financial_control_app/app/modules/add_category/add_category_page.dart';
+
 import '../modules/auth/auth_binding.dart';
 import '../modules/auth/auth_page.dart';
 import '../modules/change_balance/change_balace_binding.dart';
@@ -67,6 +70,11 @@ abstract class AppPages {
       name: Routes.auth,
       page: () => const AuthPage(),
       binding: AuthBinding()
+    ),
+    GetPage(
+      name: Routes.addCategory,
+      page: () => const AddCategoryPage(),
+      binding: AddCategoryBinding()
     ),
   ];
 }

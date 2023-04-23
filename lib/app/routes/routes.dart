@@ -10,4 +10,5 @@ abstract class Routes{
   static const preferences = '/preferences';
   static const changeBalance = '/change-balance';
   static const selectCategories = '/select-categories';
+  static const addCategory = '/add-category';
 }

@@ -1,3 +1,5 @@
+import 'package:financial_control_app/app/routes/pages.dart';
+
 import '../../data/models/category.dart';
 import 'select_categories_controller.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +13,14 @@ class SelectCategoriesPage extends GetView<SelectCategoriesController> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Selecione suas categorias'),
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.add))],
+        actions: [
+          IconButton(
+            onPressed: () {
+              Get.toNamed(Routes.addCategory);
+            },
+            icon: const Icon(Icons.add),
+          ),
+        ],
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(10),
@@ -45,7 +54,7 @@ class SelectCategoriesPage extends GetView<SelectCategoriesController> {
     return CheckboxListTile(
       title: Text(category.translateName?.tr ?? category.name),
       secondary: Icon(
-        IconData(category.iconCodePoint),
+        category.icon,
         color: Color(category.color),
       ),
       value: category.selected,

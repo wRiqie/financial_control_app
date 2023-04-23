@@ -43,7 +43,7 @@ final Map<String, String> ptBr = {
   'cancel': 'Cancelar',
   'addABill': 'Adicionar uma conta',
   'preferences': 'Preferencias',
-  'changeBalance': 'Escolha um saldo para o mês selecionado',
+  'changeBalance': 'Defina seu saldo para este mês',
   'copyBills': 'Copiar contas',
   'copyBillsToTheNextMonth': 'Copiar contas deste mês para o mês seguinte',
   'registerABill': 'Registrar conta',
