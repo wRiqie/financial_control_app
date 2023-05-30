@@ -1,87 +1,99 @@
 import 'package:financial_control_app/app/data/models/add_category_step.dart';
+import 'package:financial_control_app/app/data/models/category.dart';
+import 'package:financial_control_app/app/data/services/snackbar_service.dart';
 import 'package:financial_control_app/app/modules/add_category/widgets/selector_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_iconpicker/controllers/icon_controller.dart';
+import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:get/get.dart';
 
 import '../../data/repository/category_repository.dart';
 
 class AddCategoryController extends GetxController {
-  final CategoryRepository repository;
+  final CategoryRepository _categoryRepository;
+  final SnackbarService _snackService;
 
   bool nameIsFilled = false;
 
   final nameController = TextEditingController();
+  final iconController = IconController();
   Color? selectedColor;
   IconData? selectedIcon;
 
-  List<AddCategoryStep> steps = [];
+  bool isLoading = false;
 
-  AddCategoryController(this.repository);
+  AddCategoryController(this._categoryRepository, this._snackService);
 
-  void loadSteps() {
-    steps.addAll([
-      AddCategoryStep(
-        title: 'Nome',
-        indicatorIcon: Icons.category,
-        child: TextField(
-          controller: nameController,
-          decoration:
-              const InputDecoration(hintText: 'Digite o nome da categoria'),
-        ),
-        isDone: () => nameController.text.trim().isNotEmpty,
-      ),
-      AddCategoryStep(
-        title: 'Cor',
-        indicatorIcon: Icons.palette,
-        child: SelectorWidget(
-          prefixWidget: Container(
-            width: 24,
-            height: 24,
-            child: selectedColor == null
-                ? Icon(
-                    Icons.palette,
-                    color: Get.theme.colorScheme.onBackground,
-                  )
-                : null,
-            decoration: BoxDecoration(
-                color: selectedColor, borderRadius: BorderRadius.circular(3)),
+  List<AddCategoryStep> get steps => [
+        AddCategoryStep(
+          title: 'Nome',
+          indicatorIcon: Icons.category,
+          child: TextField(
+            controller: nameController,
+            decoration: const InputDecoration(
+              hintText: 'Digite o nome da categoria',
+            ),
+            style: const TextStyle(
+              fontSize: 14,
+            ),
           ),
-          title: 'Selecione uma cor',
-          subtitle: selectedColor != null
-              ? selectedColor.toString()
-              : 'Nenhuma cor selecionada',
-          onTap: () {
-            pickColor();
-          },
+          isDone: () => nameIsFilled,
         ),
-        isDone: () => selectedColor != null,
-      ),
-      AddCategoryStep(
-        title: 'Ícone',
-        indicatorIcon: Icons.insert_emoticon,
-        child: SelectorWidget(
-          prefixWidget: Icon(
-            Icons.insert_emoticon,
-            color: Get.theme.colorScheme.onBackground,
+        AddCategoryStep(
+          title: 'Cor',
+          indicatorIcon: Icons.palette,
+          child: SelectorWidget(
+            prefixWidget: Container(
+              width: 24,
+              height: 24,
+              child: selectedColor == null
+                  ? Icon(
+                      Icons.palette,
+                      color: Get.theme.colorScheme.onBackground,
+                    )
+                  : null,
+              decoration: BoxDecoration(
+                  color: selectedColor, borderRadius: BorderRadius.circular(3)),
+            ),
+            title: 'Selecione uma cor',
+            subtitle: selectedColor != null
+                ? '#${(selectedColor?.value.toRadixString(16) ?? '')}'
+                : 'Nenhuma cor selecionada',
+            onTap: () {
+              Get.focusScope?.unfocus();
+              pickColor();
+            },
           ),
-          title: 'Selecione um icone',
-          subtitle: selectedIcon != null
-              ? selectedIcon.toString()
-              : 'Nenhum icone selecionado',
+          isDone: () => selectedColor != null,
         ),
-        isDone: () => selectedIcon != null,
-      ),
-      AddCategoryStep(
-        title: 'Concluído',
-        indicatorIcon: Icons.done,
-        child: Container(),
-        isDone: () {
-          return false;
-        },
-      ),
-    ]);
-  }
+        AddCategoryStep(
+          title: 'Ícone',
+          indicatorIcon: Icons.insert_emoticon,
+          child: SelectorWidget(
+            prefixWidget: Icon(
+              selectedIcon ?? Icons.insert_emoticon,
+              color: Get.theme.colorScheme.onBackground,
+            ),
+            title: 'Selecione um icone',
+            subtitle: selectedIcon != null
+                ? 'N° ${(selectedIcon?.codePoint.toString() ?? '')}'
+                : 'Nenhum icone selecionado',
+            onTap: () {
+              Get.focusScope?.unfocus();
+              pickIcon();
+            },
+          ),
+          isDone: () => selectedIcon != null,
+        ),
+        AddCategoryStep(
+          title: 'Concluído',
+          indicatorIcon: Icons.done,
+          child: Container(),
+          isDone: () =>
+              selectedColor != null && selectedIcon != null && nameIsFilled,
+        ),
+      ];
 
   void pickColor() {
     Color? selectionColor;
@@ -116,13 +128,73 @@ class AddCategoryController extends GetxController {
     );
   }
 
-  void pickIcon() {}
+  void pickIcon() async {
+    final selectionIcon = await FlutterIconPicker.showIconPicker(Get.context!,
+        iconPackModes: [IconPack.material],
+        title: const Text('Escolha um ícone'),
+        closeChild: const Text('Cancelar'),
+        searchHintText: 'Buscar');
+
+    if (selectionIcon != null) {
+      selectedIcon = selectionIcon;
+      update();
+    }
+  }
+
+  bool checkFields() {
+    if (!nameIsFilled) {
+      _snackService.showSnackbar(
+        title: 'Campos não preenchidos',
+        message: 'Por favor, preencha o campo nome da categoria',
+        backgroundColor: Get.theme.colorScheme.error
+      );
+      return false;
+    } else if (selectedColor == null) {
+      _snackService.showSnackbar(
+        title: 'Campos não preenchidos',
+        message: 'Por favor, selecione uma cor',
+        backgroundColor: Get.theme.colorScheme.error
+      );
+    } else if (selectedIcon == null) {
+      _snackService.showSnackbar(
+        title: 'Campos não preenchidos',
+        message: 'Por favor, selecione um ícone',
+        backgroundColor: Get.theme.colorScheme.error
+      );
+    }
+    return true;
+  }
+
+  void finish() async {
+    if (!checkFields()) return;
+
+    isLoading = true;
+    update();
+
+    final category = Category(
+      iconCodePoint: selectedIcon!.codePoint,
+      color: selectedColor!.value,
+      name: nameController.text,
+      selected: true,
+    );
+
+    await _categoryRepository.saveCategory(category);
+
+    isLoading = false;
+    update();
+    
+    Get.back();
+  }
 
   @override
   void onInit() {
     super.onInit();
-    loadSteps();
     nameController.addListener(() {
+      if (nameController.text.trim().isNotEmpty) {
+        nameIsFilled = true;
+      } else {
+        nameIsFilled = false;
+      }
       update();
     });
   }
@@ -130,6 +202,7 @@ class AddCategoryController extends GetxController {
   @override
   void dispose() {
     nameController.dispose();
+    iconController.dispose();
     super.dispose();
   }
 }

@@ -6,7 +6,7 @@ const darkColorScheme = ColorScheme(
   onPrimary: Color(0xFF212121),
   secondary: Color(0xFF03DAC6),
   onSecondary: Color(0xFF000000),
-  error: Color(0xFFB00020),
+  error: Color.fromARGB(255, 180, 39, 65),
   onError: Color(0xFFFFFFFF),
   background: Color(0xFF121212),
   onBackground: Color(0xFFAEAEAE),

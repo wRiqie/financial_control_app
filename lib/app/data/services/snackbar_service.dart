@@ -3,23 +3,23 @@ import 'package:get/get.dart';
 
 class SnackbarService {
   void showSnackbar({
-    required String title,
-    required String subtitle,
+    String? title,
+    required String message,
     Color? backgroundColor,
     Color? textColor,
     SnackPosition? position,
     Icon? icon, 
   }) {
-    Get.snackbar(
-      title,
-      subtitle,
+    Get.rawSnackbar(
+      title: title,
+      message: message,
       snackPosition: position ?? SnackPosition.TOP,
-      padding: const EdgeInsets.symmetric(
-        horizontal: 20,
+      borderRadius: 8,
+      margin: const EdgeInsets.symmetric(
+        horizontal: 16,
         vertical: 10,
       ),
-      backgroundColor: backgroundColor,
-      colorText: textColor,
+      backgroundColor: backgroundColor ?? Get.theme.colorScheme.error,
       icon: icon,
     );
   }

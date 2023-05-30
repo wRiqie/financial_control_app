@@ -20,12 +20,12 @@ class CategoryTabController extends GetxController {
     final categories = await categoryRepository.getSelectedCategories();
     for (var category in categories) {
       num totalValue = await billRepository.getBillsTotalPriceOfMonthCategory(
-        category.id,
+        category.id ?? -1,
         AppHelpers.formatDateToSave(DateTime.now()),
       );
       categoriesToAdd.add(
         CategoryData(
-          id: category.id,
+          id: category.id  ?? -1,
           name: category.translateName?.tr ?? category.name,
           totalPrice: totalValue * 1,
           color: Color(category.color),

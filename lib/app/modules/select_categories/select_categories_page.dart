@@ -16,7 +16,9 @@ class SelectCategoriesPage extends GetView<SelectCategoriesController> {
         actions: [
           IconButton(
             onPressed: () {
-              Get.toNamed(Routes.addCategory);
+              Get.toNamed(Routes.addCategory)?.then((value) {
+                controller.getCategories();
+              });
             },
             icon: const Icon(Icons.add),
           ),

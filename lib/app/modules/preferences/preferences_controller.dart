@@ -71,14 +71,14 @@ class PreferencesController extends GetxController {
     if (!exported) {
       snackService.showSnackbar(
         title: 'Erro',
-        subtitle: 'Não foi possível exportar os dados',
+        message: 'Não foi possível exportar os dados',
         backgroundColor: Get.theme.colorScheme.error,
       );
       return;
     }
     snackService.showSnackbar(
       title: 'success'.tr,
-      subtitle: 'successfullySaved'.tr,
+      message: 'successfullySaved'.tr,
     );
   }
 
@@ -87,7 +87,7 @@ class PreferencesController extends GetxController {
     if (!imported) {
       snackService.showSnackbar(
         title: 'Erro',
-        subtitle: 'Não foi possível importar os dados',
+        message: 'Não foi possível importar os dados',
         backgroundColor: Get.theme.colorScheme.error,
       );
       return;
@@ -95,7 +95,7 @@ class PreferencesController extends GetxController {
     Get.offAllNamed(Routes.dashboard);
     snackService.showSnackbar(
       title: 'success'.tr,
-      subtitle: 'successfullySaved'.tr,
+      message: 'successfullySaved'.tr,
     );
   }
 

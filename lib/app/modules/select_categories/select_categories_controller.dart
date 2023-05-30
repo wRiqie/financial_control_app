@@ -37,7 +37,7 @@ class SelectCategoriesController extends GetxController {
     if (selectedCategories.isEmpty) {
       snackService.showSnackbar(
         title: 'Atenção',
-        subtitle: 'Selecione pelo menos uma categoria',
+        message: 'Selecione pelo menos uma categoria',
         backgroundColor: Get.theme.colorScheme.error,
         textColor: Get.theme.colorScheme.onError,
         icon: const Icon(Icons.error),

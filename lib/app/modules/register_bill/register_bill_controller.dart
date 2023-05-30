@@ -77,7 +77,7 @@ class RegisterBillController extends GetxController {
 
       snackService.showSnackbar(
         title: 'success'.tr,
-        subtitle: 'successfullySaved'.tr,
+        message: 'successfullySaved'.tr,
       );
     }
   }

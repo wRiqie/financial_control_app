@@ -5,5 +5,9 @@ final darkTheme = ThemeData(
   colorScheme: darkColorScheme,
   appBarTheme: const AppBarTheme(
     centerTitle: true,
+    titleTextStyle: TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.bold,
+    ),
   ),
 );

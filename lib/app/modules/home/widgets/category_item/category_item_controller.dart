@@ -27,7 +27,7 @@ class CategoryItemController extends GetxController {
   getBills() {
     repository
         .getBillsByCategoryIdAndDate(
-      category.id,
+      category.id ?? -1,
       month?.date ?? AppHelpers.formatDateToSave(DateTime.now()),
     )
         .then((value) {

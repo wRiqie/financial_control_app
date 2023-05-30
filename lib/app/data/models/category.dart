@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class Category {
-  final int id;
+  final int? id;
   final String name;
   final String? translateName;
   final int iconCodePoint;
@@ -10,7 +10,7 @@ class Category {
   bool selected;
 
   Category({
-    this.id = 0,
+    this.id,
     this.name = '',
     this.translateName,
     this.selected = false,

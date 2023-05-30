@@ -7,6 +7,9 @@ class CategoryRepository {
 
   CategoryRepository(this.db);
 
+  Future<int> saveCategory(Category category)
+    => db.save(data: category, table: _table);
+
   Future<void> saveCategories(List<Category> categories)
     => db.saveAll(datas: categories, table: _table);
 
