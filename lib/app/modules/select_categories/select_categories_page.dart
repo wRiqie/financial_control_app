@@ -1,6 +1,7 @@
 import 'package:financial_control_app/app/core/utils/dialog_helper.dart';
+import 'package:financial_control_app/app/data/services/snackbar_service.dart';
+import 'package:financial_control_app/app/modules/select_categories/widget/category_tile_widget.dart';
 import 'package:financial_control_app/app/routes/pages.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../../data/models/category_model.dart';
@@ -46,57 +47,20 @@ class SelectCategoriesPage extends GetView<SelectCategoriesController> {
               : SingleChildScrollView(
                   child: Column(
                     children: controller.categoryOptions
-                        .map((e) => categoryOption(context, e))
+                        .map(
+                          (e) => CategoryTileWidget(
+                            category: e,
+                            onEdit: () => controller.editCategory(e),
+                            onDelete: () =>
+                                controller.deleteCategory(context, e.id ?? 0),
+                            toggleSelected: (value) =>
+                                controller.toogleCategory(e, value ?? false),
+                          ),
+                        )
                         .toList(),
                   ),
                 ),
         ),
-      ),
-    );
-  }
-
-  Widget categoryOption(BuildContext context, CategoryModel category) {
-    return Slidable(
-      startActionPane: ActionPane(
-        motion: const ScrollMotion(),
-        children: [
-          SlidableAction(
-            onPressed: (_) {
-              controller.editCategory(category);
-            },
-            backgroundColor: Get.theme.colorScheme.primary.withOpacity(.2),
-            foregroundColor: Get.theme.colorScheme.primary,
-            icon: Icons.edit,
-          ),
-          SlidableAction(
-            onPressed: (_) {
-              DialogHelper.instance.showDecisionDialog(
-                context,
-                title: 'Deletar categoria',
-                content:
-                    'Tem certeza que deseja deletar a categoria? As contas vinculadas serão deletadas juntamente',
-                onConfirm: () => controller.deleteCategory(category.id ?? 0),
-              );
-            },
-            backgroundColor: Get.theme.colorScheme.error.withOpacity(.2),
-            foregroundColor: Get.theme.colorScheme.error,
-            icon: Icons.delete,
-          ),
-        ],
-      ),
-      child: CheckboxListTile(
-        key: key,
-        title: Text(category.translateName?.tr ?? category.name),
-        secondary: Icon(
-          category.icon,
-          color: Color(category.color),
-        ),
-        value: category.selected,
-        controlAffinity: ListTileControlAffinity.leading,
-        onChanged: (value) {
-          controller.toogleCategory(category, value ?? false);
-        },
-        activeColor: Get.theme.colorScheme.primary,
       ),
     );
   }

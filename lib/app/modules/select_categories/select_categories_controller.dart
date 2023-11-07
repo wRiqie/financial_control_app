@@ -1,5 +1,6 @@
 import 'package:financial_control_app/app/data/repository/bill_repository.dart';
 
+import '../../core/utils/dialog_helper.dart';
 import '../../core/values/constants.dart';
 import '../../data/models/category_model.dart';
 import '../../data/repository/category_repository.dart';
@@ -38,15 +39,27 @@ class SelectCategoriesController extends GetxController {
     getCategories();
   }
 
-  void deleteCategory(int id) async {
-    isLoading = true;
-    update();
-    await repository.deleteCategory(id);
-    await _billRepository.deleteBillsByCategoryId(id);
-    isLoading = false;
-    update();
+  void deleteCategory(BuildContext context, int id) async {
+    if (categoryOptions.length == 1) {
+      AlertSnackbar(message: 'É necessário ao menos 1 categoria');
+      return;
+    }
+    DialogHelper.instance.showDecisionDialog(
+      context,
+      title: 'Deletar categoria',
+      content:
+          'Tem certeza que deseja deletar a categoria? As contas vinculadas serão deletadas juntamente',
+      onConfirm: () async {
+        isLoading = true;
+        update();
+        await repository.deleteCategory(id);
+        await _billRepository.deleteBillsByCategoryId(id);
+        isLoading = false;
+        update();
 
-    getCategories();
+        getCategories();
+      },
+    );
   }
 
   void confirm() async {
