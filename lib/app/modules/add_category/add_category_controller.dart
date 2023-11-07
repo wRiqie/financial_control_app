@@ -1,11 +1,10 @@
 import 'package:financial_control_app/app/data/models/add_category_step_model.dart';
 import 'package:financial_control_app/app/data/models/category_model.dart';
 import 'package:financial_control_app/app/data/services/snackbar_service.dart';
+import 'package:financial_control_app/app/modules/add_category/widgets/select_color_dialog_widget.dart';
+import 'package:financial_control_app/app/modules/add_category/widgets/select_icon_dialog_widget.dart';
 import 'package:financial_control_app/app/modules/add_category/widgets/selector_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-// import 'package:flutter_iconpicker/controllers/icon_controller.dart';
-// import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:get/get.dart';
 
 import '../../data/repository/category_repository.dart';
@@ -94,50 +93,26 @@ class AddCategoryController extends GetxController {
         ),
       ];
 
-  void pickColor() {
-    Color? selectionColor;
-
-    showDialog(
-      context: Get.context!,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Escolha uma cor'),
-          content: SingleChildScrollView(
-            child: ColorPicker(
-              pickerColor: const Color(0xFFFFFFFF),
-              paletteType: PaletteType.hueWheel,
-              onColorChanged: (value) {
-                selectionColor = value;
-              },
-            ),
-          ),
-          actions: [
-            ElevatedButton(
-              child: const Text('Confirmar'),
-              onPressed: () {
-                selectedColor = selectionColor;
-                update();
-
-                Get.back();
-              },
-            ),
-          ],
-        );
-      },
+  void pickColor() async {
+    var result = await Get.dialog<Color>(
+      const SelectColorDialogWidget(),
     );
+
+    if (result != null) {
+      selectedColor = result;
+      update();
+    }
   }
 
   void pickIcon() async {
-    // final selectionIcon = await FlutterIconPicker.showIconPicker(Get.context!,
-    //     iconPackModes: [IconPack.material],
-    //     title: const Text('Escolha um ícone'),
-    //     closeChild: const Text('Cancelar'),
-    //     searchHintText: 'Buscar');
+    var result = await Get.dialog<IconData>(SelectIconDialogWidget(
+      color: selectedColor,
+    ));
 
-    // if (selectionIcon != null) {
-    //   selectedIcon = selectionIcon;
-    //   update();
-    // }
+    if (result != null) {
+      selectedIcon = result;
+      update();
+    }
   }
 
   bool checkFields() {
@@ -167,8 +142,7 @@ class AddCategoryController extends GetxController {
     update();
 
     final category = CategoryModel(
-      // iconCodePoint: selectedIcon!.codePoint,
-      iconCodePoint: Icons.star.codePoint,
+      iconCodePoint: selectedIcon!.codePoint,
       color: selectedColor!.value,
       name: nameController.text,
       selected: true,
