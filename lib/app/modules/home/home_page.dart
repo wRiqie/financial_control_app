@@ -1,3 +1,5 @@
+import 'package:financial_control_app/app/data/services/snackbar_service.dart';
+
 import '../../core/theme/dark/dark_colors.dart';
 import '../../core/utils/helpers.dart';
 import '../../data/enums/bill_status_enum.dart';
@@ -57,7 +59,7 @@ class HomePage extends GetView<HomeController> {
               ? [
                   IconButton(
                     onPressed: controller.openPreferences,
-                    icon: const Icon(Icons.more_horiz),
+                    icon: const Icon(Icons.more_vert),
                   ),
                 ]
               : [

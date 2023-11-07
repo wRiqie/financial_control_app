@@ -1,4 +1,5 @@
 import 'package:expandable/expandable.dart';
+import 'package:flutter/foundation.dart';
 import '../../../../core/theme/dark/dark_colors.dart';
 import '../../../../core/utils/helpers.dart';
 import '../../../../data/models/bill_model.dart';
@@ -152,7 +153,9 @@ class CategoryItem extends StatelessWidget {
           child: InkWell(
             onLongPress: () => _.toggleSelectedBill(bill),
             onTap: () {
-              print(bill);
+              if (kDebugMode) {
+                print(bill);
+              }
               _.homeController.selectedBills.isEmpty
                   ? onTap(bill, _)
                   : _.toggleSelectedBill(bill);

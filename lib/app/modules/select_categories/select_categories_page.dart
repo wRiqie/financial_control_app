@@ -1,4 +1,5 @@
 import 'package:financial_control_app/app/routes/pages.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../data/models/category_model.dart';
 import 'select_categories_controller.dart';
@@ -50,7 +51,9 @@ class SelectCategoriesPage extends GetView<SelectCategoriesController> {
               : ReorderableListView.builder(
                   itemCount: controller.categoryOptions.length,
                   onReorder: (oldIndex, newIndex) {
-                    print(newIndex);
+                    if (kDebugMode) {
+                      print(newIndex);
+                    }
                   },
                   itemBuilder: (context, index) {
                     var category = controller.categoryOptions[index];
