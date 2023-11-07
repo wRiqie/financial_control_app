@@ -126,36 +126,40 @@ class PreferencesPage extends GetView<PreferencesController> {
     bool haveSwitch = false,
     Function(bool)? toggleSwitch,
     bool switchValue = false,
+    bool isVisible = true,
   }) {
-    return ListTile(
-      leading: Icon(
-        icon,
-        color: Get.theme.colorScheme.primary,
+    return Visibility(
+      visible: isVisible,
+      child: ListTile(
+        leading: Icon(
+          icon,
+          color: Get.theme.colorScheme.primary,
+        ),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(title),
+            subtitle != null
+                ? Text(
+                    subtitle,
+                    style: const TextStyle(color: DarkColors.grey, fontSize: 12),
+                  )
+                : Container(),
+          ],
+        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        trailing: haveSwitch
+            ? Switch(
+                value: switchValue,
+                onChanged: toggleSwitch,
+                activeColor: Get.theme.colorScheme.primary,
+              )
+            : Icon(
+                Icons.arrow_forward_ios,
+                color: Get.theme.colorScheme.primary,
+              ),
+        onTap: haveSwitch ? null : onTap,
       ),
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(title),
-          subtitle != null
-              ? Text(
-                  subtitle,
-                  style: const TextStyle(color: DarkColors.grey, fontSize: 12),
-                )
-              : Container(),
-        ],
-      ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-      trailing: haveSwitch
-          ? Switch(
-              value: switchValue,
-              onChanged: toggleSwitch,
-              activeColor: Get.theme.colorScheme.primary,
-            )
-          : Icon(
-              Icons.arrow_forward_ios,
-              color: Get.theme.colorScheme.primary,
-            ),
-      onTap: haveSwitch ? null : onTap,
     );
   }
 }

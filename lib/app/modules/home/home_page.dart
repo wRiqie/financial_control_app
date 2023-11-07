@@ -43,7 +43,8 @@ class HomePage extends GetView<HomeController> {
                       ),
                     ),
                     Text(
-                      AppHelpers.formatCurrency(controller.selectedBills.totalPrice),
+                      AppHelpers.formatCurrency(
+                          controller.selectedBills.totalPrice),
                       style: const TextStyle(
                         fontSize: 12,
                         color: DarkColors.grey,
@@ -56,7 +57,7 @@ class HomePage extends GetView<HomeController> {
               ? [
                   IconButton(
                     onPressed: controller.openPreferences,
-                    icon: const Icon(Icons.app_registration_outlined),
+                    icon: const Icon(Icons.more_horiz),
                   ),
                 ]
               : [
@@ -95,17 +96,19 @@ class HomePage extends GetView<HomeController> {
                   child: Row(
                     children: [
                       _buildValueCard(
-                        title: 'remainingBalance'.tr,
-                        value: controller.remainingBalance,
-                        position: 0,
-                        size: size,
-                      ),
+                          title: 'remainingBalance'.tr,
+                          value: controller.remainingBalance,
+                          position: 0,
+                          size: size,
+                          color: controller.remainingBalance < 0
+                              ? Get.theme.colorScheme.error
+                              : null),
                       _buildValueCard(
                         title: 'totalUnpaid'.tr,
                         value: controller.selectedMonth?.totalUnpaid ?? 0,
                         position: 1,
                         size: size,
-                        color: Get.theme.colorScheme.onBackground,
+                        color: const Color.fromARGB(255, 87, 131, 206),
                       ),
                       _buildValueCard(
                         title: 'balanceOfMonth'.tr,

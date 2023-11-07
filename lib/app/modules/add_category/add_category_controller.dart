@@ -4,8 +4,8 @@ import 'package:financial_control_app/app/data/services/snackbar_service.dart';
 import 'package:financial_control_app/app/modules/add_category/widgets/selector_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:flutter_iconpicker/controllers/icon_controller.dart';
-import 'package:flutter_iconpicker/flutter_iconpicker.dart';
+// import 'package:flutter_iconpicker/controllers/icon_controller.dart';
+// import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:get/get.dart';
 
 import '../../data/repository/category_repository.dart';
@@ -17,7 +17,7 @@ class AddCategoryController extends GetxController {
   bool nameIsFilled = false;
 
   final nameController = TextEditingController();
-  final iconController = IconController();
+  // final iconController = IconController();
   Color? selectedColor;
   IconData? selectedIcon;
 
@@ -129,16 +129,16 @@ class AddCategoryController extends GetxController {
   }
 
   void pickIcon() async {
-    final selectionIcon = await FlutterIconPicker.showIconPicker(Get.context!,
-        iconPackModes: [IconPack.material],
-        title: const Text('Escolha um ícone'),
-        closeChild: const Text('Cancelar'),
-        searchHintText: 'Buscar');
+    // final selectionIcon = await FlutterIconPicker.showIconPicker(Get.context!,
+    //     iconPackModes: [IconPack.material],
+    //     title: const Text('Escolha um ícone'),
+    //     closeChild: const Text('Cancelar'),
+    //     searchHintText: 'Buscar');
 
-    if (selectionIcon != null) {
-      selectedIcon = selectionIcon;
-      update();
-    }
+    // if (selectionIcon != null) {
+    //   selectedIcon = selectionIcon;
+    //   update();
+    // }
   }
 
   bool checkFields() {
@@ -172,7 +172,8 @@ class AddCategoryController extends GetxController {
     update();
 
     final category = Category(
-      iconCodePoint: selectedIcon!.codePoint,
+      // iconCodePoint: selectedIcon!.codePoint,
+      iconCodePoint: Icons.star.codePoint,
       color: selectedColor!.value,
       name: nameController.text,
       selected: true,
@@ -202,7 +203,7 @@ class AddCategoryController extends GetxController {
   @override
   void dispose() {
     nameController.dispose();
-    iconController.dispose();
+    // iconController.dispose();
     super.dispose();
   }
 }

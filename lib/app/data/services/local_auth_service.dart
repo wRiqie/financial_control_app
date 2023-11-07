@@ -5,9 +5,9 @@ class LocalAuthService {
   final auth = LocalAuthentication();
 
   Future<bool> checkDeviceCompatility(LocalAuthentication auth) async {
-    final bool canAuthenticateWithBiometrics = await auth.canCheckBiometrics;
-    final bool canAuthenticate =
-        canAuthenticateWithBiometrics || await auth.isDeviceSupported();
+    final canAuthenticateWithBiometrics = await auth.canCheckBiometrics;
+    final canAuthenticate =
+        canAuthenticateWithBiometrics && await auth.isDeviceSupported();
     return canAuthenticate;
   }
 

@@ -18,6 +18,7 @@ class PreferencesController extends GetxController {
   final args = Get.arguments;
   bool copyBills = false;
   bool biometryEnabled = false;
+  bool canEnableBiometry = false;
   Month? month;
 
   PreferencesController(this.backupDbService,
@@ -54,8 +55,7 @@ class PreferencesController extends GetxController {
     } else {
       Get.dialog(
         ConfirmDialog(
-          body:
-              'biometryError'.tr,
+          body: 'biometryError'.tr,
           icon: Icon(
             Icons.fingerprint,
             color: Get.theme.colorScheme.primary,
@@ -103,7 +103,8 @@ class PreferencesController extends GetxController {
   void onInit() {
     super.onInit();
     toggleCopyBills(box.read(Constants.copyBills));
-    toggleBiometry(box.read(Constants.biometryEnabled));
+    var enableBiometry = box.read(Constants.biometryEnabled);
+    if (enableBiometry ?? false) toggleBiometry(enableBiometry);
     month = args['month'];
   }
 }

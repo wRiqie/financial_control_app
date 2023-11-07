@@ -40,20 +40,32 @@ class SelectCategoriesPage extends GetView<SelectCategoriesController> {
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
-              : SingleChildScrollView(
-                  child: Column(
-                    children: controller.categoryOptions
-                        .map((e) => categoryOption(e))
-                        .toList(),
-                  ),
+              // : SingleChildScrollView(
+              //     child: Column(
+              //       children: controller.categoryOptions
+              //           .map((e) => categoryOption(e))
+              //           .toList(),
+              //     ),
+              //   ),
+              : ReorderableListView.builder(
+                  itemCount: controller.categoryOptions.length,
+                  onReorder: (oldIndex, newIndex) {
+                    print(newIndex);
+                  },
+                  itemBuilder: (context, index) {
+                    var category = controller.categoryOptions[index];
+                    return categoryOption(Key('$index'), category);
+                  },
+
                 ),
         ),
       ),
     );
   }
 
-  Widget categoryOption(Category category) {
+  Widget categoryOption(Key key, Category category) {
     return CheckboxListTile(
+      key: key,
       title: Text(category.translateName?.tr ?? category.name),
       secondary: Icon(
         category.icon,
