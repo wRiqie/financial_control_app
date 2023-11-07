@@ -2,9 +2,9 @@ import 'package:expandable/expandable.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/utils/helpers.dart';
-import '../../../../data/models/bill.dart';
-import '../../../../data/models/category.dart';
-import '../../../../data/models/month.dart';
+import '../../../../data/models/bill_model.dart';
+import '../../../../data/models/category_model.dart';
+import '../../../../data/models/month_model.dart';
 import '../../../../data/repository/bill_repository.dart';
 import '../../home_controller.dart';
 
@@ -12,9 +12,9 @@ class CategoryItemController extends GetxController {
   final HomeController homeController;
   final BillRepository repository;
   final expandable = ExpandableController();
-  final Month? month;
-  List<Bill> bills = [];
-  final Category category;
+  final MonthModel? month;
+  List<BillModel> bills = [];
+  final CategoryModel category;
   final args = Get.arguments;
 
   CategoryItemController({
@@ -36,12 +36,13 @@ class CategoryItemController extends GetxController {
     });
   }
 
-  addBill(Bill bill) {
+  addBill(BillModel bill) {
     bills.add(bill);
     update();
   }
 
-  void toggleSelectedBill(Bill bill) => homeController.toggleSelectedBill(bill);
+  void toggleSelectedBill(BillModel bill) =>
+      homeController.toggleSelectedBill(bill);
 
   void toggleSelectedBills() {
     for (var bill in bills) {
@@ -49,7 +50,7 @@ class CategoryItemController extends GetxController {
     }
   }
 
-  bool selected(Bill bill) => homeController.selectedBills.contains(bill);
+  bool selected(BillModel bill) => homeController.selectedBills.contains(bill);
 
   @override
   void onReady() {

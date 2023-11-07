@@ -1,5 +1,5 @@
 import '../../../../core/theme/dark/dark_colors.dart';
-import '../../../../data/models/category_data.dart';
+import '../../../../data/models/category_data_model.dart';
 import '../../../../data/provider/database_provider.dart';
 import '../../../../data/repository/bill_repository.dart';
 import '../../../../data/repository/category_repository.dart';
@@ -34,12 +34,13 @@ class CategoryTabPage extends GetView<CategoryTabController> {
                           isVisible: true,
                         ),
                         series: <CircularSeries>[
-                          PieSeries<CategoryData, String>(
+                          PieSeries<CategoryDataModel, String>(
                             dataSource: controller.datas,
-                            pointColorMapper: (CategoryData data, _) =>
+                            pointColorMapper: (CategoryDataModel data, _) =>
                                 data.color,
-                            xValueMapper: (CategoryData data, _) => data.name,
-                            yValueMapper: (CategoryData data, _) =>
+                            xValueMapper: (CategoryDataModel data, _) =>
+                                data.name,
+                            yValueMapper: (CategoryDataModel data, _) =>
                                 data.totalPrice,
                           ),
                         ],

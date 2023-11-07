@@ -1,10 +1,11 @@
+import 'package:financial_control_app/app/data/services/snackbar_service.dart';
+
 import '../../core/utils/helpers.dart';
 import '../../data/enums/bill_status_enum.dart';
-import '../../data/models/bill.dart';
-import '../../data/models/month.dart';
+import '../../data/models/bill_model.dart';
+import '../../data/models/month_model.dart';
 import '../../data/repository/bill_repository.dart';
 import '../../data/repository/month_repository.dart';
-import '../../data/services/snackbar_service.dart';
 import '../home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,16 +15,15 @@ class RegisterBillController extends GetxController {
   final homeController = Get.find<HomeController>();
   final BillRepository repository;
   final MonthRepository monthRepository;
-  final SnackbarService snackService;
   final args = Get.arguments;
   final uuid = const Uuid();
   int categoryId = 0;
   int? categoryIconPoint;
   bool havePortions = false;
   bool paid = false;
-  Month? selectedMonth;
+  MonthModel? selectedMonth;
 
-  Bill? editingBill;
+  BillModel? editingBill;
 
   final formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
@@ -32,9 +32,7 @@ class RegisterBillController extends GetxController {
   final portionController = TextEditingController();
   final maxPortionController = TextEditingController();
 
-  RegisterBillController(
-      this.repository, this.monthRepository,
-      {required this.snackService});
+  RegisterBillController(this.repository, this.monthRepository);
 
   togglePortion(bool? value) {
     havePortions = value ?? !havePortions;
@@ -50,7 +48,7 @@ class RegisterBillController extends GetxController {
 
   saveBill({bool add = false}) async {
     if (formKey.currentState!.validate()) {
-      Bill bill = Bill(
+      BillModel bill = BillModel(
         id: editingBill != null ? editingBill!.id : uuid.v4(),
         categoryId: categoryId,
         title: titleController.text,
@@ -75,7 +73,7 @@ class RegisterBillController extends GetxController {
         Get.back();
       }
 
-      snackService.showSnackbar(
+      SuccessSnackbar(
         title: 'success'.tr,
         message: 'successfullySaved'.tr,
       );
@@ -120,7 +118,7 @@ class RegisterBillController extends GetxController {
     categoryId = args['categoryId'];
     categoryIconPoint = args['categoryIconPoint'];
     selectedMonth = args['selectedMonth'];
-    
+
     if (args['bill'] != null) {
       editingBill = args['bill'];
       fillFields();

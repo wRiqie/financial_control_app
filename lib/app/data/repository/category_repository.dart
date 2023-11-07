@@ -1,21 +1,20 @@
-import '../models/category.dart';
+import '../models/category_model.dart';
 import '../provider/database_provider.dart';
 
 class CategoryRepository {
-  final _table = DatabaseProvider.categoryTable; 
+  final _table = DatabaseProvider.categoryTable;
   final DatabaseProvider db;
 
   CategoryRepository(this.db);
 
-  Future<int> saveCategory(Category category)
-    => db.save(data: category, table: _table);
+  Future<int> saveCategory(CategoryModel category) =>
+      db.save(data: category, table: _table);
 
-  Future<void> saveCategories(List<Category> categories)
-    => db.saveAll(datas: categories, table: _table);
+  Future<void> saveCategories(List<CategoryModel> categories) =>
+      db.saveAll(datas: categories, table: _table);
 
-  Future<List<Category>> getAllCategories() 
-    => db.getAllCategories();
+  Future<List<CategoryModel>> getAllCategories() => db.getAllCategories();
 
-  Future<List<Category>> getSelectedCategories()
-    => db.getSelectedCategories();
+  Future<List<CategoryModel>> getSelectedCategories() =>
+      db.getSelectedCategories();
 }

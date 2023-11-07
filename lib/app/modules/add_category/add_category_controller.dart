@@ -1,5 +1,5 @@
-import 'package:financial_control_app/app/data/models/add_category_step.dart';
-import 'package:financial_control_app/app/data/models/category.dart';
+import 'package:financial_control_app/app/data/models/add_category_step_model.dart';
+import 'package:financial_control_app/app/data/models/category_model.dart';
 import 'package:financial_control_app/app/data/services/snackbar_service.dart';
 import 'package:financial_control_app/app/modules/add_category/widgets/selector_widget.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,6 @@ import '../../data/repository/category_repository.dart';
 
 class AddCategoryController extends GetxController {
   final CategoryRepository _categoryRepository;
-  final SnackbarService _snackService;
 
   bool nameIsFilled = false;
 
@@ -23,10 +22,10 @@ class AddCategoryController extends GetxController {
 
   bool isLoading = false;
 
-  AddCategoryController(this._categoryRepository, this._snackService);
+  AddCategoryController(this._categoryRepository);
 
-  List<AddCategoryStep> get steps => [
-        AddCategoryStep(
+  List<AddCategoryStepModel> get steps => [
+        AddCategoryStepModel(
           title: 'Nome',
           indicatorIcon: Icons.category,
           child: TextField(
@@ -40,7 +39,7 @@ class AddCategoryController extends GetxController {
           ),
           isDone: () => nameIsFilled,
         ),
-        AddCategoryStep(
+        AddCategoryStepModel(
           title: 'Cor',
           indicatorIcon: Icons.palette,
           child: SelectorWidget(
@@ -67,7 +66,7 @@ class AddCategoryController extends GetxController {
           ),
           isDone: () => selectedColor != null,
         ),
-        AddCategoryStep(
+        AddCategoryStepModel(
           title: 'Ícone',
           indicatorIcon: Icons.insert_emoticon,
           child: SelectorWidget(
@@ -86,7 +85,7 @@ class AddCategoryController extends GetxController {
           ),
           isDone: () => selectedIcon != null,
         ),
-        AddCategoryStep(
+        AddCategoryStepModel(
           title: 'Concluído',
           indicatorIcon: Icons.done,
           child: Container(),
@@ -143,23 +142,19 @@ class AddCategoryController extends GetxController {
 
   bool checkFields() {
     if (!nameIsFilled) {
-      _snackService.showSnackbar(
-        title: 'Campos não preenchidos',
-        message: 'Por favor, preencha o campo nome da categoria',
-        backgroundColor: Get.theme.colorScheme.error
-      );
+      ErrorSnackbar(
+          title: 'Campos não preenchidos',
+          message: 'Por favor, preencha o campo nome da categoria');
       return false;
     } else if (selectedColor == null) {
-      _snackService.showSnackbar(
+      ErrorSnackbar(
         title: 'Campos não preenchidos',
         message: 'Por favor, selecione uma cor',
-        backgroundColor: Get.theme.colorScheme.error
       );
     } else if (selectedIcon == null) {
-      _snackService.showSnackbar(
+      ErrorSnackbar(
         title: 'Campos não preenchidos',
         message: 'Por favor, selecione um ícone',
-        backgroundColor: Get.theme.colorScheme.error
       );
     }
     return true;
@@ -171,7 +166,7 @@ class AddCategoryController extends GetxController {
     isLoading = true;
     update();
 
-    final category = Category(
+    final category = CategoryModel(
       // iconCodePoint: selectedIcon!.codePoint,
       iconCodePoint: Icons.star.codePoint,
       color: selectedColor!.value,
@@ -183,7 +178,7 @@ class AddCategoryController extends GetxController {
 
     isLoading = false;
     update();
-    
+
     Get.back();
   }
 

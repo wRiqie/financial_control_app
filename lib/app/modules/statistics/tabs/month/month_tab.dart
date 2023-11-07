@@ -1,5 +1,5 @@
 import '../../../../core/utils/helpers.dart';
-import '../../../../data/models/month_data.dart';
+import '../../../../data/models/month_data_model.dart';
 import '../../../../data/provider/database_provider.dart';
 import '../../../../data/repository/month_repository.dart';
 import 'month_tab_controller.dart';
@@ -32,8 +32,8 @@ class MonthTabPage extends GetView<MonthTabController> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Padding(
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
                           child: Text(
                             'totalPriceForMonths'.tr,
                             style: const TextStyle(
@@ -48,15 +48,18 @@ class MonthTabPage extends GetView<MonthTabController> {
                               )
                             : SfCartesianChart(
                                 primaryXAxis: CategoryAxis(
-                                  majorGridLines: const MajorGridLines(width: 0),
+                                  majorGridLines:
+                                      const MajorGridLines(width: 0),
                                 ),
                                 series: <ChartSeries>[
-                                  SplineSeries<MonthData, String>(
+                                  SplineSeries<MonthDataModel, String>(
                                     dataSource: controller.datas,
                                     color: Get.theme.colorScheme.primary,
                                     width: 3,
-                                    xValueMapper: (MonthData data, _) => data.x,
-                                    yValueMapper: (MonthData data, _) => data.y,
+                                    xValueMapper: (MonthDataModel data, _) =>
+                                        data.x,
+                                    yValueMapper: (MonthDataModel data, _) =>
+                                        data.y,
                                   )
                                 ],
                               ),
@@ -92,10 +95,9 @@ class MonthTabPage extends GetView<MonthTabController> {
                     child: Text(
                       controller.caption,
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Get.theme.colorScheme.primary
-                      ),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Get.theme.colorScheme.primary),
                     ),
                   ),
                 ],

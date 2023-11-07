@@ -9,4 +9,7 @@ class Constants {
   static const darkTheme = 'darkTheme';
   static const isValuesVisible = 'isValuesVisible';
   static const biometryEnabled = 'EnabledBiometry';
+
+  static const defaultError =
+      'Um erro inesperado aconteceu, tente novamente...';
 }

@@ -1,6 +1,6 @@
 import '../../core/utils/helpers.dart';
 import '../../core/values/constants.dart';
-import '../../data/models/month.dart';
+import '../../data/models/month_model.dart';
 import '../../data/repository/month_repository.dart';
 import '../../routes/pages.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,7 +13,7 @@ class ChangeBalanceController extends GetxController {
   final args = Get.arguments;
   final formKey = GlobalKey<FormState>();
   final balanceController = TextEditingController();
-  Month? month;
+  MonthModel? month;
   bool? firstTime;
 
   ChangeBalanceController(this.repository);
@@ -26,7 +26,7 @@ class ChangeBalanceController extends GetxController {
         await repository.saveMonth(month!);
         Get.back();
       } else {
-        var monthToAdd = Month(
+        var monthToAdd = MonthModel(
           date: AppHelpers.formatDateToSave(DateTime.now()),
           balance: AppHelpers.revertCurrencyFormat(balanceController.text),
         );

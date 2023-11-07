@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/utils/helpers.dart';
-import '../../../../data/models/category_data.dart';
+import '../../../../data/models/category_data_model.dart';
 import '../../../../data/repository/bill_repository.dart';
 import '../../../../data/repository/category_repository.dart';
 import 'package:get/get.dart';
@@ -10,13 +10,13 @@ class CategoryTabController extends GetxController {
   final BillRepository billRepository;
   final CategoryRepository categoryRepository;
   bool isLoading = false;
-  List<CategoryData> datas = [];
+  List<CategoryDataModel> datas = [];
 
   CategoryTabController(this.billRepository, this.categoryRepository);
 
   void loadDatas() async {
     isLoading = true;
-    List<CategoryData> categoriesToAdd = [];
+    List<CategoryDataModel> categoriesToAdd = [];
     final categories = await categoryRepository.getSelectedCategories();
     for (var category in categories) {
       num totalValue = await billRepository.getBillsTotalPriceOfMonthCategory(
@@ -24,8 +24,8 @@ class CategoryTabController extends GetxController {
         AppHelpers.formatDateToSave(DateTime.now()),
       );
       categoriesToAdd.add(
-        CategoryData(
-          id: category.id  ?? -1,
+        CategoryDataModel(
+          id: category.id ?? -1,
           name: category.translateName?.tr ?? category.name,
           totalPrice: totalValue * 1,
           color: Color(category.color),

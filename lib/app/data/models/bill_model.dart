@@ -1,5 +1,6 @@
 import '../enums/bill_status_enum.dart';
-class Bill {
+
+class BillModel {
   late String id;
   late int categoryId;
   late String title;
@@ -10,7 +11,7 @@ class Bill {
   late int status;
   late String date;
 
-  Bill({
+  BillModel({
     required this.id,
     required this.categoryId,
     required this.title,
@@ -22,7 +23,7 @@ class Bill {
     required this.date,
   });
 
-  Bill.fromMap(Map<String, dynamic> map) {
+  BillModel.fromMap(Map<String, dynamic> map) {
     id = map['id'];
     categoryId = map['categoryId'];
     title = map['title'];
@@ -49,7 +50,7 @@ class Bill {
   }
 }
 
-extension BillExtension on List<Bill> {
+extension BillExtension on List<BillModel> {
   double get leftPrice {
     var leftBills = where((e) => e.status != EBillStatus.paid.id);
     double price = 0;

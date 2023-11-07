@@ -1,5 +1,5 @@
 import '../../core/values/constants.dart';
-import '../../data/models/month.dart';
+import '../../data/models/month_model.dart';
 import '../../data/services/database_service.dart';
 import '../../data/services/local_auth_service.dart';
 import '../../data/services/snackbar_service.dart';
@@ -12,17 +12,15 @@ import 'package:get_storage/get_storage.dart';
 
 class PreferencesController extends GetxController {
   final DatabaseService backupDbService;
-  final SnackbarService snackService;
   final LocalAuthService localAuthService;
   final box = GetStorage(Constants.storageName);
   final args = Get.arguments;
   bool copyBills = false;
   bool biometryEnabled = false;
   bool canEnableBiometry = false;
-  Month? month;
+  MonthModel? month;
 
-  PreferencesController(this.backupDbService,
-      {required this.snackService, required this.localAuthService});
+  PreferencesController(this.backupDbService, {required this.localAuthService});
 
   void toggleCopyBills(bool? value) async {
     copyBills = value ?? true;
@@ -69,14 +67,13 @@ class PreferencesController extends GetxController {
   void exportDb() async {
     final exported = await backupDbService.exportDatabase();
     if (!exported) {
-      snackService.showSnackbar(
+      ErrorSnackbar(
         title: 'Erro',
         message: 'Não foi possível exportar os dados',
-        backgroundColor: Get.theme.colorScheme.error,
       );
       return;
     }
-    snackService.showSnackbar(
+    SuccessSnackbar(
       title: 'success'.tr,
       message: 'successfullySaved'.tr,
     );
@@ -85,15 +82,14 @@ class PreferencesController extends GetxController {
   void importDb() async {
     final imported = await backupDbService.importDatabase();
     if (!imported) {
-      snackService.showSnackbar(
+      ErrorSnackbar(
         title: 'Erro',
         message: 'Não foi possível importar os dados',
-        backgroundColor: Get.theme.colorScheme.error,
       );
       return;
     }
     Get.offAllNamed(Routes.dashboard);
-    snackService.showSnackbar(
+    SuccessSnackbar(
       title: 'success'.tr,
       message: 'successfullySaved'.tr,
     );

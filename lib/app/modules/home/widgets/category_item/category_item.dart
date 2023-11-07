@@ -1,9 +1,9 @@
 import 'package:expandable/expandable.dart';
 import '../../../../core/theme/dark/dark_colors.dart';
 import '../../../../core/utils/helpers.dart';
-import '../../../../data/models/bill.dart';
-import '../../../../data/models/category.dart';
-import '../../../../data/models/month.dart';
+import '../../../../data/models/bill_model.dart';
+import '../../../../data/models/category_model.dart';
+import '../../../../data/models/month_model.dart';
 import '../../../../data/provider/database_provider.dart';
 import '../../../../data/repository/bill_repository.dart';
 import 'category_item_controller.dart';
@@ -11,11 +11,11 @@ import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 
 class CategoryItem extends StatelessWidget {
-  final Category category;
-  final Function(Category category, CategoryItemController controller)
+  final CategoryModel category;
+  final Function(CategoryModel category, CategoryItemController controller)
       addBillToCategory;
-  final Function(Bill bill, CategoryItemController controller) onTap;
-  final Month? month;
+  final Function(BillModel bill, CategoryItemController controller) onTap;
+  final MonthModel? month;
   const CategoryItem({
     Key? key,
     required this.onTap,
@@ -144,7 +144,7 @@ class CategoryItem extends StatelessWidget {
     );
   }
 
-  Widget _buildBill(CategoryItemController _, Bill bill) {
+  Widget _buildBill(CategoryItemController _, BillModel bill) {
     return Column(
       children: [
         Material(

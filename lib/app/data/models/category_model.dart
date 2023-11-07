@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-class Category {
+class CategoryModel {
   final int? id;
   final String name;
   final String? translateName;
@@ -9,7 +9,7 @@ class Category {
   int sortOrder;
   bool selected;
 
-  Category({
+  CategoryModel({
     this.id,
     this.name = '',
     this.translateName,
@@ -19,8 +19,8 @@ class Category {
     this.sortOrder = 0,
   });
 
-  factory Category.fromMap(Map<String, dynamic> map) {
-    return Category(
+  factory CategoryModel.fromMap(Map<String, dynamic> map) {
+    return CategoryModel(
       id: map['id'],
       name: map['name'] ?? '',
       translateName: map['translateName'],

@@ -1,7 +1,7 @@
 import '../../core/theme/dark/dark_colors.dart';
 import '../../core/utils/helpers.dart';
 import '../../data/enums/bill_status_enum.dart';
-import '../../data/models/bill.dart';
+import '../../data/models/bill_model.dart';
 import '../../global/widgets/confirm_dialog.dart';
 import 'home_controller.dart';
 import 'widgets/category_item/category_item.dart';

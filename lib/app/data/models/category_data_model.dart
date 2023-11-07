@@ -1,13 +1,13 @@
 import 'package:flutter/Material.dart';
 
-class CategoryData {
+class CategoryDataModel {
   int id;
   String name;
   double totalPrice;
   Color color;
   IconData icon;
 
-  CategoryData({
+  CategoryDataModel({
     required this.id,
     required this.name,
     required this.totalPrice,

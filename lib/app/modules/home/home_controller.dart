@@ -6,9 +6,9 @@ import 'package:uuid/uuid.dart';
 import '../../core/utils/helpers.dart';
 import '../../core/values/constants.dart';
 import '../../data/enums/bill_status_enum.dart';
-import '../../data/models/bill.dart';
-import '../../data/models/category.dart';
-import '../../data/models/month.dart';
+import '../../data/models/bill_model.dart';
+import '../../data/models/category_model.dart';
+import '../../data/models/month_model.dart';
 import '../../data/repository/bill_repository.dart';
 import '../../data/repository/category_repository.dart';
 import '../../data/repository/month_repository.dart';
@@ -24,10 +24,10 @@ class HomeController extends GetxController {
   final valueCardController = ScrollController();
   num remainingBalance = 0.0;
   DateTime selectedDate = DateTime.now();
-  Month? selectedMonth;
-  List<Month> availableMonths = [];
-  List<Category> categories = [];
-  List<Bill> selectedBills = [];
+  MonthModel? selectedMonth;
+  List<MonthModel> availableMonths = [];
+  List<CategoryModel> categories = [];
+  List<BillModel> selectedBills = [];
   bool isValuesVisible = false;
 
   HomeController(
@@ -72,9 +72,12 @@ class HomeController extends GetxController {
   }
 
   Future<void> addBillToCategory(
-      Category category, CategoryItemController controller) async {
-    await Get.toNamed(Routes.registerBill,
-        arguments: {'categoryId': category.id, 'categoryIconPoint': category.iconCodePoint, 'selectedMonth': selectedMonth});
+      CategoryModel category, CategoryItemController controller) async {
+    await Get.toNamed(Routes.registerBill, arguments: {
+      'categoryId': category.id,
+      'categoryIconPoint': category.iconCodePoint,
+      'selectedMonth': selectedMonth
+    });
     controller.getBills();
   }
 
@@ -102,7 +105,7 @@ class HomeController extends GetxController {
 
     var previousMonthBalance = await loadPreviousMonthBalance();
 
-    var monthToAdd = Month(
+    var monthToAdd = MonthModel(
       date: AppHelpers.formatDateToSave(selectedDate),
       balance: previousMonthBalance,
     );
@@ -111,7 +114,8 @@ class HomeController extends GetxController {
     final previousDate = await previousMonthDate();
     if (previousDate != null) {
       final copyBills = box.read<bool>(Constants.copyBills);
-      await loadAndCopyPreviousMonthBills(previousDate, copy: copyBills ?? false);
+      await loadAndCopyPreviousMonthBills(previousDate,
+          copy: copyBills ?? false);
     }
 
     calcRemainingBalance();
@@ -125,7 +129,7 @@ class HomeController extends GetxController {
     update();
   }
 
-  Future<void> toggleBillStatus(Bill bill) async {
+  Future<void> toggleBillStatus(BillModel bill) async {
     if (bill.status != EBillStatus.paid.id) {
       bill.status = EBillStatus.paid.id;
     } else {
@@ -137,7 +141,8 @@ class HomeController extends GetxController {
     await loadMonth();
   }
 
-  void deleteBill(Bill bill, CategoryItemController categoryController) async {
+  void deleteBill(
+      BillModel bill, CategoryItemController categoryController) async {
     if (selectedMonth != null) {
       var result = await billRepository.deleteBillById(bill.id);
       if (result != 0) {
@@ -170,8 +175,9 @@ class HomeController extends GetxController {
     return 0;
   }
 
-  Future<List<Bill>> loadAndCopyPreviousMonthBills(String previousDate, {bool copy = false}) async {
-    List<Bill> billsToSave = [];
+  Future<List<BillModel>> loadAndCopyPreviousMonthBills(String previousDate,
+      {bool copy = false}) async {
+    List<BillModel> billsToSave = [];
     num totalPrice = 0.0;
 
     final previousMonthBills =
@@ -191,7 +197,7 @@ class HomeController extends GetxController {
         e.maxPortion != null &&
         e.portion! == e.maxPortion!);
 
-    await Future.forEach<Bill>(
+    await Future.forEach<BillModel>(
       billsToSave,
       (bill) {
         bill.id = uuid.v4();
@@ -216,7 +222,7 @@ class HomeController extends GetxController {
     return billsToSave;
   }
 
-  void toggleSelectedBill(Bill bill) {
+  void toggleSelectedBill(BillModel bill) {
     bool selected = selectedBills.contains(bill);
     if (selected) {
       selectedBills.remove(bill);

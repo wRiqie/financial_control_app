@@ -1,10 +1,10 @@
-class CategoryMonth {
+class CategoryMonthModel {
   late String id;
   late int categoryId;
   late String month;
   late num value;
 
-  CategoryMonth({
+  CategoryMonthModel({
     required this.categoryId,
     required this.month,
     this.value = 0.0,
@@ -12,7 +12,7 @@ class CategoryMonth {
     id = month + categoryId.toString();
   }
 
-  CategoryMonth.fromMap(Map<String, dynamic> map) {
+  CategoryMonthModel.fromMap(Map<String, dynamic> map) {
     id = map['id'];
     categoryId = map['categoryId'];
     month = map['month'];

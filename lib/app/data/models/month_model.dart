@@ -1,17 +1,17 @@
-class Month {
+class MonthModel {
   late String date;
   num? totalPrice;
   num? balance;
   num? totalUnpaid;
 
-  Month({
+  MonthModel({
     required this.date,
     this.totalPrice,
     this.balance,
     this.totalUnpaid,
   });
 
-  Month.fromMap(Map<String, dynamic> map) {
+  MonthModel.fromMap(Map<String, dynamic> map) {
     date = map['date'];
     totalPrice = map['totalPrice'];
     balance = map['balance'];

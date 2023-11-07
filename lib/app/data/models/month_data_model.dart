@@ -1,8 +1,8 @@
-class MonthData {
+class MonthDataModel {
   String x;
   num? y;
 
-  MonthData({
+  MonthDataModel({
     required this.x,
     required this.y,
   });

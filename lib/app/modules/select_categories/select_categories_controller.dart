@@ -1,5 +1,5 @@
 import '../../core/values/constants.dart';
-import '../../data/models/category.dart';
+import '../../data/models/category_model.dart';
 import '../../data/repository/category_repository.dart';
 import '../../data/services/snackbar_service.dart';
 import '../../routes/pages.dart';
@@ -9,12 +9,11 @@ import 'package:get_storage/get_storage.dart';
 
 class SelectCategoriesController extends GetxController {
   final CategoryRepository repository;
-  final SnackbarService snackService;
   final box = GetStorage(Constants.storageName);
-  List<Category> categoryOptions = [];
+  List<CategoryModel> categoryOptions = [];
   bool isLoading = false;
 
-  SelectCategoriesController(this.repository, {required this.snackService});
+  SelectCategoriesController(this.repository);
 
   void getCategories() {
     isLoading = true;
@@ -25,7 +24,7 @@ class SelectCategoriesController extends GetxController {
     });
   }
 
-  void toogleCategory(Category category, bool value) {
+  void toogleCategory(CategoryModel category, bool value) {
     category.selected = value;
     update();
   }
@@ -35,11 +34,9 @@ class SelectCategoriesController extends GetxController {
         categoryOptions.where((e) => e.selected).toList();
 
     if (selectedCategories.isEmpty) {
-      snackService.showSnackbar(
+      ErrorSnackbar(
         title: 'Atenção',
         message: 'Selecione pelo menos uma categoria',
-        backgroundColor: Get.theme.colorScheme.error,
-        textColor: Get.theme.colorScheme.onError,
         icon: const Icon(Icons.error),
       );
       return;

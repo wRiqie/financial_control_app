@@ -1,16 +1,16 @@
 import '../../../../core/utils/helpers.dart';
-import '../../../../data/models/month.dart';
-import '../../../../data/models/month_data.dart';
+import '../../../../data/models/month_model.dart';
+import '../../../../data/models/month_data_model.dart';
 import '../../../../data/repository/month_repository.dart';
 import 'package:get/get.dart';
 
 class MonthTabController extends GetxController {
   final MonthRepository repository;
   bool isLoading = false;
-  Month? currentMonth;
+  MonthModel? currentMonth;
   num totalPrice = 0;
-  List<MonthData> datas = [];
-  List<Month> months = [];
+  List<MonthDataModel> datas = [];
+  List<MonthModel> months = [];
 
   MonthTabController(this.repository);
 
@@ -21,7 +21,7 @@ class MonthTabController extends GetxController {
       months = value;
       for (var month in value.reversed) {
         var monthNumber = AppHelpers.revertDateFromSave(month.date).month;
-        var statisticData = MonthData(
+        var statisticData = MonthDataModel(
           x: AppHelpers.monthResolver(monthNumber),
           y: (month.totalPrice ?? 0.0),
         );
@@ -40,9 +40,9 @@ class MonthTabController extends GetxController {
 
   bool get totalPriceDecreased {
     bool isFirstMonth = months.length <= 1;
-    Month? previousMonth = isFirstMonth
+    MonthModel? previousMonth = isFirstMonth
         ? null
-        : months[months.indexOf(currentMonth ?? Month(date: '')) + 1];
+        : months[months.indexOf(currentMonth ?? MonthModel(date: '')) + 1];
     if (previousMonth != null) {
       return (previousMonth.totalPrice ?? 0) > (currentMonth?.totalPrice ?? 0);
     }
@@ -51,9 +51,9 @@ class MonthTabController extends GetxController {
 
   num get balanceDifferencePercentage {
     bool isFirstMonth = months.length <= 1;
-    Month? previousMonth = isFirstMonth
+    MonthModel? previousMonth = isFirstMonth
         ? null
-        : months[months.indexOf(currentMonth ?? Month(date: '')) + 1];
+        : months[months.indexOf(currentMonth ?? MonthModel(date: '')) + 1];
     if (previousMonth != null) {
       var difference =
           (currentMonth?.balance ?? 0) - (previousMonth.balance ?? 0);
@@ -64,9 +64,9 @@ class MonthTabController extends GetxController {
 
   String get caption {
     bool isFirstMonth = months.length <= 1;
-    Month? previousMonth = isFirstMonth
+    MonthModel? previousMonth = isFirstMonth
         ? null
-        : months[months.indexOf(currentMonth ?? Month(date: '')) + 1];
+        : months[months.indexOf(currentMonth ?? MonthModel(date: '')) + 1];
     return (totalPriceDecreased ? 'youSaved'.tr : 'youSpent'.tr) +
         ' ' +
         (totalPriceDecreased

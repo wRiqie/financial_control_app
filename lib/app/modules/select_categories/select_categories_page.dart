@@ -1,6 +1,6 @@
 import 'package:financial_control_app/app/routes/pages.dart';
 
-import '../../data/models/category.dart';
+import '../../data/models/category_model.dart';
 import 'select_categories_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -56,14 +56,13 @@ class SelectCategoriesPage extends GetView<SelectCategoriesController> {
                     var category = controller.categoryOptions[index];
                     return categoryOption(Key('$index'), category);
                   },
-
                 ),
         ),
       ),
     );
   }
 
-  Widget categoryOption(Key key, Category category) {
+  Widget categoryOption(Key key, CategoryModel category) {
     return CheckboxListTile(
       key: key,
       title: Text(category.translateName?.tr ?? category.name),

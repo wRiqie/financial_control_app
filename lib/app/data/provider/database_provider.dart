@@ -4,10 +4,10 @@ import 'package:financial_control_app/app/core/values/categories.dart';
 
 import '../../core/values/constants.dart';
 import '../enums/bill_status_enum.dart';
-import '../models/bill.dart';
-import '../models/category.dart';
-import '../models/category_month.dart';
-import '../models/month.dart';
+import '../models/bill_model.dart';
+import '../models/category_model.dart';
+import '../models/category_month_model.dart';
+import '../models/month_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -185,7 +185,7 @@ class DatabaseProvider {
     );
   """;
 
-  Future<List<Bill>> getBillsByDate(String date) async {
+  Future<List<BillModel>> getBillsByDate(String date) async {
     final db = await database;
     if (db != null) {
       var res = await db.query(
@@ -193,12 +193,14 @@ class DatabaseProvider {
         where: '$_billDate = ?',
         whereArgs: [date],
       );
-      return res.isNotEmpty ? res.map((e) => Bill.fromMap(e)).toList() : [];
+      return res.isNotEmpty
+          ? res.map((e) => BillModel.fromMap(e)).toList()
+          : [];
     }
     return [];
   }
 
-  Future<List<Bill>> getBillsByCategoryIdAndDate(
+  Future<List<BillModel>> getBillsByCategoryIdAndDate(
       int categoryId, String date) async {
     final db = await database;
     if (db != null) {
@@ -207,7 +209,9 @@ class DatabaseProvider {
         where: '$_billCategoryId = ? AND $_billDate = ?',
         whereArgs: [categoryId, date],
       );
-      return res.isNotEmpty ? res.map((e) => Bill.fromMap(e)).toList() : [];
+      return res.isNotEmpty
+          ? res.map((e) => BillModel.fromMap(e)).toList()
+          : [];
     }
     return [];
   }
@@ -239,7 +243,7 @@ class DatabaseProvider {
     return 0;
   }
 
-  Future<int> deleteBillsByIds(List<Bill> bills) async {
+  Future<int> deleteBillsByIds(List<BillModel> bills) async {
     final db = await database;
     if (db != null) {
       var res = await db.delete(
@@ -251,7 +255,7 @@ class DatabaseProvider {
     return 0;
   }
 
-  String splitBillsList(List<Bill> bills) {
+  String splitBillsList(List<BillModel> bills) {
     final splittedList = StringBuffer();
     for (var bill in bills) {
       splittedList
@@ -315,16 +319,18 @@ class DatabaseProvider {
   //   }
   // }
 
-  Future<List<Month>> getMonths() async {
+  Future<List<MonthModel>> getMonths() async {
     final db = await database;
     if (db != null) {
       var res = await db.query(monthTable);
-      return res.isNotEmpty ? res.map((e) => Month.fromMap(e)).toList() : [];
+      return res.isNotEmpty
+          ? res.map((e) => MonthModel.fromMap(e)).toList()
+          : [];
     }
     return [];
   }
 
-  Future<Month?> getMonthByDate(String date, bool onlySelected) async {
+  Future<MonthModel?> getMonthByDate(String date, bool onlySelected) async {
     final db = await database;
     if (db != null) {
       var res = await db.query(
@@ -332,7 +338,7 @@ class DatabaseProvider {
         where: '$_monthDate = ?',
         whereArgs: [date],
       );
-      final month = res.isNotEmpty ? Month.fromMap(res.first) : null;
+      final month = res.isNotEmpty ? MonthModel.fromMap(res.first) : null;
       if (month != null) {
         month.totalPrice = await getMonthTotalPrice(date, onlySelected);
         month.totalUnpaid =
@@ -355,7 +361,7 @@ class DatabaseProvider {
     return null;
   }
 
-  Future<List<Month>> getLastMonths(bool onlySelected) async {
+  Future<List<MonthModel>> getLastMonths(bool onlySelected) async {
     const int limit = 6;
     final db = await database;
     if (db != null) {
@@ -365,8 +371,8 @@ class DatabaseProvider {
         limit: limit,
       );
 
-      List<Month> months =
-          res.isNotEmpty ? res.map((e) => Month.fromMap(e)).toList() : [];
+      List<MonthModel> months =
+          res.isNotEmpty ? res.map((e) => MonthModel.fromMap(e)).toList() : [];
       for (var month in months) {
         month.totalPrice = await getMonthTotalPrice(month.date, onlySelected);
         month.totalUnpaid = await getMonthTotalPrice(month.date, onlySelected,
@@ -448,16 +454,18 @@ class DatabaseProvider {
     }
   }
 
-  Future<List<Category>> getAllCategories() async {
+  Future<List<CategoryModel>> getAllCategories() async {
     final db = await database;
     if (db != null) {
       var res = await db.query(categoryTable);
-      return res.isNotEmpty ? res.map((e) => Category.fromMap(e)).toList() : [];
+      return res.isNotEmpty
+          ? res.map((e) => CategoryModel.fromMap(e)).toList()
+          : [];
     }
     return [];
   }
 
-  Future<List<Category>> getSelectedCategories() async {
+  Future<List<CategoryModel>> getSelectedCategories() async {
     final db = await database;
     if (db != null) {
       var res = await db.query(
@@ -465,7 +473,9 @@ class DatabaseProvider {
         where: '$_categorySelected = ?',
         whereArgs: [1],
       );
-      return res.isNotEmpty ? res.map((e) => Category.fromMap(e)).toList() : [];
+      return res.isNotEmpty
+          ? res.map((e) => CategoryModel.fromMap(e)).toList()
+          : [];
     }
     return [];
   }
@@ -486,7 +496,7 @@ class DatabaseProvider {
     );
   """;
 
-  Future<List<CategoryMonth>> getCategoryMonthsByCategoryIdAndMonth(
+  Future<List<CategoryMonthModel>> getCategoryMonthsByCategoryIdAndMonth(
       int categoryId, String month) async {
     final db = await database;
     if (db != null) {
@@ -496,7 +506,7 @@ class DatabaseProvider {
         whereArgs: [categoryId, month],
       );
       return res.isNotEmpty
-          ? res.map((e) => CategoryMonth.fromMap(e)).toList()
+          ? res.map((e) => CategoryMonthModel.fromMap(e)).toList()
           : [];
     }
     return [];
