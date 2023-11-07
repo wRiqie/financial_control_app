@@ -13,6 +13,8 @@ class CategoryRepository {
   Future<void> saveCategories(List<CategoryModel> categories) =>
       db.saveAll(datas: categories, table: _table);
 
+  Future<int> deleteCategory(int id) => db.deleteCategoryById(id);
+
   Future<List<CategoryModel>> getAllCategories() => db.getAllCategories();
 
   Future<List<CategoryModel>> getSelectedCategories() =>

@@ -243,6 +243,19 @@ class DatabaseProvider {
     return 0;
   }
 
+  Future<int> deleteBillsByCategoryId(int categoryId) async {
+    final db = await database;
+    if (db != null) {
+      var res = await db.delete(
+        billTable,
+        where: '$_billCategoryId = ?',
+        whereArgs: [categoryId],
+      );
+      return res;
+    }
+    return 0;
+  }
+
   Future<int> deleteBillsByIds(List<BillModel> bills) async {
     final db = await database;
     if (db != null) {
@@ -291,33 +304,6 @@ class DatabaseProvider {
       $_monthBalance REAL
     );
   """;
-
-  // void test() async {
-  //   final db = await database;
-  //   if (db != null) {
-  //     final sql = StringBuffer();
-
-  //     sql.write(" SELECT *");
-  //     // sql.write(" COALESCE(SUM(B.$_billValue), 0.0) AS RESULT ");
-  //     sql.write(" FROM $billTable B ");
-  //     sql.write(" INNER JOIN $categoryTable C ");
-  //     sql.write(" ON B.$_billCategoryId = C.$_categoryId ");
-  //     // sql.write(" WHERE B.$_billDate = '06-23' ");
-  //     // sql.write(" AND C.$_categorySelected = 1 ");
-  //     sql.write(
-  //         " AND $_billStatus IN (${EBillStatus.overdue.id}, ${EBillStatus.pendent.id})");
-
-  //     // sql.write(" SELECT SUM($_billValue) FROM $billTable ");
-  //     // sql.write(
-  //     //     " WHERE $_billStatus IN (${EBillStatus.overdue.id}, ${EBillStatus.pendent.id}) ");
-
-  //     final teste = await db.rawQuery(
-  //       sql.toString(),
-  //       // ['${EBillStatus.overdue.id}, ${EBillStatus.pendent.id}']
-  //     );
-  //     print(teste);
-  //   }
-  // }
 
   Future<List<MonthModel>> getMonths() async {
     final db = await database;
@@ -478,6 +464,32 @@ class DatabaseProvider {
           : [];
     }
     return [];
+  }
+
+  Future<int> deleteCategoryById(int id) async {
+    final db = await database;
+    if (db != null) {
+      var res = await db.delete(
+        categoryTable,
+        where: '$_categoryId = ?',
+        whereArgs: [id],
+      );
+      return res;
+    }
+    return -1;
+  }
+
+  Future<int> updateCategoryById(int id) async {
+    final db = await database;
+    if (db != null) {
+      var res = await db.delete(
+        categoryTable,
+        where: '$_categoryId = ?',
+        whereArgs: [id],
+      );
+      return res;
+    }
+    return -1;
   }
 
   // Category Month

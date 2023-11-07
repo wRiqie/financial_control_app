@@ -21,6 +21,8 @@ class AddCategoryController extends GetxController {
 
   bool isLoading = false;
 
+  CategoryModel? editingCategory;
+
   AddCategoryController(this._categoryRepository);
 
   List<AddCategoryStepModel> get steps => [
@@ -142,9 +144,11 @@ class AddCategoryController extends GetxController {
     update();
 
     final category = CategoryModel(
+      id: editingCategory?.id,
       iconCodePoint: selectedIcon!.codePoint,
       color: selectedColor!.value,
       name: nameController.text,
+      translateName: null,
       selected: true,
     );
 
@@ -154,6 +158,15 @@ class AddCategoryController extends GetxController {
     update();
 
     Get.back();
+  }
+
+  void _loadEditingCategory() {
+    nameController.text =
+        editingCategory?.translateName?.tr ?? editingCategory?.name ?? '';
+    selectedColor =
+        editingCategory != null ? Color(editingCategory!.color) : null;
+    selectedIcon = editingCategory?.icon;
+    update();
   }
 
   @override
@@ -167,12 +180,17 @@ class AddCategoryController extends GetxController {
       }
       update();
     });
+
+    var args = Get.arguments;
+    if (args is CategoryModel) {
+      editingCategory = args;
+      _loadEditingCategory();
+    }
   }
 
   @override
   void dispose() {
     nameController.dispose();
-    // iconController.dispose();
     super.dispose();
   }
 }
