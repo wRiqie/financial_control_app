@@ -55,37 +55,45 @@ class _SelectIconDialogWidgetState extends State<SelectIconDialogWidget> {
         borderRadius: BorderRadius.circular(8),
       ),
       backgroundColor: Get.theme.colorScheme.surface,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(
-              'Escolha um ícone',
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 16,
+      child: SizedBox(
+        height: Get.height * .55,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'Escolha um ícone',
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                ),
               ),
-            ),
-            const SizedBox(height: 16),
-            Wrap(
-              direction: Axis.horizontal,
-              alignment: WrapAlignment.center,
-              spacing: 12,
-              runSpacing: 12,
-              children: icons
-                  .map((e) => GestureDetector(
-                      onTap: () {
-                        Get.back(result: e);
-                      },
-                      child: Icon(
-                        e,
-                        size: 46,
-                        color: widget.color ?? Get.theme.colorScheme.onSurface,
-                      )))
-                  .toList(),
-            ),
-          ],
+              const SizedBox(height: 16),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Wrap(
+                    direction: Axis.horizontal,
+                    alignment: WrapAlignment.center,
+                    spacing: 12,
+                    runSpacing: 12,
+                    children: icons
+                        .map((e) => GestureDetector(
+                            onTap: () {
+                              Get.back(result: e);
+                            },
+                            child: Icon(
+                              e,
+                              size: 46,
+                              color: widget.color ??
+                                  Get.theme.colorScheme.onSurface,
+                            )))
+                        .toList(),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

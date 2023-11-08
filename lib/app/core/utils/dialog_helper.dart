@@ -31,6 +31,7 @@ class DialogHelper {
                 child: Icon(
                   icon ?? Icons.warning,
                   size: 30,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
               const SizedBox(
