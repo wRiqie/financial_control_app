@@ -1,4 +1,5 @@
 import 'package:financial_control_app/app/data/services/snackbar_service.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 import '../../core/theme/dark/dark_colors.dart';
 import '../../core/utils/helpers.dart';
@@ -17,6 +18,23 @@ class HomePage extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     final size = Get.size;
+
+    List<SpeedDialChild> speedDials = [
+      SpeedDialChild(
+        child: const Icon(
+          Icons.card_travel,
+        ),
+        label: 'Viagens',
+        onTap: () => Get.toNamed(Routes.travels),
+      ),
+      SpeedDialChild(
+        child: const Icon(
+          Icons.settings,
+        ),
+        label: 'Preferências',
+        onTap: controller.openPreferences,
+      ),
+    ];
 
     return GetBuilder<HomeController>(
       builder: (_) => Scaffold(
@@ -57,9 +75,15 @@ class HomePage extends GetView<HomeController> {
           centerTitle: controller.selectedBills.isEmpty,
           actions: controller.selectedBills.isEmpty
               ? [
-                  IconButton(
-                    onPressed: controller.openPreferences,
-                    icon: const Icon(Icons.more_vert),
+                  SpeedDial(
+                    animatedIcon: AnimatedIcons.menu_close,
+                    animatedIconTheme: IconThemeData(
+                      color: Get.theme.colorScheme.onSurface,
+                    ),
+                    direction: SpeedDialDirection.down,
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    children: speedDials,
                   ),
                 ]
               : [
@@ -148,6 +172,10 @@ class HomePage extends GetView<HomeController> {
                               DropdownMenuItem(
                                 value: 'showAll',
                                 child: Text('Exibir tudo'),
+                              ),
+                              DropdownMenuItem(
+                                value: 'paid',
+                                child: Text('Pagas'),
                               ),
                               DropdownMenuItem(
                                 value: 'unpaid',

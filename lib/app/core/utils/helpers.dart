@@ -1,3 +1,5 @@
+import 'package:easy_mask/easy_mask.dart';
+
 import '../../data/enums/bill_status_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -34,7 +36,7 @@ class AppHelpers {
   }
 
   static Color billStatusResolver(int status) {
-    var billStatus = BillStatusExtension.getById(status); 
+    var billStatus = BillStatusExtension.getById(status);
     switch (billStatus) {
       case EBillStatus.overdue:
         return Colors.red;
@@ -60,8 +62,22 @@ class AppHelpers {
   }
 
   static num revertCurrencyFormat(String currency) {
-    final formatter = NumberFormat.simpleCurrency(locale: Get.deviceLocale?.toString() ?? "en_US");
+    final formatter = NumberFormat.simpleCurrency(
+        locale: Get.deviceLocale?.toString() ?? "en_US");
     return formatter.parse(currency);
+  }
+
+  /// Notação de milhares
+  ///
+  /// ```dart
+  /// // Exemplo
+  /// formatNumberWithThousandsSeparator("100000"); // Output: "100.000"
+  /// ```
+  static TextInputFormatter numberWithThousandsSeparatorFormatter() {
+    return TextInputMask(
+      mask: '9*.999.999',
+      reverse: true,
+    );
   }
 }
 

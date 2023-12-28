@@ -1,5 +1,9 @@
 import 'package:financial_control_app/app/modules/add_category/add_category_binding.dart';
 import 'package:financial_control_app/app/modules/add_category/add_category_page.dart';
+import 'package:financial_control_app/app/modules/travels/add_travel/add_travel_binding.dart';
+import 'package:financial_control_app/app/modules/travels/add_travel/add_travel_page.dart';
+import 'package:financial_control_app/app/modules/travels/travels_binding.dart';
+import 'package:financial_control_app/app/modules/travels/travels_page.dart';
 
 import '../modules/auth/auth_binding.dart';
 import '../modules/auth/auth_page.dart';
@@ -26,10 +30,9 @@ part './routes.dart';
 abstract class AppPages {
   static final pages = [
     GetPage(
-      name: Routes.splash,
-      page: () => const SplashPage(),
-      binding: SplashBinding()
-    ),
+        name: Routes.splash,
+        page: () => const SplashPage(),
+        binding: SplashBinding()),
     GetPage(
       name: Routes.dashboard,
       page: () => const DashboardPage(),
@@ -37,44 +40,44 @@ abstract class AppPages {
       middlewares: [AuthMiddleware()],
     ),
     GetPage(
-      name: Routes.home,
-      page: () => const HomePage(),
-      binding: HomeBinding()
-    ),
+        name: Routes.home,
+        page: () => const HomePage(),
+        binding: HomeBinding()),
     GetPage(
-      name: Routes.statistics,
-      page: () => const StatisticsPage(),
-      binding: StatisticsBinding()
-    ),
+        name: Routes.statistics,
+        page: () => const StatisticsPage(),
+        binding: StatisticsBinding()),
     GetPage(
-      name: Routes.registerBill,
-      page: () => const RegisterBillPage(),
-      binding: RegisterBillBinding()
-    ),
+        name: Routes.registerBill,
+        page: () => const RegisterBillPage(),
+        binding: RegisterBillBinding()),
     GetPage(
-      name: Routes.preferences,
-      page: () => const PreferencesPage(),
-      binding: PreferencesBinding()
-    ),
+        name: Routes.preferences,
+        page: () => const PreferencesPage(),
+        binding: PreferencesBinding()),
     GetPage(
-      name: Routes.changeBalance,
-      page: () => const ChangeBalancePage(),
-      binding: ChangeBalanceBinding()
-    ),
+        name: Routes.changeBalance,
+        page: () => const ChangeBalancePage(),
+        binding: ChangeBalanceBinding()),
     GetPage(
-      name: Routes.selectCategories,
-      page: () => const SelectCategoriesPage(),
-      binding: SelectCategoriesBinding()
-    ),
+        name: Routes.selectCategories,
+        page: () => const SelectCategoriesPage(),
+        binding: SelectCategoriesBinding()),
     GetPage(
-      name: Routes.auth,
-      page: () => const AuthPage(),
-      binding: AuthBinding()
-    ),
+        name: Routes.auth,
+        page: () => const AuthPage(),
+        binding: AuthBinding()),
     GetPage(
-      name: Routes.addCategory,
-      page: () => const AddCategoryPage(),
-      binding: AddCategoryBinding()
-    ),
+        name: Routes.addCategory,
+        page: () => const AddCategoryPage(),
+        binding: AddCategoryBinding()),
+    GetPage(
+        name: Routes.travels,
+        page: () => const TravelsPage(),
+        binding: TravelsBinding()),
+    GetPage(
+        name: Routes.addTravel,
+        page: () => const AddTravelPage(),
+        binding: AddTravelBinding()),
   ];
 }

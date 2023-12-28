@@ -1,6 +1,8 @@
 import 'dart:convert' as convert;
 import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:financial_control_app/app/core/values/categories.dart';
+import 'package:financial_control_app/app/data/models/travel_day_model.dart';
+import 'package:financial_control_app/app/data/models/travel_model.dart';
 
 import '../../core/values/constants.dart';
 import '../enums/bill_status_enum.dart';
@@ -46,6 +48,8 @@ class DatabaseProvider {
     await db.execute(_createTableBill);
     await db.execute(_createTableCategory);
     await db.execute(_createTableCategoryMonth);
+    await db.execute(_createTableTravel);
+    await db.execute(_createTableTravelDay);
   }
 
   // Backup
@@ -524,5 +528,97 @@ class DatabaseProvider {
     return [];
   }
 
-  // Future<int> deleteCategoryMonth(String) async {}
+  // Travel
+  static const travelTable = 'travel';
+  static const _travelId = 'id';
+  static const _travelTitle = 'title';
+  static const _travelTotalValue = 'totalValue';
+  static const _travelTotalDays = 'totalDays';
+
+  static const _createTableTravel = """
+    CREATE TABLE IF NOT EXISTS $travelTable(
+      $_travelId TEXT NOT NULL PRIMARY KEY,
+      $_travelTitle TEXT,
+      $_travelTotalValue REAL,
+      $_travelTotalDays INTEGER
+    );
+  """;
+
+  Future<List<TravelModel>> getTravels(int limit, int offset) async {
+    final db = await database;
+    if (db != null) {
+      var res = await db.query(travelTable, limit: limit, offset: offset);
+      return res.isNotEmpty
+          ? res.map((e) => TravelModel.fromMap(e)).toList()
+          : [];
+    }
+    return [];
+  }
+
+  // Travel Day
+  static const travelDayTable = 'travelDay';
+  static const _travelDayId = 'id';
+  static const _travelDayDay = 'day';
+  static const _travelDayTravelId = 'travelId';
+  static const _travelDayTotalValue = 'totalValue';
+
+  static const _createTableTravelDay = """
+    CREATE TABLE IF NOT EXISTS $travelDayTable(
+      $_travelDayId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+      $_travelDayDay INTEGER,
+      $_travelDayTravelId TEXT,
+      $_travelDayTotalValue REAL
+    );
+  """;
+
+  Future<void> updateTravelDaysTotalValue(
+      String travelId, int actualDay, num newValue) async {
+    final db = await database;
+    if (db != null) {
+      final sql = StringBuffer();
+      sql.write(" UPDATE $travelDayTable ");
+      sql.write(" SET $_travelDayTotalValue = $newValue ");
+      sql.write(" WHERE $_travelDayDay > $actualDay ");
+      await db.rawUpdate(sql.toString());
+    }
+  }
+
+  Future<int> updateTravelDay(TravelDayModel travelDay) async {
+    final db = await database;
+    if (db != null) {
+      return db.update(travelDayTable, travelDay.toMap());
+    }
+    return -1;
+  }
+
+  Future<List<TravelDayModel>> getTravelDays(
+      String travelId, int limit, int offset) async {
+    final db = await database;
+    if (db != null) {
+      var res = await db.query(
+        travelDayTable,
+        where: '$_travelDayTravelId = ?',
+        whereArgs: [travelId],
+        limit: limit,
+        offset: offset,
+      );
+      return res.isNotEmpty
+          ? res.map((e) => TravelDayModel.fromMap(e)).toList()
+          : [];
+    }
+    return [];
+  }
+
+  Future<TravelDayModel?> getTravelDayById(int id) async {
+    final db = await database;
+    if (db != null) {
+      var res = await db.query(
+        travelDayTable,
+        where: '$_travelDayId = ?',
+        whereArgs: [id],
+      );
+      return res.isNotEmpty ? TravelDayModel.fromMap(res.first) : null;
+    }
+    return null;
+  }
 }

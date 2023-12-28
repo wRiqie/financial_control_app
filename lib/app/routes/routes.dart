@@ -1,6 +1,8 @@
 part of './pages.dart';
 
-abstract class Routes{
+abstract class Routes {
+  Routes._();
+
   static const splash = '/splash';
   static const auth = '/auth';
   static const dashboard = '/dashboard';
@@ -11,4 +13,6 @@ abstract class Routes{
   static const changeBalance = '/change-balance';
   static const selectCategories = '/select-categories';
   static const addCategory = '/add-category';
+  static const travels = '/travels';
+  static const addTravel = '/add-travel';
 }
